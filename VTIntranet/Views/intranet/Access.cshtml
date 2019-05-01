@@ -1,0 +1,502 @@
+﻿
+@{
+    ViewBag.Title = "Access";
+}
+
+<h2>Access</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <b> Search users</b>
+    </div>
+    <div class="panel-body">
+        <div class="form-left-spacing">
+            <form id="searchUser" enctype="multipart/form-data" class="">
+                <div>
+                    @*<div class="col-lg-3">
+                        <div class="form-group  margin-right-md">
+                            <div class="input-group" id="tags">
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="col-lg-6">
+                        <div class="col-lg-10">
+                            <div class="col-lg-3 col-md-2 col-sm-2">
+                                <span style="display:inline;margin: 6px 5px 0px 0px;">User name:</span>
+                            </div>
+                            <div class="col-lg-9  col-md-5 col-sm-5">
+                                <input type="text" name="userName" id="userName" class="form-control" autocomplete="off" style="display:inline;" />
+                                <input type="hidden" id="hfidUser" name="idUser" />
+                            </div>
+                        </div>
+                        <div class="col-lg-10"><div class="col-lg-9"></div></div>
+                        @*<div class="col-lg-10">
+                            <div class="col-lg-3">
+                                <span style="display:inline;margin: 6px 5px 0px 0px;">Upload date:</span>
+                            </div>
+                            <div class="col-lg-9">
+                                <input type="text" name="attachmentDateLastChange" id="attachmentDate" class="form-control" style="display:inline;" />
+                            </div>
+                            <div style="display:block; margin:7px 0 0 0;">
+                                <a title="Clean date" id="attDateClean" style="display:grid;"><img style="width:20px;" src="~/Img/clear_1.png" /></a>
+                            </div>
+                        </div>*@
+                    </div>  
+                    <div class="col-lg-4">
+                        <input id="btnSearchUser" class="btn btn-default" type="button" title="Search file" value="Search" />
+                        <input id="btnExportToExcel" class="btn btn-default" type="button" title="Export To Excel" value="Export To Excel" />
+                    </div>                
+                    <div class="col-lg-10">
+                        <div class="col-lg-7">
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br />
+        <div id="infoUserTag" class="col-lg-10" style="margin-bottom:15px;">
+            <div id="userTags" class="scrollable-table">
+
+            </div>
+        </div>
+
+        <div id="ctrlPageSize" class="col-lg-10" style="display:none; margin-bottom:15px;">
+            <span style="display:inline-block;"> Page Size:</span>
+            <div style="display:inline-block;">
+                <select id="pageSize" class="form-control" >
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                </select>
+            </div>
+        </div>
+        <div id="infoUserTag" class="col-lg-10">
+            <div id="infoUserFiles">
+
+            </div>            
+        </div>
+        <div class="col-md-12 text-center">
+            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+        </div>
+        @*<div id="btnOptions" class="col-lg-12 col-md-6 col-xs-12" style="display:none;">
+            <div class="col-lg-2 col-md-4 col-xs-4">
+                <button class="col-lg-12 col-xs-12 bgColor" id="PreValue">Pre</button>
+            </div>
+            <div class="col-lg-4  col-md-2 col-xs-4 nav content-btn">
+            </div>
+            <div class="col-lg-2  col-md-4 col-xs-4">
+                <button class="col-lg-12 col-xs-12 bgColor" id="nextValue">Next</button>
+            </div>
+        </div>*@
+        <iframe id="txtArea1" style="display:none"></iframe>
+        
+        <div id="modalDocs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document" style="width:50%!important">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dissmiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Document</h3>
+                    </div>
+                    <div class="modal-body">
+                        <h3 id="txtFile" style="display:none;">File not exist.</h3>
+                        <iframe id="openFile" frameborder="0" class="doc" src="">                            
+                        </iframe>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+@*<script src="~/Scripts/jquery-1.8.3.min.js"></script>*@
+@*<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
+<script src="~/Scripts/twitter-bootstrap/bootstrap.min.js"></script>
+<script src="~/Scripts/Bootstrap-3-Typeahead/bootstrap3-typeahead.min.js"></script>
+<script src="~/Scripts/tableToExport/tableToExcel.js"></script>
+    <style>
+    .bgColor{
+    background-color: #137dbd;
+    color: #ffffff;
+    } 
+    #PreValue,#nextValue{
+	border: none;
+    height: 25px;
+    border-radius: 5px;
+    }
+    .doc {
+    width: 100%;
+    height: 500px;
+    }
+    </style>
+    <script type="text/javascript">
+        //var countAttch;
+        var attachments;
+        var attachmentTags;
+        var table = $("#tblUserTagFile");
+        var max_size = attachments == undefined ? 0 : attachments.length;
+        var sta = 0;
+        var elements_per_page = 10;
+        var limit = elements_per_page;
+        $.fn.pageMe = function (opts) {
+            var $this = this,
+                defaults = {
+                    perPage: 7,
+                    showPrevNext: false,
+                    hidePageNumbers: false
+                },
+                settings = $.extend(defaults, opts);
+
+            var listElement = $this;
+            var perPage = settings.perPage;
+            var children = listElement.children();
+            var pager = $('.pager');
+
+            if (typeof settings.childSelector != "undefined") {
+                children = listElement.find(settings.childSelector);
+            }
+
+            if (typeof settings.pagerSelector != "undefined") {
+                pager = $(settings.pagerSelector);
+            }
+
+            var numItems = children.length;//size();
+            var numPages = Math.ceil(numItems / perPage);
+
+            pager.data("curr", 0);
+
+            if (settings.showPrevNext) {
+                $('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
+            }
+
+            var curr = 0;
+            while (numPages > curr && (settings.hidePageNumbers == false)) {
+                $('<li><a href="#" class="page_link">' + (curr + 1) + '</a></li>').appendTo(pager);
+                curr++;
+            }
+
+            if (settings.showPrevNext) {
+                $('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
+            }
+
+            pager.find('.page_link:first').addClass('active');
+            pager.find('.prev_link').hide();
+            if (numPages <= 1) {
+                pager.find('.next_link').hide();
+            }
+            pager.children().eq(1).addClass("active");
+
+            children.hide();
+            children.slice(0, perPage).show();
+
+            pager.find('li .page_link').click(function () {
+                var clickedPage = $(this).html().valueOf() - 1;
+                goTo(clickedPage, perPage);
+                return false;
+            });
+            pager.find('li .prev_link').click(function () {
+                previous();
+                return false;
+            });
+            pager.find('li .next_link').click(function () {
+                next();
+                return false;
+            });
+
+            function previous() {
+                var goToPage = parseInt(pager.data("curr")) - 1;
+                goTo(goToPage);
+            }
+
+            function next() {
+                goToPage = parseInt(pager.data("curr")) + 1;
+                goTo(goToPage);
+            }
+
+            function goTo(page) {
+                var startAt = page * perPage,
+                    endOn = startAt + perPage;
+
+                children.css('display', 'none').slice(startAt, endOn).show();
+
+                if (page >= 1) {
+                    pager.find('.prev_link').show();
+                }
+                else {
+                    pager.find('.prev_link').hide();
+                }
+
+                if (page < (numPages - 1)) {
+                    pager.find('.next_link').show();
+                }
+                else {
+                    pager.find('.next_link').hide();
+                }
+
+                pager.data("curr", page);
+                pager.children().removeClass("active");
+                pager.children().eq(page + 1).addClass("active");
+
+            }
+        };
+
+        $(document).ready(function () {
+            $("#btnSearchUser").click(function () {
+                if ($("#hfidUser").val() != 0) {
+                    getUser();
+                    getUserFiles();                   
+
+                } else {
+
+                }
+            });                     
+
+            $("#pageSize").change(function () {
+                var pageSize = $(this).val();
+
+                getTableAttachments();
+            });
+
+            $(".close").click(function () {
+                $('#modalDocs').modal('toggle');
+            });
+        });
+
+      
+
+
+        function getUser() {
+            var user = $("#hfidUser").val();
+            $.ajax({
+            method: "GET"
+           , url: "/intranet/getInfoUserTagsById" 
+           , datatype: 'json'
+           , data: { idUser: user }
+            })
+           .done(function (data, textStatus, jqXHR) {
+               var items = data.data;
+               //console.log(items)
+               var tags = items.tags;
+               var tagName = "";
+               var count = tags.length;
+               if (count > 1) { tagName = "Tags name"; } else { tagName = "Tag name"; }
+               $("#userTags").empty();
+               $("#userTags").append("<table class='table table-bordered' id='UserTagInfo'><thead><tr><th colspan='1'>User name</th><th colspan='" + count + "'>" + tagName + "</th></tr></thead><table>");
+               var userId = "";
+               var userName = "";
+               $.each(items, function (key, value) {
+                   if (key == "idUser") { userId = value }
+                   if (key == "userName") { userName = value }
+                   var trCount = $("#UserTagInfo tbody tr").length;
+                   if (userId != "" && userName != "" && trCount == 0 ) {
+                       $("#UserTagInfo").append("<tbody><tr row_id='" + userId + "'><td>" + userName + "</td></tr></tbody>");
+                       $.each(tags, function (j, valor) {                          
+                           $("#UserTagInfo tbody tr").append("<td>" + valor.tagName + "<td>");
+                       });
+                   }
+               });
+               $("#UserTagInfo tbody tr td:empty").remove();
+               $("#userTags table:empty").remove();
+
+           })
+           .fail(function (jqXHR, textStatus, errorThrown) {
+               alert("error");
+           });
+        }
+
+        function getUserFiles() {
+            var user = $("#hfidUser").val();
+            $.ajax({
+                method: "GET"
+           , url: "/intranet/getInfoUserTagsFilesById"
+           , datatype: 'json'
+           , data: { idUser: user }
+            })
+           .done(function (data, textStatus, jqXHR) {
+               var items = data.data;
+               //console.log(items)
+
+               attachments = items.attachModel;
+               attachmentTags = items.tagsModel;
+
+               //var pageSize = $("#pageSize").val();
+               //elements_per_page = parseInt(pageSize);
+               //limit = elements_per_page; getTableAttachments(sta, limit);
+               getTableAttachments();
+
+               $("#tblUserTagFile tbody tr td:empty").remove();
+               $("#infoUserFiles table:empty").remove();
+
+           })
+           .fail(function (jqXHR, textStatus, errorThrown) {
+               alert("error");
+           });
+        }
+
+        function getTableAttachments() {
+            var fileName, tagName = "";
+            if (attachments != undefined) {
+                var countAttch = attachments.length;
+                var countTags = attachmentTags.length
+                if (countAttch > 1) { fileName = "Files name"; } else { fileName = "File name"; }
+                if (countTags > 1) { tagName = "Tags name"; } else { tagName = "Tag name"; }
+                $("#infoUserFiles").empty();
+                $("#infoUserFiles").append("<table class='table table-bordered table-striped table-hover' id='tblUserTagFile'><thead><tr><th colspan='1'>" + tagName + "</th><th colspan='1'>" + fileName + "</th><th>Uploaded date</th><th>File type</th><th></th></tr></thead><table>");
+                $("#tblUserTagFile").append("<tbody id='myTable'></tbody>");
+                //for (var i = sta; i < limit; i++) {
+                for (var i = 0; i < attachments.length; i++) { 
+                    //if (i <  countAttch) {
+                        $("#tblUserTagFile tbody").append("<tr id='" + attachments[i].idAttachment + "'><td style='border-right: 2px solid #ddd;'></td></tr>")
+                        $.each(attachmentTags, function (j, valor) {
+                            if (attachments[i].idAttachment == valor.idAttachment) {
+                                $("tr#" + attachments[i].idAttachment + " td").append("<div class='sp_" + attachments[i].idAttachment + "'>" + valor.tagName + "</div>");
+                                $("div.sp_" + attachments[i].idAttachment).css("margin-right", "10px");
+                                $("div.sp_" + attachments[i].idAttachment).css("display", "inline-block");
+                            }
+                        });
+                        $("tr#" + attachments[i].idAttachment).append("<td>" + attachments[i].attachmentName + "</td>");
+                        $("tr#" + attachments[i].idAttachment).append("<td>" + attachments[i].attachmentDateLastChange + "</td>");
+                        $("tr#" + attachments[i].idAttachment).append("<td>" + attachments[i].attachmentFileType + "</td>");
+                        if (openFileExtension(attachments[i].attachmentUrl) == 'pdf') {
+                            $("tr#" + attachments[i].idAttachment).append("<td><a id='attView_" + attachments[i].idAttachment + "' style='cursor:pointer;'><input type='hidden' id='hdfAttachment' value='" + i + "'><span class='glyphicon glyphicon-eye-open'></span></a></td>");
+                        } else {
+                            $("tr#" + attachments[i].idAttachment).append("<td><a id='attView_0_" + attachments[i].idAttachment + "' style='cursor:pointer;'><span class='glyphicon glyphicon-eye-open'></span></a></td>");
+                        }
+                        $("#attView_" + attachments[i].idAttachment).click(function (e) {
+                            e.preventDefault();
+                            var item = $(this).find(":hidden").val();
+                           
+                            //var downloadLink = document.createElement("a");                                                        
+                            var fileUrl = attachments[item].attachmentUrl;
+                            var id = attachments[item].idAttachment;                                                      
+                            $.ajax({
+                                method: "GET"
+                                , url: "/intranet/GenerateFile"
+                                , datatype: 'json'
+                                , data: { idAttachment: id }
+                                    })
+                                .done(function (data, textStatus, jqXHR) {
+                                    var items = data.data;
+                                    var $iframe = $("#openFile");
+                                    if (items == true) {
+                                       $("#txtFile").css("display", "none");                                       
+                                        if (extension == 'other') {
+                                            $iframe[0].src = "https://view.officeapps.live.com/op/embed.aspx?src=http://" + window.location.host + fileUrl;
+                                        } else if (extension == 'pdf') {
+                                            $iframe[0].src = fileUrl;
+                                            //"https://docs.google.com/viewer?embedded=true&url=http://" + window.location.host +
+                                        } else {
+                                            $iframe[0].src = window.location.host + fileUrl
+                                        }
+                                    } else {
+                                        $("#txtFile").css("display", "block");
+                                        $iframe[0].src = "";
+                                    }
+                                $("#modalDocs").modal();
+
+                                })
+                                .fail(function (jqXHR, textStatus, errorThrown) {
+                                        alert("error");
+                                 });
+                            var extension = openFileExtension(fileUrl);
+                            //downloadLink.href = window.location.host + fileUrl;
+                            //
+                            
+                            
+
+
+                        });
+                    //}
+                }
+                $("#ctrlPageSize").css("display", "block");
+                var pageSize = $("#pageSize").val();
+
+                $("#myPager").empty();
+                $('#myTable').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: parseInt(pageSize) });                
+
+                $("#tblUserTagFile tbody tr td:empty").remove();
+                $("#infoUserFiles table:empty").remove();
+            }
+        }
+        
+
+        $(function () {
+            $("#userName").typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1,
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/intranet/AutoComplete/',
+                        data: "{ 'nameUser': '" + request + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            //console.log(data.data)
+                            items = [];
+                            map = {};
+                            $.each(data.data, function (i, item) {
+                                var id = item.idUser;
+                                var name = item.userName;
+                                map[name] = { id: id, name: name };
+                                items.push(name);
+                            });
+                            response(items);
+                            $(".dropdown-menu").css("height", "auto");
+                            $(".dropdown-menu").css("width", "100%");
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                updater: function (item) {
+                    $('#hfidUser').val(map[item].id);
+                    return item;
+                }
+            });
+        });
+
+        function openFileExtension(file) {
+            var type = "";
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            switch (extension) {
+                case 'jpg':
+                    type = "jpg"
+                    break;
+                case 'jpeg':
+                    type = "jpeg"
+                    break;
+                case 'png':
+                    type = "png"
+                    break;
+                case 'gif':
+                    type = "gif"
+                    break;
+                case 'zip':
+                    type = "zip"
+                    break;
+                case 'rar':
+                    type = "rar"
+                    break;
+                case 'pdf':
+                    type = "pdf"
+                    break;
+                case 'txt':
+                    type = "txt"
+                    break;
+                default:
+                    type = "other"
+                    break;
+            }
+            return type;
+        };
+    </script>
+  }

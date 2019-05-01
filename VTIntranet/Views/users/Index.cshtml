@@ -1,0 +1,99 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<VTIntranet.Models.usersModelHelper>
+@using VTIntranet.intranetdb;
+<br /><br />
+<br /><br />
+<div class="form-group">
+    <div class="col-md-10" style="margin: 0px 0px 11px 0px;">
+        <a href='@Url.Action("Register", "users")' alt="Agregar" title="Add User" class="btn btn-default"> <span class="glyphicon glyphicon-file ic"></span> Add User</a>
+    </div>
+    <br />
+    <div class="col-md-5">
+        <form action="/users" id="form1" method="get">
+            <label>Page size:</label>
+            <select class="input-max-height-sm" id="pageSize" name="pageSize" onchange="this.form.submit();">
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </form>
+    </div>
+</div>
+<br /><br />
+<table class="table table-bordered table-hover table-striped table-font-size-sm">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            User Name
+        </th>
+        <th>
+            User
+        </th>
+        <th>
+            User Email
+        </th>
+        <th>
+            Profile
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.idUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userCompledName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userProfileType)
+            </td>
+            <td>
+                <a href="/users/Register?idUser=@item.idUser&idProfile=@item.idProfile" alt="Editar" title="Edit User" class=""> <span class="glyphicon glyphicon-edit"></span></a>
+            </td>
+            <td>
+                <a href="/Account/Manage?idUser=@item.idUser" alt="Password" title="Edit Password" class=""> <span class="glyphicon glyphicon-lock"></span></a>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="pagination table-font-size-sm" style="margin: 5px 0;">
+    <div class="pagination-information">
+        Item <i>@(Model.FirstItemOnPage)</i> to <i>@(Model.LastItemOnPage)</i> of <i>@(Model.TotalItemCount)</i>
+    </div>
+    <div class="pagination-information">
+        Page <i>@(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)</i> of <i>@Model.PageCount </i>
+    </div>
+
+    <div>
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, PageSize = Model.PageSize }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#pageSize").val(@ViewBag.psize);
+
+        });
+
+    </script>
+    }
+

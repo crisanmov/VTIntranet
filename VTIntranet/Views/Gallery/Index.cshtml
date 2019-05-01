@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNet.Identity
+@model VTIntranet.Models.NewModelHelper
+@{
+    ViewBag.Title = "Galeria VTIntranet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+</head>
+<style type="text/css">
+    img {
+        border-top: .5px solid;
+        width: 100%;
+        border-bottom: .5px solid;
+        border-left: 1px solid;
+    }
+    .cont-img {
+        padding: 5px;
+    }
+
+    .content-album {
+        border: 1.5px solid blue;
+        width: 80%;
+        text-align: center;
+        margin-left: 1%;
+    }
+
+    .cont-img:hover {
+        padding: 5px;
+        transform: scale(1.05);
+    }
+
+</style>
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+    <hr />
+
+    <div style="display: flex;justify-content: space-between;">
+
+        @foreach (var evt in ViewBag.events)
+        {
+            <div style="max-width: 25%">
+                <div class="cont-img" style="display:grid; width: 80%; grid-template-columns: auto auto;">
+                    <span class="album" style="display:none;">@evt.IdEvent</span>
+                </div>
+                <div class="card-body" style="width:80%; margin-left:2%">
+                    <h5 class="card-title"><strong>@evt.Title</strong></h5>
+                    <p class="card-text">@evt.Description</p>
+                    <a href="#" class="btn btn-primary">Ver galeria</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    
+
+    <script>
+
+        $(document).ready(function () {
+
+            let albums = $(".album");
+            //console.log(albums.length);
+
+            for (var i = 0; i < albums.length; i++) {
+                //console.log($(albums[i]).text());
+                let idAlbum = $(albums[i]).text();
+                getPortrait(idAlbum);
+            }
+
+        });
+
+
+
+        function getPortrait(idAlbum) {
+            console.log("entra a generar portrait de album: " + idAlbum);
+
+            $.ajax({
+                url: 'getPortrait/?idAlbum=' + idAlbum,
+                dataType: 'json',
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                processData: false,
+                cache: false,
+                success: function (data) {
+
+                    let portrait = document.querySelector('.cont-img');
+                    console.log(data);
+                    for (let i = 0; i < data.length; i++) {
+                        let src = "/UploadedFiles/";
+                        src += data[i].FileName;
+                        console.log(data[i].FileName);
+                        let img = document.createElement('img');
+                        img.setAttribute("class", "img-album");
+                        img.src = src;
+                        portrait.append(img);
+                    }
+
+
+
+                },
+                error: function (e) {
+                    //console.log(e);
+                }
+            });
+        }
+    </script>
+
+
+
+
+
+
+</div>
+
+

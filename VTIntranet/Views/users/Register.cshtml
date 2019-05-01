@@ -1,0 +1,545 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+<br /><br />
+
+<h2>Register</h2>
+
+<form id="infoUser">
+    <div class="row">
+        <input type="text" value="@ViewBag.idUser" name="idUser" id="idUser" style="display:none;">
+        <input type="text" value="@ViewBag.idProfile" id="ProfileID" style="display:none;">
+        <input type="text" value="@ViewBag._ProfileID" id="Profile" style="display:none;">
+        <div class="form-group">
+            <label class="control-label col-md-2" for="UserName">User Name:</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="UserName" id="UserName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="userEmail">Email:</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="userEmail" id="userEmail" />
+            </div>
+        </div>
+        <div id="odPass">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Password">Password:</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="Password" id="Password" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="ConfirmPassword">Confirm Password:</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="ConfirmPassword" id="ConfirmPassword" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="UserNameReal">Name:</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="UserNameReal" id="UserNameReal" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="userFirstLastName">First last name:</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="userFirstLastName" id="userFirstLastName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="userSecondLastName">Second last name:</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="userSecondLastName" id="userSecondLastName" />
+            </div>
+        </div>
+
+
+        <div id="odRelationship">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="idProfile">Profile:</label>
+                <div class="col-md-10">
+                    <select class="form-control" id="idProfile" name="idProfile"></select>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                <label class="control-label col-md-2" for="userTypeRelationship">Type user:</label>
+                <div class="col-md-10">
+                    <select class="form-control" id="userTypeRelationship" name="userTypeRelationship"></select>
+                </div>
+            </div>*@
+
+            @*<div class="form-group">
+                <label class="control-label col-md-2" for="IdRelationship">Relationship:</label>
+                <div class="col-md-10">
+                    <select class="form-control" name="IdRelationship" id="IdRelationship" placeholder=""></select>
+                </div>
+            </div>*@
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="userActive">Active:</label>
+            <div class="col-md-10">
+                <div class="checkbox col-md-10">
+                    <input type="hidden" name="userActive" id="hdfUserActive" />
+                    <input type="checkbox" id="userActive" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+</form>
+<form id="infoPermissions">
+    <div class="row">
+        <div class="form-group">
+            <div class="control-label col-md-2"></div>
+            <div class="col-md-10"></div>
+        </div>
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#odPermission">Add permissions</a>
+            </h4>
+        </div>
+        <div class="form-group col-md-10 panel-collapse collapse" id="odPermission" style="padding-top: 20px; ">
+            <div class="">
+                <label class="control-label" style="width: 16.66666667%;float: left;" for="permissions">Permissions</label>
+            </div>
+            <div class="col-md-7">
+                <div id="divPermissions" class="col-md-7">
+                    <table class="table ctable" id="tblPermissions">
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</form>
+<form id="infoTag">
+    <div class="row">
+        <div class="form-group">
+            <div class="control-label col-md-2"></div>
+            <div class="col-md-10"></div>
+        </div>
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#odTags">Add Tags</a>
+            </h4>
+        </div>
+        <div class="form-group col-md-10 panel-collapse collapse" id="odTags" style="padding-top: 20px; ">
+            <div class="">
+                <label class="control-label" style="width: 16.66666667%;float: left;" for="tags">Tags</label>
+            </div>
+            <div class="col-md-7">
+                <div id="divTags" class="col-md-7">
+                    <table class="table ctTags" id="tblTags">
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" id="btnSave" />
+                <a id="Back" href="/Home/Index" alt="Back" title="Back" class="btn btn-default back form-font-size-sm-a"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+<script src="~/Scripts/Utils/resizeElement.js"></script>
+    <script type="text/javascript">
+        var infoUser = $("#infoUser");
+        var userData = {};
+        var userPermission = {};
+        var profileTag = {};
+        $(document).ready(function () {
+            getProfile();
+            getPermissions($("#idUser").val());
+            getTags($("#ProfileID").val());
+            if ($("#idUser").val() != 0) {
+                $("#odPass").css("display","none");
+                getInfoUser($("#idUser").val());
+            }
+            if ($("#Profile").val() == 1) {
+                $("#Back").attr("href", "/users/Index")
+            }
+        });
+
+        $("#ConfirmPassword").change(function () {
+            if ($(this).val() != "") {
+                $(this).css("border", "")
+
+            }
+        });
+        $("#Password").change(function () {
+            if ($(this).val() != "") {
+                $(this).css("border", "")
+
+            }
+        });
+        $("#idProfile").change(function () {
+            if ($(this).val() != "") {
+                $(this).css("border", "")
+
+            }
+        });
+        $("#UserNameReal").change(function () {
+            if ($(this).val() != "") {
+                $(this).css("border", "")
+
+            }
+        });
+        $("#UserName").change(function () {
+            if ($(this).val() != "") {
+                $(this).css("border", "")
+
+            }
+        });
+
+        function validatePassword() {
+            var result = true;
+            if ($("#odPass").is(":visible")) {
+                if ($("#Password").val() != $("#ConfirmPassword").val()) {
+                    result = false;
+                }
+            }
+            return result;
+        }
+
+
+        $("#userActive").click(function () {
+            if ($("#userActive").is(':checked')) {
+
+                $("#userActive").attr("checked", "checked")
+                $("#hdfUserActive").val(true)
+                $("#userActive").attr("title", "Active user")
+            } else {
+
+                $("#userActive").attr("checked", false)
+                $("#hdfUserActive").val(false)
+                $("#userActive").attr("title", "Inactive user")
+            }
+        });
+
+        $("#btnSave").click(function (event) {
+            event.preventDefault();
+           var result =  validatePassword();
+
+           if ($("#idProfile").val() != 0 && $("#UserName").val() != "" && result == true) {
+                saveUser();
+           } else {
+               if (result == false) {
+                   $("#info").notify("Problems at captured the information: " + "Passwords Don't Match",
+                                 {
+                                     position: "top right",
+                                     className: "error",
+                                     hideDuration: 2000
+                                 });
+               } else {
+                   $("#info").notify("Problems at captured the information: " + "There are empty fields.",
+                               {
+                                   position: "top right",
+                                   className: "error",
+                                   hideDuration: 2000
+                               });
+               }
+                validateControl();
+            }
+        });
+
+        function validateControl() {
+            if ($("#UserName").val() == "") {
+                $("#UserName").css("border", "solid 1px red")
+            }
+            if ($("#odPass").is(":visible")) {
+                if ($("#Password").val() == "") {
+                    $("#Password").css("border", "solid 1px red")
+                }
+            }
+            if ($("#UserNameReal").val() == "") {
+                $("#UserNameReal").css("border", "solid 1px red")
+            }
+            if ($("#idProfile").val() == 0) {
+                $("#idProfile").css("border", "solid 1px red")
+            }
+        }
+
+        function saveUser() {
+            $.each(infoUser.serializeArray(), function (index,value){
+                userData[value.name] = value.value;
+            });
+            var Permission = $(".idPermission")
+            $.each(Permission, function (key, valor) {
+                var permision = new Object();
+                permision.idPermission = valor.value;
+                permision.userPermissionActive = valor.checked;
+                userPermission[key] = permision;
+            });
+
+            var Tags = $(".idTags")
+            $.each(Tags, function (key, valor) {
+                var tag = new Object();
+                tag.idTag = valor.value;
+                tag.profileTagActive = valor.checked;
+                profileTag[key] = tag;
+            });
+
+            $.ajax({
+                url: "/users/RegisterUser",
+                type: 'POST',
+                datatype: 'json',
+                data: {
+                    model: userData,
+                    userPermissionView: userPermission,
+                    profileTagView: profileTag
+                },
+                success: function (response) {
+                    if (response.success === true) {
+
+                        $("#info").notify("The information has been added correctly",
+                            {
+                                position: "top right",
+                                className: "success",
+                                hideDuration: 500
+                            });
+                    }
+                    else {
+                        $("#info").notify("Problems at captured the information:" + response.message,
+                            {
+                                position: "top right",
+                                className: "error",
+                                hideDuration: 2000
+                            });
+                    }
+                }
+            });
+        }
+
+        function getProfile() {
+            $.ajax({
+                method: "GET"
+           , url: "/users/getProfiles"
+           , datatype: 'json'
+            })
+           .done(function (data, textStatus, jqXHR) {
+               var items = data.data;
+               $.each(items, function (key, value) {
+                   $("#idProfile")
+                       .append($("<option></option>")
+                                  .attr("value", value.value)
+                                  .text(value.text));
+
+                   //$("#userTypeRelationship")
+                   //    .append($("<option></option>")
+                   //               .attr("value", value.value)
+                   //               .text(value.text));
+               });
+           })
+           .fail(function (jqXHR, textStatus, errorThrown) {
+               alert("error");
+           });
+        }
+
+        function getInfoUser(UserID) {
+            $.ajax({
+                method: "GET"
+                , url: "/users/getInfoUser"
+                , data: { idUser: UserID }
+                , datatype: 'json'
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    var items = data.data;
+
+                    userData = items;
+
+                    userData.idUser = $("#idUser").val();
+                    if (userData.userActive == true) {
+                        $("#userActive").attr('checked', true);
+                        $("#hdfUserActive").val(true)
+                        $("#userActive").attr("title", "Active user")
+                    } else {
+                        $("#userActive").attr('checked', false);
+                        $("#hdfUserActive").val(false)
+                        $("#userActive").attr("title", "Inactive user")
+                    }
+
+                    populateForm(infoUser, userData)
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("error");
+                });
+        }
+
+        function getPermissions(User) {
+            $.ajax({
+                method: "GET"
+                    , url: "/users/getPermission"
+                    , datatype: 'json'
+            })
+                    .done(function (data, textStatus, jqXHR) {
+                        var items = data.data;
+                        //console.log(items)
+                        $.each(items, function (key, value) {
+                            $("#divPermissions .ctable > tbody").append(
+                                "<tr>" +
+                                "<td style='border-top:none;'>" +
+                                "<input type='checkbox' id='" + value.value + "' name='idPermission' value='" + value.value + "' class='idPermission' />" +
+                                "</td>" +
+                                "<td class='tooltipermission' style='border-top:none;'>" +
+                                 "<label for='" + value.value + "' style='font-weight:300'>" + value.text + "</label>" +
+                                 "<span class='tooltipermissiontext'>" + value.shortText + "</span>" +
+                                 "</td>" +
+                                 "</tr>"
+                                );
+                            $("#" + value.value).click(function () {
+                                if ($("#" + value.value).is(':checked')) {
+                                    $("#" + value.value).attr("checked", "checked")
+                                }
+                                else {
+                                    $("#" + value.value).attr("checked", false)
+                                }
+                            });
+                        });
+                        if (User != 0) {
+                            getPermissionsByidUser($("#idUser").val());
+                        }
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert("error");
+                    });
+        }
+
+        function getTags(Profile) {
+            $.ajax({
+                method: "GET"
+                    , url: "/users/getTags"
+                    , datatype: 'json'
+            })
+                    .done(function (data, textStatus, jqXHR) {
+                        var items = data.data;
+                        $.each(items, function (key, value) {
+                            $("#divTags .ctTags > tbody").append(
+                                "<tr>" +
+                                "<td style='border-top:none;'>" +
+                                "<input type='checkbox' id='idTag_" + value.value + "' name='idTag' value='" + value.value + "' class='idTags' />" +
+                                "</td>" +
+                                "<td class='tooltipermission' style='border-top:none;'>" +
+                                 "<label for='idTag_" + value.value + "' style='font-weight:300' class=''>" + value.text + "</label>" +
+                                 "<span class='tooltipermissiontext'>" + value.shortText + "</span>" +
+                                 "</td>" +
+                                 "</tr>"
+                                );
+                            $("#" + value.value).click(function () {
+                                if ($("#" + value.value).is(':checked')) {
+                                    $("#" + value.value).attr("checked", "checked")
+                                }
+                                else {
+                                    $("#" + value.value).attr("checked", false)
+                                }
+                            });
+                        });
+                        if (Profile != 0) {
+                            //getTagByidProfile($("#ProfileID").val());
+                            getTagByidUser($("#idUser").val());
+                        }
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert("error");
+                    });
+        }
+
+        function getPermissionsByidUser(User) {
+
+            $.ajax({
+                method: "GET"
+                    , url: "/users/getPermissionsByidUser"
+                    , data: { idUser: User }
+                    , datatype: 'json'
+            })
+                    .done(function (data, textStatus, jqXHR) {
+                        var items = data.data;
+                        var Permission = $(".idPermission");
+
+                        $(Permission).each(function () {
+                            var input = $(this).prop("id");
+                            $.each(items, function (key, value) {
+                                if (input == value.value && value.userPermissionActive == true) {
+                                    $('#' + input).attr('checked', true);
+                                    $('#' + input).val(value.value);
+                                }
+                            });
+                        });
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert("error");
+                    });
+        }
+
+        function getTagByidProfile(ProfileID) {
+
+            $.ajax({
+                method: "GET"
+                    , url: "/users/getTagsByidProfile"
+                    , data: { idProfile: ProfileID }
+                    , datatype: 'json'
+            })
+                    .done(function (data, textStatus, jqXHR) {
+                        var items = data.data;
+                        var Tags = $(".idTags");
+                        //console.log(items)
+                        $(Tags).each(function () {
+                            var input = $(this).prop("id");
+                            $.each(items, function (key, valor) {
+                                var concat = "idTag_" + valor.value
+                                if (input == concat && valor.profileTagActive == true) {
+                                    //$('#' + input).attr('checked', true);
+                                    $('#' + input).prop('checked', true);
+                                    $('#' + input).val(valor.value);
+                                }
+                            });
+                        });
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert("error");
+                    });
+        }
+
+        function getTagByidUser(UserId) {
+
+            $.ajax({
+                method: "GET"
+                    , url: "/users/getTagsByidUser"
+                    , data: { idUser: UserId }
+                    , datatype: 'json'
+            })
+                    .done(function (data, textStatus, jqXHR) {
+                        var items = data.data;
+                        var Tags = $(".idTags");
+                        //console.log(items)
+                        $(Tags).each(function () {
+                            var input = $(this).prop("id");
+                            $.each(items, function (key, valor) {
+                                var concat = "idTag_" + valor.value
+                                if (input == concat && valor.userTagActive == true) {
+                                    //$('#' + input).attr('checked', true);
+                                    $('#' + input).prop('checked', true);
+                                    $('#' + input).val(valor.value);
+                                }
+                            });
+                        });
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert("error");
+                    });
+        }
+    </script>
+    }

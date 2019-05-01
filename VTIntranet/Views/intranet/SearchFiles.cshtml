@@ -1,0 +1,247 @@
+﻿
+@{
+    ViewBag.Title = "SearchFiles";
+}
+
+<h2>Search</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <b> Search files</b>
+    </div>
+    <div class="panel-body">
+        <div class="form-left-spacing">
+            <form id="upload" enctype="multipart/form-data" class="">
+                <div>                   
+                    <div class="col-lg-6 col-md-5">
+                        <div class="col-lg-10">
+                            <div class="col-lg-3">
+                                <span style="display:inline;margin: 6px 5px 0px 0px;">File ID:</span>
+                            </div>
+                            <div class="col-lg-9">
+                                <input type="text" name="idAttachment" id="idAttachment" class="form-control" style="display:inline;" />
+                            </div>
+                        </div>
+                        <div class="col-lg-10"><div class="col-lg-9"></div></div>
+                        <div class="col-lg-10">
+                            <div class="col-lg-3">
+                                <span style="display:inline;margin: 6px 5px 0px 0px;">File name:</span>
+                            </div>
+                            <div class="col-lg-9">
+                                <input type="text" name="attachmentName" id="attachmentName" class="form-control" style="display:inline;" />
+                            </div>                                                       
+                        </div>
+                        <div class="col-lg-10"><div class="col-lg-9"></div></div>
+                        <div class="col-lg-10">
+                            <div class="col-lg-3">
+                                <span style="display:inline;margin: 6px 5px 0px 0px;">Upload start date:</span>
+                            </div>
+                            <div class="col-lg-9">
+                                <input type="text" name="attachmentDateStart" id="attachmentDateStart" class="form-control" style="display:inline;" placeholder="Select start date."/>
+                                @*<span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>*@                       
+                            </div>
+                            <div style="display:block; margin:7px 0 0 0;">
+                                <a title="Clean date" id="attDateCleanStart" style="display:grid;cursor:pointer;"><img style="width:20px;" src="~/Img/clear_1.png" /></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="col-lg-3">
+                                <span style="display:inline;margin: 6px 5px 0px 0px;">Upload end date:</span>
+                            </div>
+                            <div class="col-lg-9">
+                                <input type="text" name="attachmentDateEnd" id="attachmentDateEnd" class="form-control" style="display:inline;" placeholder="Select end date." />
+                            </div>
+                            <div style="display:block; margin:7px 0 0 0;">
+                                <a title="Clean date" id="attDateCleanEnd" style="display:grid;cursor:pointer;"><img style="width:20px;" src="~/Img/clear_1.png" /></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="form-group  margin-right-md">
+                            <div class="input-group scrollable" id="tags">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin:7px 0 0 10px;">
+                        <input id="btnSearch" class="btn btn-default" type="button" title="Search file" value="Search" onclick="Search()" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="popup" class="">
+            <div id="demo">
+
+            </div>
+        </div>
+    </div>
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">                
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Change tags by attachment</h3>
+                </div>
+                <div class="modal-body" style="height:400px;">
+                    <div id="infoModal"></div>
+                    <form id="frmChangeTags">
+                        <div>
+                            <div id="tagFileName"></div>
+                        </div>
+                        <div class="col-lg-12">&nbsp;&nbsp;&nbsp;</div>
+                        <div class="col-lg-5 scrollable" style="margin: 0 20px 0 55px;">
+                            <div class="form-group margin-right-md">
+                                <div class="input-group" id="tagsChange">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input id="btnSaveChange" class="btn btn-default" type="button" title="Save change" value="Save" />
+                        </div>
+                    </form>          
+                </div>
+            </div>
+           </div>
+      </div>
+
+    <div id="modalDocs" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLabel">
+        <div class="modal-dialog" role="document" style="width:50%!important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myLabel">Document</h3>
+                </div>
+                <div class="modal-body">
+                    <h3 id="txtFile" style="display:none;">File not exist.</h3>
+                    <iframe id="openFile" frameborder="0" class="doc" src=""></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/intranet/intranet.js"></script>
+    <style>
+    .doc {
+    width: 100%;
+    height: 500px;
+    }
+    button.docclose{
+    -webkit-appearance: none; 
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+
+    }
+    .docclose{
+     float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+    /*background: transparent;
+    border: 0;*/
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            generateTagList();
+            getAttachmentsSearch();
+            var nowTemp = new Date();
+            var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+            //var checkin = $("#attachmentDateStart").datepicker({
+            //    format: 'dd/mm/yyyy',
+            //    todayHighlight: true
+            //});
+            //var checkout = $("#attachmentDateEnd").datepicker({
+            //    format: 'dd/mm/yyyy',
+            //    todayHighlight: true
+            //});
+
+            var checkin = $('#attachmentDateStart').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                zIndexOffset: 10000
+            }).on('changeDate', function (ev) {
+                if ($('#attachmentDateEnd').val() == "") {
+                    if (ev.date === undefined) { } else {
+                        var newDate = new Date(ev.date.valueOf())
+                        newDate.setDate(newDate.getDate() + 1);
+                        $('#attachmentDateEnd').data("datepicker").setDate(newDate);
+                    }
+                }
+                if (($("#attachmentDateStart").val() == $('#attachmentDateEnd').val()) && $("#attachmentDateStart").val() != "" && $('#attachmentDateEnd').val() != "") {
+                    var newDate = new Date(ev.date.valueOf())
+                    newDate.setDate(newDate.getDate() + 1);
+                    $('#attachmentDateEnd').data("datepicker").setDate(newDate);
+                }
+                if ($("#attachmentDateStart").val() > $('#attachmentDateEnd').val()) {
+                    var newDate = new Date(ev.date.valueOf())
+                    newDate.setDate(newDate.getDate() + 1);
+                    $('#attachmentDateEnd').data("datepicker").setDate(newDate);
+                }
+                if ($(".required").is(":visible") && $('#attachmentDateStart').val() != "") {
+                    $("#attachmentDateStart").removeClass("required")
+                    $("#attachmentDateStart").css("border-color", "")
+                }
+            }).data('datepicker');
+
+            var checkout = $('#attachmentDateEnd').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                zIndexOffset: 10000
+            }).on('changeDate', function (ev) {
+                if ($('#attachmentDateStart').val() == "") {
+                    if (ev.date === undefined) { } else {
+                        var newDate = new Date(ev.date.valueOf())
+                        newDate.setDate(newDate.getDate() - 1);
+                        $('#attachmentDateStart').data("datepicker").setDate(newDate);
+                    }
+                }
+                if (($("#attachmentDateStart").val() == $('#attachmentDateEnd').val()) && $("#attachmentDateStart").val() != "" && $('#attachmentDateEnd').val() != "") {
+                    var newDate = new Date(ev.date.valueOf())
+                    newDate.setDate(newDate.getDate() - 1);
+                    $('#attachmentDateStart').data("datepicker").setDate(newDate);
+                }
+                if ($("#attachmentDateStart").val() > $('#attachmentDateEnd').val()) {
+                    if (ev.date === undefined) { } else {
+                        var newDate = new Date(ev.date.valueOf())
+                        newDate.setDate(newDate.getDate() - 1);
+                        $('#attachmentDateStart').data("datepicker").setDate(newDate);
+                    }
+                }
+                if ($(".required").is(":visible") && $('#attachmentDateEnd').val() !="" ) {
+                    $("#attachmentDateEnd").removeClass("required")
+                    $("#attachmentDateEnd").css("border-color", "")
+                }
+            }).data('datepicker');
+
+            $("#attachmentDateStart").attr("readonly", true);
+            $('#attachmentDateStart').attr('style', 'background-color: #fff !important');
+            $("#attachmentDateEnd").attr("readonly", true);
+            $('#attachmentDateEnd').attr('style', 'background-color: #fff !important');
+
+
+            $(".datepicker").css("z-index", "9999")
+
+            $("#btnSaveChange").click(function () {
+                event.preventDefault();
+                saveChangeTags();
+            });
+
+            $("#attDateCleanStart").click(function () {
+                $("#attachmentDateStart").data('datepicker').setDate(null);
+            });
+            $("#attDateCleanEnd").click(function () {
+                $("#attachmentDateEnd").data('datepicker').setDate(null);
+            });
+        });
+</script>
+    }

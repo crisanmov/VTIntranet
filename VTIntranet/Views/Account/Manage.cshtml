@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Manage";
+}
+<br />
+<h2>Changed password</h2>
+<form id="ofmChangePass">
+    <div>
+        <div class="row">
+            <input type="text" id="idUser" name="idUser" value="@ViewBag.idUser" style="display:none;" />
+            <input type="text" id="idProfile" name="idProfile" value="@ViewBag.idProfile" style="display:none;" />
+            <div class="form-group" id="dvOldPassword">
+                <label class="control-label col-md-2" for="Password">Old Password:</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="OldPassword" id="OldPassword" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Password">New Password:</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="Password" id="Password" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Password">Confirm Password:</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="ConfirmPassword" id="ConfirmPassword" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <br />
+
+                    <input type="submit" value="Save" class="btn btn-default" id="btnSave" />
+                    <a href="/Home/Index" id="aBack" alt="Back" title="Back" class="btn btn-default back form-font-size-sm-a"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/Scripts/Utils/resizeElement.js"></script>
+    <script type="text/javascript">
+        var ofmChangePass = $("#ofmChangePass");
+        var userDataSend = {};
+        $(document).ready(function () {
+            if ($("#idProfile").val() == 1) {
+                $("#dvOldPassword").css("display", "none");
+                $("#aBack").attr("href", "/users/Index")
+            } else {
+
+            }
+        });
+
+        function SavePassword() {
+            $.each(ofmChangePass.serializeArray(), function (index, value) {
+                userDataSend[value.name] = value.value
+            });
+
+            $.ajax({
+                url: "/Account/ManageChange",
+                type: 'POST',
+                datatype: 'json',
+                data: {
+                    model: userDataSend
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        $("#info").notify("The information has been added correctly",
+                        {
+                            position: "top right",
+                            className: "success",
+                            hideDuration: 500
+                        });
+                    }
+                    else {
+                        if (response.message === undefined) {
+                            window.location.href = '@Url.Action("Login", "Account")';
+                        } else {
+                            $("#info").notify("Problems at captured the information:" + response.message,
+                                {
+                                    position: "top right",
+                                    className: "error",
+                                    hideDuration: 2000
+                                });
+                        }
+                    }
+                }
+            });
+        }
+
+        $(function () {
+            $("#btnSave").click(function () {
+                var password = $("#Password").val();
+                var confirmPassword = $("#ConfirmPassword").val();
+                event.preventDefault();
+                if (password != confirmPassword) {
+                    $.ajax({
+                        type: 'POST',
+                        datatype: 'json',
+                        success: function (response) {
+                            $("#info").notify("Passwords do not match: Verify your password",
+                                    {
+                                        position: "top right",
+                                        className: "error",
+                                        hideDuration: 2000
+                                    });
+                        }
+                    });
+                    return false;
+                }
+                else {
+                    SavePassword();
+                    return true;
+                }
+            });
+        });
+    </script>
+    
+    }

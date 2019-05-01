@@ -1,0 +1,191 @@
+﻿@{
+    ViewBag.Title = "Attachment";
+}
+
+<h2>Intranet</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <b> Add Attachments by tags</b>
+    </div>
+    <div class="panel-body">
+        <div class="form-left-spacing">
+            <form id="upload" enctype="multipart/form-data" class="">
+                <div>                   
+                    <div class="col-lg-6">
+                        <div id="odInfoUpload" class="col-lg-12">
+                            <table id="tfiles" style="width:100%;">
+                                <tr row_id="1">
+                                    <td>
+                                        <div class="input-group" style="width:100%;">
+                                            <label class="input-group-btn">
+                                                <span class="btn btn-default">
+                                                    <span style="font-size:9pt;">Select File</span>
+                                                    <input type="file" class="fileUpload" name="fileUpload" id="fileUpload_1" style="display: none;" multiple />
+                                                </span>
+                                            </label>
+                                            <input id="file_1" type="text" class="form-control filelabel" value="No file selected" readonly />                                           
+                                        </div>
+                                    </td>
+                                    @*<td>
+                                        <a id="delete" class="btn btn-default btn_delete" onclick="deleteUpload()">x</a>
+                                    </td>*@
+                                </tr>
+                            </table>
+                            <br />
+                            <div id="filesName">
+                                <ul style="list-style-type: none;"></ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="display:none;">
+                            <input id="add" class="btn btn-default" type="button" value="Add" title="Add item file" onclick="addUpload()" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="form-group  margin-right-md">
+                            @*<label for="idAttach">Tags:</label>*@
+                            <div class="input-group scrollable" id="tags">
+
+                            </div>
+                        </div>
+                    </div>
+                    <input id="btnUploadFile" class="btn btn-default" type="button" value="Upload File" title="Save file" onclick="uploapFiles()" />
+                </div>
+            </form>
+        </div>
+        <div id="popup" class="">
+            <div id="demo">
+                <table class="table table-bordered table-striped" id="keysAttach">
+                    <thead>
+                        <tr>
+                            <th>File id</th>
+                            <th>File Name</th>
+                            <th>Tags</th>
+                            <th>Upload Date</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 10px;"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            generateTagList();
+            getAttachments();
+
+
+        });
+
+        //$('input[type=file]').change(function () {
+        //    $('#btnUpload').show();
+        //    $('#divFiles').html('');
+        //    for (var i = 0; i < this.files.length; i++) { //Progress bar and status label's for each file genarate dynamically
+        //        var fileId = i;
+        //        $("#divFiles").append('<div class="col-md-12">' +
+        //                '<div class="progress-bar progress-bar-striped active" id="progressbar_' + fileId + '" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>' +
+        //                '</div>' +
+        //                '<div class="col-md-12">' +
+        //                     '<div class="col-md-6">' +
+        //                        '<input type="button" class="btn btn-danger" style="display:none;line-height:6px;height:25px" id="cancel_' + fileId + '" value="cancel">' +
+        //                     '</div>' +
+        //                     '<div class="col-md-6">' +
+        //                        '<p class="progress-status" style="text-align: right;margin-right:-15px;font-weight:bold;color:saddlebrown" id="status_' + fileId + '"></p>' +
+        //                     '</div>' +
+        //                '</div>' +
+        //                '<div class="col-md-12">' +
+        //                     '<p id="notify_' + fileId + '" style="text-align: right;"></p>' +
+        //                '</div>');
+        //    }
+        //});
+        //function uploadFiles() {
+        //    var file = document.getElementById("fileUploader")//All files
+        //    for (var i = 0; i < file.files.length; i++) {
+        //        uploadSingleFile(file.files[i], i);
+        //    }
+        //}
+
+        //function uploadSingleFile(file, i) {
+        //    var fileId = i;
+        //    var ajax = new XMLHttpRequest();
+        //    //Progress Listener
+        //    ajax.upload.addEventListener("progress", function (e) {
+        //        var percent = (e.loaded / e.total) * 100;
+        //        $("#status_" + fileId).text(Math.round(percent) + "% uploaded, please wait...");
+        //        $('#progressbar_' + fileId).css("width", percent + "%")
+        //        $("#notify_" + fileId).text("Uploaded " + (e.loaded / 1048576).toFixed(2) + " MB of " + (e.total / 1048576).toFixed(2) + " MB ");
+        //    }, false);
+        //    //Load Listener
+        //    ajax.addEventListener("load", function (e) {
+        //        $("#status_" + fileId).text(event.target.responseText);
+        //        $('#progressbar_' + fileId).css("width", "100%")
+
+        //        //Hide cancel button
+        //        var _cancel = $('#cancel_' + fileId);
+        //        _cancel.hide();
+        //    }, false);
+        //    //Error Listener
+        //    ajax.addEventListener("error", function (e) {
+        //        $("#status_" + fileId).text("Upload Failed");
+        //    }, false);
+        //    //Abort Listener
+        //    ajax.addEventListener("abort", function (e) {
+        //        $("#status_" + fileId).text("Upload Aborted");
+        //    }, false);
+
+        //    ajax.open("POST", "/api/upload/UploadFiles"); // Your API .net, php
+
+        //    var uploaderForm = new FormData(); // Create new FormData
+        //    uploaderForm.append("file", file); // append the next file for upload
+        //    ajax.send(uploaderForm);
+
+        //    //Cancel button
+        //    var _cancel = $('#cancel_' + fileId);
+        //    _cancel.show();
+
+        //    _cancel.on('click', function () {
+        //        ajax.abort();
+        //    })
+        //}
+
+        $(function () {
+
+            // We can attach the `fileselect` event to all file inputs on the page
+            $(document).on('change', ':file', function () {
+                var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [numFiles, label]);
+
+                for (var i = 0; i < input[0].files.length; i++) {
+                    if (input[0].files.length > 1) {
+                        var li = document.createElement('li');
+                        li.innerHTML = 'File ' + (i + 1) + ':  ' + input[0].files[i].name;
+                        $("#filesName ul").append(li);
+                    }
+                }
+            });
+
+            // We can watch for our custom `fileselect` event like this
+            $(document).ready(function () {
+                $(':file').on('fileselect', function (event, numFiles, label) {
+
+                    var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                    if (input.length) {
+                        input.val(log);
+                    } else {
+                        if (log) alert(log);
+                    }
+
+                });
+            });
+
+        });
+    </script>
+
+}
