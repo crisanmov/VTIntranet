@@ -40,6 +40,9 @@
             background-size: cover;
             background-position:center;
         }
+        .wrap-login100{margin:0 auto; background: transparent; width:75%}
+        .login100-form{background:#fff; padding:30px}
+        .login100-form-title{    font-family: Poppins-Regular;}
     </style>
 
 </head>
@@ -51,7 +54,7 @@
                     {
                     @Html.AntiForgeryToken()
                     <p class="login100-form-title p-b-70">
-                        ¡Bienvenido a VTintranet!
+                        ¡Bienvenido a <span>VTintranet!</span>
                     </p>
                     <span class="login100-form-avatar">
                         <img src="~/Scripts/login/images/User_Avatar-512.jpg" alt="AVATAR">
