@@ -5,9 +5,9 @@
     ViewBag.Title = "Home Page";
 
 }
-    <head>
-        <!--DatePicker-->
-        <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
+<head>
+    <!--DatePicker-->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
@@ -15,294 +15,312 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>-->
 
 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-     
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
-        <style>
-            .grid-container {
-                display: grid;
-                grid-template-columns: auto auto;
-                padding: 10px;
+
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto;
+            padding: 10px;
+        }
+
+        #calendar {
+            max-width: 600px;
+            margin: 0 auto;
+            height: 100%;
+        }
+
+        #hover-effect:hover:before {
+            color: #122143;
+        }
+
+        .fc-scroller.fc-day-grid-container {
+            height: auto !important;
+        }
+
+        .navbar-fixed-top, .navbar-fixed-bottom {
+            /* z-index: 9999; */
+            background: #fff !important;
+        }
+
+        #gallery {
+            background: transparent;
+            height: auto;
+            max-height: 150px;
+            overflow: hidden
+        }
+
+            #gallery a {
+                color: #000 !important;
             }
 
-            #calendar {
-                max-width: 600px;
-                margin: 0 auto;
-                height: 100%;
-            }
+        .navbar-brand {
+            width: 100%
+        }
 
-            #hover-effect:hover:before {
-                color: #122143;
-            }
+        .modal-footer{
+            padding: inherit !important;
+        }
 
-            .fc-scroller.fc-day-grid-container {
-                height: auto !important;
-            }
+        .modal-content {
+            height: 580px !important; 
+        }
 
-            .navbar-fixed-top, .navbar-fixed-bottom {
-                /* z-index: 9999; */
-                background: #fff !important;
-            }
+        .modal-details {
+         
+            position: fixed;
+            background-color: white;
+            width: 100%;
+        
+        }
 
-            #gallery {
-                background: transparent;
-                height: auto;
-                max-height: 150px;
-                overflow: hidden
-            }
+        #add-dates {
+            display: flex;
+            justify-content: space-between;
+        }
 
-                #gallery a {
-                    color: #000 !important;
-                }
-
-            .navbar-brand {
-                width: 100%
-            }
-
-            #add-dates {
-                display: flex;
-                justify-content: space-between;
-            }
         .carrusel {
-    position: relative;
-    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.64);
-    margin-top: 26px;
-}
+            position: relative;
+            box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.64);
+            margin-top: 26px;
+        }
 
-.carrusel-inner {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-}
+        .carrusel-inner {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
 
-.carrusel-open:checked + .carrusel-item {
-    position: static;
-    opacity: 100;
-}
+        .carrusel-open:checked + .carrusel-item {
+            position: static;
+            opacity: 100;
+        }
 
-.carrusel-item {
-    position: absolute;
-    opacity: 0;
-    -webkit-transition: opacity 0.6s ease-out;
-    transition: opacity 0.6s ease-out;
-}
+        .carrusel-item {
+            position: absolute;
+            opacity: 0;
+            -webkit-transition: opacity 0.6s ease-out;
+            transition: opacity 0.6s ease-out;
+        }
 
-.carrusel-item img {
-    display: block;
-    height: auto;
-    max-width: 100%;
-}
+            .carrusel-item img {
+                display: block;
+                height: auto;
+                max-width: 100%;
+            }
 
-.carrusel-control {
-    background: rgba(0, 0, 0, 0.28);
-    border-radius: 50%;
-    color: #fff;
-    cursor: pointer;
-    display: none;
-    font-size: 40px;
-    height: 40px;
-    line-height: 35px;
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translate(0, -50%);
-    cursor: pointer;
-    -ms-transform: translate(0, -50%);
-    transform: translate(0, -50%);
-    text-align: center;
-    width: 40px;
-    z-index: 10;
-}
+        .carrusel-control {
+            background: rgba(0, 0, 0, 0.28);
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            display: none;
+            font-size: 40px;
+            height: 40px;
+            line-height: 35px;
+            position: absolute;
+            top: 50%;
+            -webkit-transform: translate(0, -50%);
+            cursor: pointer;
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+            text-align: center;
+            width: 40px;
+            z-index: 10;
+        }
 
-.carrusel-control.prev {
-    left: 2%;
-}
+            .carrusel-control.prev {
+                left: 2%;
+            }
 
-.carrusel-control.next {
-    right: 2%;
-}
+            .carrusel-control.next {
+                right: 2%;
+            }
 
-.carrusel-control:hover {
-    background: rgba(0, 0, 0, 0.8);
-    color: #aaaaaa;
-}
+            .carrusel-control:hover {
+                background: rgba(0, 0, 0, 0.8);
+                color: #aaaaaa;
+            }
 
-#carrusel-1:checked ~ .control-1,
-#carrusel-2:checked ~ .control-2,
-#carrusel-3:checked ~ .control-3 {
-    display: block;
-}
+        #carrusel-1:checked ~ .control-1,
+        #carrusel-2:checked ~ .control-2,
+        #carrusel-3:checked ~ .control-3 {
+            display: block;
+        }
 
-.carrusel-indicators {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    bottom: 2%;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 10;
-}
+        .carrusel-indicators {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            bottom: 2%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 10;
+        }
 
-.carrusel-indicators li {
-    display: inline-block;
-    margin: 0 5px;
-}
+            .carrusel-indicators li {
+                display: inline-block;
+                margin: 0 5px;
+            }
 
-.carrusel-bullet {
-    color: #fff;
-    cursor: pointer;
-    display: block;
-    font-size: 35px;
-}
+        .carrusel-bullet {
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            font-size: 35px;
+        }
 
-.carrusel-bullet:hover {
-    color: #aaaaaa;
-}
+            .carrusel-bullet:hover {
+                color: #aaaaaa;
+            }
 
-#carrusel-1:checked ~ .control-1 ~ .carrusel-indicators li:nth-child(1) .carrusel-bullet,
-#carrusel-2:checked ~ .control-2 ~ .carrusel-indicators li:nth-child(2) .carrusel-bullet,
-#carrusel-3:checked ~ .control-3 ~ .carrusel-indicators li:nth-child(3) .carrusel-bullet {
-    color: #428bca;
-}
-.carrusel-item img{height:auto}
-.carrusel-item {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    height:350px
-}
+        #carrusel-1:checked ~ .control-1 ~ .carrusel-indicators li:nth-child(1) .carrusel-bullet,
+        #carrusel-2:checked ~ .control-2 ~ .carrusel-indicators li:nth-child(2) .carrusel-bullet,
+        #carrusel-3:checked ~ .control-3 ~ .carrusel-indicators li:nth-child(3) .carrusel-bullet {
+            color: #428bca;
+        }
+
+        .carrusel-item img {
+            height: auto
+        }
+
+        .carrusel-item {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            height: 350px
+        }
+    </style>
 
 
-        </style>
-
-
-    </head>
-
-    <div>
-        <div style="margin-left: 2%;">
-            <h4>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", new { idUser = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
-            </h4>
-        </div>
-        <div class="grid-container" id="grid-container" ;>
-            <div class="grid-item" id="row1" style="">
-                <div id="news">
-                    <div id="add-dates">
-                        <h4><b style="color: #7F7B7B">Noticias</b></h4><span style="font-size: 3em; color: #21356a; float: right;" data-toggle="modal" data-target="#myModal">
-                            <i class="far fa-calendar-plus" id='hover-effect'></i>
-                        </span>
-                    </div>
-                   
-
-                    <table style="margin-left:5%; width: 90%">
-                        @foreach (var field in ViewBag.news)
-                        {
-                            <tr>
-                                <th style="font-size: medium; background: #CCC7C7; color: #122143">- @field.Title</th>
-                                <th style="font-size: medium; background: #CCC7C7; color: #122143"></th>
-                            </tr>
-                            <tr>
-                                <td style="font-size:small; color:#7F7B7B">@field.Description</td>
-                                <td style="font-size:small; color:#7F7B7B"><a href="@field.IdNotice" style="color: blue" class="newDetails">Ver Detalles</a></td>
-                            </tr>
-                        }
-                    </table>
+</head>
+<div>
+    <div style="margin-left: 2%;">
+        <h4>
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", new { idUser = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
+        </h4>
+    </div>
+    <div class="grid-container" id="grid-container" ;>
+        <div class="grid-item" id="row1" style="">
+            <div id="news">
+                <div id="add-dates">
+                    <h4><b style="color: #7F7B7B">Noticias</b></h4><span style="font-size: 3em; color: #21356a; float: right;" data-toggle="modal" data-target="#myModal">
+                        <i class="far fa-calendar-plus" id='hover-effect'></i>
+                    </span>
                 </div>
-             
-                <div class="container" id="">
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog" style="height: 90%">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Nueva Noticia</h4>
-                                </div>
-                                <!--form New Notice-->
-                                <form method="post" action="/Home/SaveNotice">
-                                    <div class="modal-body">
-                                        <p>Detalles</p>
-                                        <div id="validation"></div>
-                                        <hr />
-                                        <!--title-->
-                                        <input class="form-control" type="text" placeholder="Titulo" name="title" id="title">
-                                        <br />
-                                        <div class="form-group row">
-                                            <label for="typeNotice" class="col-sm-2 col-form-label">Tipo de Noticia</label>
-                                            <br />
-                                            <!--checkBoxes-->
-                                            <div class="col-sm-10">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="oneDateChecked">
-                                                    <label class="form-check-label" for="defaultCheck1">
-                                                        Un Solo dia.
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <!--calendar startDate-->
-                                            <div class='col-sm-7'>
-                                                <div class="form-group">
-                                                    <input type='text' class="form-control" placeholder="Fecha de Inicio" name="startDateNews" id="startDateNews" />
-                                                </div>
-                                            </div>
-                                            <!--calendar endDate-->
-                                            <div class='col-sm-7'>
-                                                <div class="form-group">
-                                                    <input type='text' class="form-control" placeholder="Fecha de Fin" name="endDateNews" id="endDateNews" />
-                                                </div>
-                                            </div>
-                                            <!--description-->
-                                            <div class='col-sm-7'>
-                                                <div class="form-group">
-                                                    <label for="exampleFormControlTextarea1">Descripción</label>
-                                                    <textarea class="form-control" id="description" rows="6" style="resize: none" name="description"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--save notice-->
-                                        <div class="modal-footer">
-                                            <input type="submit" class="btn btn-default" value="Guardar" id="btnSaveNotice" />
-                                            <!--<button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Cerrar</button>-->
-                                        </div>
-                                    </div>
-                                </form>
+
+
+                <table style="margin-left:5%; width: 90%">
+                    @foreach (var field in ViewBag.news)
+                    {
+                        <tr>
+                            <th style="font-size: medium; background: #CCC7C7; color: #122143">- @field.Title</th>
+                            <th style="font-size: medium; background: #CCC7C7; color: #122143"></th>
+                        </tr>
+                        <tr>
+                            <td style="font-size:small; color:#7F7B7B">@field.Description</td>
+                            <td style="font-size:small; color:#7F7B7B"><a href="@field.IdNotice" style="color: blue" class="newDetails">Ver Detalles</a></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <div class="container" id="">
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog" style="">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Nueva Noticia</h4>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container" id="">
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal2" role="dialog">
-                        <div class="modal-dialog" style="height: 90%">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Detalles de la Noticia</h4>
-                                </div>
+                            <!--form New Notice-->
+                            <form method="post" action="/Home/SaveNotice">
                                 <div class="modal-body">
+                                    <p>Detalles</p>
+                                    <div id="validation"></div>
+                                    <hr />
+                                    <!--title-->
+                                    <input class="form-control" type="text" placeholder="Titulo" name="title" id="title">
+                                    <br />
                                     <div class="form-group row">
-                                        <label for="titleNotice" class="col-sm-2 col-form-label" style="color: darkblue">Titulo: </label>
-                                        <div class="col-sm-10">
-                                            <label for="titleNotice" class="col-sm-2 col-form-label " id="titleNotice"></label>
-                                        </div>
+                                        <label for="typeNotice" class="col-sm-2 col-form-label">Tipo de Noticia</label>
                                         <br />
-                                        <label for="descriptionNotice" class="col-sm-2 col-form-label" style="color: darkblue">Descripción: </label>
+                                        <!--checkBoxes-->
                                         <div class="col-sm-10">
-                                            <label for="titleNotice" class="col-sm-2 col-form-label" id="descriptionNotice"></label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="oneDateChecked">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    Un Solo dia.
+                                                </label>
+                                            </div>
                                         </div>
-                                        <hr />
-                                        <label for="startNotice" class="col-sm-2 col-form-label" style="color: darkblue">Fecha de Inicio: </label>
-                                        <div class="col-sm-10">
-                                            <label for="startNotice" class="col-sm-4 col-form-label" id="startNotice"></label>
-                                            <label for="startNotice" class="col-sm-4 col-form-label" style="color: darkblue">Fecha de Termino: </label>
-                                            <label for="startNotice" class="col-sm-4 col-form-label" id="endNotice"></label>
+                                        <!--calendar startDate-->
+                                        <div class='col-sm-7'>
+                                            <div class="form-group">
+                                                <input type='text' class="form-control" placeholder="Fecha de Inicio" name="startDateNews" id="startDateNews" />
+                                            </div>
                                         </div>
+                                        <!--calendar endDate-->
+                                        <div class='col-sm-7'>
+                                            <div class="form-group">
+                                                <input type='text' class="form-control" placeholder="Fecha de Fin" name="endDateNews" id="endDateNews" />
+                                            </div>
+                                        </div>
+                                        <!--description-->
+                                        <div class='col-sm-7'>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Descripción</label>
+                                                <textarea class="form-control" id="description" rows="6" style="resize: none" name="description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--save notice-->
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn btn-default" value="Guardar" id="btnSaveNotice" />
+                                        <!--<button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Cerrar</button>-->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" id="">
+                <!-- Modal -->
+                <div class="modal fade" id="myModal2" role="dialog">
+                    <div class="modal-dialog" style="height: 90%">
+                        <!-- Modal content-->
+                        <div class="modal-details">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Detalles de la Noticia</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <label for="titleNotice" class="col-sm-2 col-form-label" style="color: darkblue">Titulo: </label>
+                                    <div class="col-sm-10">
+                                        <label for="titleNotice" class=" " id="titleNotice"></label>
+                                    </div>
+                                    <br />
+                                    <label for="descriptionNotice" class="col-sm-2 col-form-label" style="color: darkblue">Descripción: </label>
+                                    <div class="col-sm-10">
+                                        <label for="titleNotice" class="" id="descriptionNotice"></label>
+                                    </div>
+                                    <hr />
+                                    <label for="startNotice" class="col-sm-2 col-form-label" style="color: darkblue">Fecha de Inicio: </label>
+                                    <div class="col-sm-10">
+                                        <label for="startNotice" class="col-sm-4 col-form-label" id="startNotice"></label>
+                                        <label for="startNotice" class="col-sm-4 col-form-label" style="color: darkblue">Fecha de Termino: </label>
+                                        <label for="startNotice" class="col-sm-4 col-form-label" id="endNotice"></label>
                                     </div>
                                 </div>
                             </div>
@@ -310,14 +328,15 @@
                     </div>
                 </div>
             </div>
-            <div class="grid-item" id="row2">
-                <div id="events" style="height: 100%;">
-                    <div class="" id="calendar" style=""></div>
-                </div>
-                <br /><br />
-            </div>
         </div>
-        <!--<div class="grid-item" id="row3">
+        <div class="grid-item" id="row2">
+            <div id="events" style="height: 100%;">
+                <div class="" id="calendar" style=""></div>
+            </div>
+            <br /><br />
+        </div>
+    </div>
+    <!--<div class="grid-item" id="row3">
         <div class="container" id="gallery" style="border: 1.5px solid orange;">
             @Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })<br />
             @Html.ActionLink("Example", "Parent", "Home", null, new { style = "color: white" })<br />
@@ -370,8 +389,7 @@
     </div>
 
 
-    </div>
-
+</div>
 <!--JS Calendar-->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -384,10 +402,10 @@
         let json = JSON.parse(notices.replace(/&quot;/g, '"'));
         console.log(json);
         //console.log(json[0]['startDateNotice']);
-        
+
         //Parse Json Dates start and end notice
         for (let key in json) {
-            
+
             let date = json[key].StartDateNotice;
             let date2 = json[key].EndDateNotice;
             date = date.substring(0, date.length - 14);
@@ -396,12 +414,12 @@
             date2 = date2.match(/\d+/g);
             date = date[2] + "-" + date[1] + "-" + date[0];
             date2 = date2[2] + "-" + date2[1] + "-" + date2[0];
-           
+
             //date2 = date2.substring(6, date2.length - 4);
             //let startDate = new Date(date).toISOString().slice(0, 10).replace('T', ' ');
             console.log(date);
             console.log(date2);
-           
+
             json[key].StartDateNotice = date;
             json[key].EndDateNotice = date2;
 
@@ -410,7 +428,7 @@
         console.log(json);
 
         let noticeObj = [];
-        
+
         for (let key in json) {
 
             let str = {};
@@ -445,7 +463,7 @@
         }
 
         //console.log(noticeObj);
-        
+
         var calendar = new FullCalendar.Calendar(calendarEl, {
             plugins: ['interaction', 'dayGrid'],
             header: {
@@ -458,8 +476,8 @@
             editable: false,
             eventLimit: false, // allow "more" link when too many events
 
-            events: noticeObj, 
-            
+            events: noticeObj,
+
 
             eventClick: function (event, jsEvent, view) {
                 console.log(event.id);
@@ -470,7 +488,7 @@
 
 
 
-        
+
         });
 
         calendar.render();
@@ -478,10 +496,10 @@
 
         calendar.on('dateClick', function (info) {
             console.log('clicked on ' + info.dateStr);
-            
+
         });
 
-       
+
 
     });
 </script>
@@ -657,7 +675,7 @@
     function saveNotice(notice) {
         console.log("entra a guardar");
         console.log(notice);
-        
+
         console.log("####################");
 
         $.ajax({
@@ -672,7 +690,9 @@
             cache: false,
             success: function (data) {
                 if (data === 'successfully') {
-                   
+                    console.log("Noticia creada");
+
+
                     $modal = $('#myModal');
                     $modal.find('form')[0].reset();
                     $('#myModal').modal('hide');
@@ -711,7 +731,7 @@
                 date2 = date2.substring(6, date2.length - 2);
                 date = Number(date);
                 date2 = Number(date2);*/
-                
+
                 //let startDate = new Date(date).toISOString().slice(0, 10).replace('T', ' ');
                 //let endtDate = new Date(date2).toISOString().slice(0, 10).replace('T', ' ');
 
@@ -721,7 +741,7 @@
                 $('#startNotice').text(date);
                 $('#endNotice').text(date2);
 
-               
+
 
             },
             error: function (e) {
@@ -787,11 +807,13 @@
         $(this).attr("autocomplete", "off");
     });
 
-   
 
-    
-    
+
+
+
 
 
 </script>
+
+
 
