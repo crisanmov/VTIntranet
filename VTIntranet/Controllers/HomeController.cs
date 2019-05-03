@@ -20,7 +20,7 @@ namespace VTIntranet.Controllers
 
         public ActionResult Index()
         {
-            
+
             TagHelper th = new TagHelper();
             NoticeHelper nh = new NoticeHelper();
 
@@ -38,7 +38,7 @@ namespace VTIntranet.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveNotice(Notice notice) 
+        public JsonResult SaveNotice(Notice notice)
         {
             Activity a = new Activity
             {
@@ -55,9 +55,9 @@ namespace VTIntranet.Controllers
 
             NoticeHelper nh = new NoticeHelper();
             nh.CreateActivity(a, n);
-            
+
             return Json("successfully");
-            
+
         }
 
         [HttpPost]
@@ -70,7 +70,7 @@ namespace VTIntranet.Controllers
                     string title = Convert.ToString(Request["title"]);
                     string url = Convert.ToString(Request["url"]);
                     string description = Convert.ToString(Request["description"]);
-                    
+
                     System.Diagnostics.Debug.WriteLine(title);
                     System.Diagnostics.Debug.WriteLine(url);
                     System.Diagnostics.Debug.WriteLine(description);
@@ -101,11 +101,11 @@ namespace VTIntranet.Controllers
                         Url = url
                     };
 
-                    EventHelper eh = new  EventHelper();
+                    EventHelper eh = new EventHelper();
                     eh.CreateActivity(evt);
 
                 }
-                
+
                 return Json(new { success = true, responseText = "succesfully" }, JsonRequestBehavior.AllowGet);
             }
             catch
@@ -121,9 +121,9 @@ namespace VTIntranet.Controllers
         {
             try
             {
-                foreach(var file in filesPost)
+                foreach (var file in filesPost)
                 {
-                    if(file.ContentLength > 0)
+                    if (file.ContentLength > 0)
                     {
                         string _FileName = Path.GetFileName(file.FileName);
                         string extension = Path.GetExtension(_FileName);
@@ -210,7 +210,8 @@ namespace VTIntranet.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
+            TagHelper mt = new TagHelper();
+            ViewBag.tags = mt.getTagProfile(1);
             return View();
         }
 
@@ -228,7 +229,7 @@ namespace VTIntranet.Controllers
             //tags
             TagHelper mt = new TagHelper();
             ViewBag.tags = mt.getTagProfile(1);
-            
+
             return View();
         }
 
@@ -264,6 +265,13 @@ namespace VTIntranet.Controllers
         }*/
 
         public ActionResult Volunteer()
+        {
+            //tags
+            TagHelper mt = new TagHelper();
+            ViewBag.tags = mt.getTagProfile(1);
+            return View();
+        }
+        public ActionResult Talend ()
         {
             //tags
             TagHelper mt = new TagHelper();
