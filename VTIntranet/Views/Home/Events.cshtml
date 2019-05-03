@@ -129,6 +129,14 @@
             #eventos-padre .btn-primary {
     width: 90%;
 }
+            .form-control {
+    max-width: 100%;
+}
+            input#fileEvt{max-width:100%; width:100%}
+            input#files {
+    width: 100%;
+    max-width: 100%;
+}
     </style>
 </head>
 <div>
@@ -195,21 +203,21 @@
                         <input class="form-control" type="text" placeholder="Titulo" name="title" id="titleEvt">
                         <br />
                         <div class="form-group row">
-                            <div class='col-sm-7'>
+                            <div class='col-sm-12'>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Imagen</label>
                                     <input type="file" class="btn btn-default" value="" id="fileEvt" accept="image/*" />
                                 </div>
                             </div>
                             <!--Url-->
-                            <div class='col-sm-7'>
+                            <div class='col-sm-12'>
                                 <div class="form-group">
                                     <label for="url">URL</label>
                                     <input class="form-control" type="text" placeholder="insertar URL " id="urlEvt" />
                                 </div>
                             </div>
                             <!--description-->
-                            <div class='col-sm-7'>
+                            <div class='col-sm-12'>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Descripción</label>
                                     <textarea class="form-control" id="desEvt" rows="6" style="resize: none" name="description"></textarea>
@@ -217,7 +225,7 @@
                             </div>
                         </div>
                         <!--save notice-->
-                        <div class="modal-footer">
+                        <div style="text-align:right; padding:30px 5px">
                             <input type="submit" class="btn btn-default" value="Guardar" id="btnSaveEvt" />
                             <!--<button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Cerrar</button>-->
                         </div>
@@ -241,20 +249,20 @@
                         <h4 class="modal-title">Agregar imagenes al Album</h4>
                     </div>
                     <br />
-                    <input style="margin-left: 5%;" type="file" id="files" name="files[]" multiple />
+                    <input style="margin-left: 5%;width:100%" type="file" id="files" name="files[]" multiple />
                     <hr />
                     <form enctype="multipart/form-data">
                         <div class="img-container">
                             <output id="list"></output>
                         </div>
-                        <div class="modal-footer">
+                        <div style="text-align:right; padding:30px 15px">
                             <input type="submit" class="btn btn-default" value="Guardar" id="btnSaveImg" />
                             <!--<button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Cerrar</button>-->
                         </div>
                     </form>
 
                 </div>
-                <button></button>
+            
             </div>
         </div>
     </div>

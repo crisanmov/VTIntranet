@@ -238,8 +238,6 @@ namespace VTIntranet.Controllers
             return Content("Child Action " + name);
         }
 
-
-
         /*
         [ChildActionOnly]
         public ActionResult Chat()
@@ -264,5 +262,13 @@ namespace VTIntranet.Controllers
             
             return View();
         }*/
+
+        public ActionResult Volunteer()
+        {
+            //tags
+            TagHelper mt = new TagHelper();
+            ViewBag.tags = mt.getTagProfile(1);
+            return View();
+        }
     }
 }

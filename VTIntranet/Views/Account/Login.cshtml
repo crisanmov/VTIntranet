@@ -36,48 +36,56 @@
         .login {
             background-image: url("UploadedFiles/login.jpg");
             max-width: 100%;
-            height: 100%;
             background-size: cover;
             background-position:center;
+                min-height: 100vh;
         }
-        .wrap-login100{margin:0 auto; background: transparent; width:75%}
+        .wrap-login100{margin:0 auto; background: transparent; width:60%}
         .login100-form{background:#fff; padding:30px}
         .login100-form-title{    font-family: Poppins-Regular;}
+
+        .b-2{color:#001c40}
+        .b-1{color:#7f7f7f}
+        .logo-vtimes{text-align:center; padding:20px 0;background:#092d52}
+        .logo-vtimes img{height:50px}
+        button.login100-form-btn {box-shadow: none;}
+        .container-login100-form-btn {padding: 50px 0 20px;}
+        .focus-input100::before{background: #092d52;}
+        .wrap-input100 {margin-bottom: 30px;}
     </style>
 
 </head>
 <body>
     <div class="login">
         <div class="wrap-login100 p-t-85 p-b-20">
+            <div class="logo-vtimes"><img src="~/UploadedFiles/vtimes_logo.png" /></div>
             @*<form class="login100-form validate-form">*@
-                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login100-form validate-form" }))
-                    {
-                    @Html.AntiForgeryToken()
-                    <p class="login100-form-title p-b-70">
-                        ¡Bienvenido a <span>VTintranet Salim!</span>
-                    </p>
-                    <span class="login100-form-avatar">
-                        <img src="~/Scripts/login/images/User_Avatar-512.jpg" alt="AVATAR">
-                    </span>
-                    <div style="text-align: center; color: crimson; font-size: smaller;">
-                        @Html.ValidationSummary()
-                    </div>
-                    <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter user name">
-                        <input class="input100" type="text" name="UserName">
-                        <span class="focus-input100" data-placeholder="Username"></span>
-                    </div>
 
-                    <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-                        <input class="input100" type="password" name="Password">
-                        <span class="focus-input100" data-placeholder="Password"></span>
-                    </div>
-                    <br />
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">
-                            Login
-                        </button>
-                    </div>               
-                    }
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login100-form validate-form" }))
+            {
+                @Html.AntiForgeryToken()
+                <p class="login100-form-title p-b-50">
+                    <span class="b-1">¡Bienvenido a</span> <span class="b-2">VTintranet!</span>
+                </p>
+                <div style="text-align: center; color: crimson; font-size: smaller;">
+                    @Html.ValidationSummary()
+                </div>
+                <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter user name">
+                    <input class="input100" type="text" name="UserName">
+                    <span class="focus-input100" data-placeholder="Username"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
+                    <input class="input100" type="password" name="Password">
+                    <span class="focus-input100" data-placeholder="Password"></span>
+                </div>
+                <br />
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn">
+                        Login
+                    </button>
+                </div>
+            }
             @*</form>*@
         </div>
     </div>

@@ -197,6 +197,13 @@
             grid-template-columns: auto auto auto;
             height: 350px
         }
+        .interno{display:flex}
+        .form-control{max-width:100%}
+        .modal-content.index{
+            width:70%;
+            margin:0 auto
+        }
+        .index-form>div{padding:0}
     </style>
 
 
@@ -237,7 +244,7 @@
                 <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog" style="">
                         <!-- Modal content-->
-                        <div class="modal-content">
+                        <div class="modal-content index">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">Nueva Noticia</h4>
@@ -251,11 +258,11 @@
                                     <!--title-->
                                     <input class="form-control" type="text" placeholder="Titulo" name="title" id="title">
                                     <br />
-                                    <div class="form-group row">
-                                        <label for="typeNotice" class="col-sm-2 col-form-label">Tipo de Noticia</label>
+                                    <div class="form-group row interno">
+                                        <label for="typeNotice" class="col-sm-4 col-form-label">Tipo de Noticia</label>
                                         <br />
                                         <!--checkBoxes-->
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-8">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="" id="oneDateChecked">
                                                 <label class="form-check-label" for="defaultCheck1">
@@ -263,20 +270,22 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        </div>
+                                    <div class="index-form">
                                         <!--calendar startDate-->
-                                        <div class='col-sm-7'>
+                                        <div class='col-sm-12'>
                                             <div class="form-group">
                                                 <input type='text' class="form-control" placeholder="Fecha de Inicio" name="startDateNews" id="startDateNews" />
                                             </div>
                                         </div>
                                         <!--calendar endDate-->
-                                        <div class='col-sm-7'>
+                                        <div class='col-sm-12'>
                                             <div class="form-group">
                                                 <input type='text' class="form-control" placeholder="Fecha de Fin" name="endDateNews" id="endDateNews" />
                                             </div>
                                         </div>
                                         <!--description-->
-                                        <div class='col-sm-7'>
+                                        <div class='col-sm-12'>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Descripción</label>
                                                 <textarea class="form-control" id="description" rows="6" style="resize: none" name="description"></textarea>
@@ -284,7 +293,7 @@
                                         </div>
                                     </div>
                                     <!--save notice-->
-                                    <div class="modal-footer">
+                                    <div style="text-align:center">
                                         <input type="submit" class="btn btn-default" value="Guardar" id="btnSaveNotice" />
                                         <!--<button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Cerrar</button>-->
                                     </div>
