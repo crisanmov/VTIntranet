@@ -20,20 +20,29 @@ namespace VTIntranet.Controllers
 
         public ActionResult Index()
         {
+            var userName = this.Session["userName"];
+            ViewBag.UserName = userName;
+
+            string id = this.Session["idUser"].ToString();
+            int idUser = int.Parse(id);
 
             TagHelper th = new TagHelper();
             NoticeHelper nh = new NoticeHelper();
 
+            //serializer for notices "calendar"
             var serializer = new JavaScriptSerializer();
             var serializedResult = serializer.Serialize(nh.getAllNotice());
-
-            ViewBag.tags = th.getTagProfile(1);
-            ViewBag.news = nh.getAllNotice();
             ViewBag.news2 = serializedResult;
 
-            var userName = this.Session["userName"];
-            ViewBag.UserName = userName;
+            //notices for grid view
+            ViewBag.news = nh.getAllNotice();
 
+            //serializer for brands
+            //ViewBag.tags = th.getTagProfile(1);
+            var serializerBrand = new JavaScriptSerializer();
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            ViewBag.Navbar = serializedResultB;
+            
             return View();
         }
 

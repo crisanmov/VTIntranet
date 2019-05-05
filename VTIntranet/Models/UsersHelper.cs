@@ -21,13 +21,11 @@ namespace VTIntranet.Models
         public usersModelHelper GetUser(string userName)
         {
             Conectar();
-
             string query = "SELECT idUser, userNameReal, userEmail FROM tblusers WHERE userName ='" + userName  + "' ";
             SqlCommand com = new SqlCommand(query, con);
             con.Open();
 
             SqlDataReader rows = com.ExecuteReader();
-
             usersModelHelper data = new usersModelHelper();
 
             while (rows.Read())

@@ -264,6 +264,7 @@
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\attachmentsModelHelper.cs" />
+    <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventHelper.cs" />
     <Compile Include="Models\FormSelectModel.cs" />
