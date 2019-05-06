@@ -21,9 +21,13 @@
     
     <style>
         .nav > li > a:focus, .nav > li > a:hover {
-            background-color: #989292 !important;
-        }
+            background-color: transparent !important;
 
+        }
+        #nav_home li:hover a {
+            border-left: 5px solid #ddd;
+        }
+        .nav > li > a{padding:15px !important}
         .container {
             width: 100% !important;
             padding: 0 !important;
@@ -287,8 +291,19 @@
         }
 
         .placeholder{color:#fff !important}
+        #nav_home li:hover div {
+            display: block !important;
+        }
+        .nav > li > a, .nav > li > div > ul > li {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+        }
+        .nav > li > div > ul {
+            background: #122143;
+        }
 
-        
+
     </style>
 
     <script>
@@ -319,7 +334,7 @@
 
     <div class="container">
         <div id="container-left">
-            <ul class=" nav flex-column" id="nav_home" style="color: white; background-color: #122143;  ">
+            <ul class=" nav flex-column" id="nav_home" style="color: white; background-color: #21356a;  ">
                 <li>
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -338,7 +353,7 @@
                 
             </ul>
             <div style="border: 1px solid white;"></div>
-            <ul class=" nav flex-column" style="color: white; background-color: #122143;">
+            <ul class=" nav flex-column" style="color: white; background-color: #21356a;">
                 <li>@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
                 <li>@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
                 <li><a id="uploadFile" style="color:white">Subir Manual</a></li>
@@ -512,7 +527,7 @@
 
                 a.style.color = 'white';
                 a.innerHTML = field;
-                a.setAttribute('id', field);
+                //a.setAttribute('id', field);
                 li.append(a);               
                 nav_home.append(li);
 
@@ -533,7 +548,7 @@
             for (let i = 0; i < item.length; i++) {
                 let li = document.createElement('li');
                 li.innerHTML = item[i].deptoName;
-                li.setAttribute('id', item[i].idDepto);
+                //li.setAttribute('id', item[i].idDepto);
                 ul.appendChild(li);
             }
 
