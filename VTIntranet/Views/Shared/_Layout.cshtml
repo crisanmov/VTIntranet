@@ -25,7 +25,7 @@
 
         }
         #nav_home li:hover a {
-            border-left: 5px solid #ddd;
+            border-left: 8px solid #ddd;
         }
         .nav > li > a{padding:15px !important}
         .container {
@@ -291,7 +291,8 @@
         }
 
         .placeholder{color:#fff !important}
-        #nav_home li:hover div {
+
+        #nav_home li:hover div, #nav_home li:active div {
             display: block !important;
         }
         .nav > li > a, .nav > li > div > ul > li {
@@ -302,7 +303,9 @@
         .nav > li > div > ul {
             background: #122143;
         }
-
+        #nav_home>li, .nav.flex-column>li {
+    border-bottom: 1px solid #122143;
+}
 
     </style>
 
@@ -554,6 +557,7 @@
 
             submenu.appendChild(ul);
             submenu.style.display = 'none';
+            
 
             return submenu;
 
