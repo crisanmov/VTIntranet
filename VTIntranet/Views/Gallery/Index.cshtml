@@ -15,7 +15,7 @@
         border-left: 1px solid;
     }
     .cont-img {
-        padding: 5px;
+        padding: 15px 0;
     }
 
     .content-album {
@@ -32,19 +32,19 @@
 
 </style>
 
-<div class="container">
+<div class="">
     <h2>@ViewBag.Title</h2>
     <hr />
 
-    <div style="display: flex;justify-content: space-between;">
+    <div style="display: grid;grid-template-columns: 1fr 1fr 1fr 1fr">
 
         @foreach (var evt in ViewBag.events)
         {
-            <div style="max-width: 25%">
-                <div class="cont-img" style="display:grid; width: 80%; grid-template-columns: auto auto;">
+            <div style="max-width: 95%; margin-bottom:15px; margin:0 auto">
+                <div class="cont-img" style="display:grid; width: 100%; grid-template-columns: auto auto;">
                     <span class="album" style="display:none;">@evt.IdEvent</span>
                 </div>
-                <div class="card-body" style="width:80%; margin-left:2%">
+                <div class="card-body" style="width:100%; margin-left:2%">
                     <h5 class="card-title"><strong>@evt.Title</strong></h5>
                     <p class="card-text">@evt.Description</p>
                     <a href="#" class="btn btn-primary">Ver galeria</a>
