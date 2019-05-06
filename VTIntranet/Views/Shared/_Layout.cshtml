@@ -335,12 +335,11 @@
                     <div class="container">
                         <div class="navbar-collapse collapse" style=" width: 100%; position: relative; z-index:1; overflow:auto">
                             <ul class="nav navbar-nav">
-                                <li>@Html.ActionLink("¿Quienes Somos?", "Index", "Home")</li>
+                                <li>@Html.ActionLink("¿Quienes Somos?", "About", "Home")</li>
                                 <li>@Html.ActionLink("Very Talent", "Talend", "Home")</li>
                                 <li>@Html.ActionLink("Voluntariado", "Volunteer", "Home")</li>
                                 <li>@Html.ActionLink("Eventos", "Events", "Home")</li>
-                                <li>@Html.ActionLink("Mi Perfil", "Profile", "Home")</li>
-                                <li>@Html.Partial("_LoginPartial")</li>
+                                
                                 <li>
                                     <form class="form-inline my-2 my-lg-0" style="padding-left:0">
                                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -854,7 +853,7 @@
         }
 
         function createSubMenu(field, item) {
-            console.log(item);
+            //console.log(item);
 
             let submenu = document.createElement('div');
             submenu.setAttribute('id', field);
