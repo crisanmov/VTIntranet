@@ -9,8 +9,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Contents/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Awesome Icons-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!--Calendar-->
@@ -244,22 +243,22 @@
             margin-left: 20px;
         }
 
-            #left_scroll img, #right_scroll img {
-                border: 0;
-                /* remove the default border of linked image */
-                /*styling*/
-                cursor: pointer;
-            }
+        #left_scroll img, #right_scroll img {
+            border: 0;
+            /* remove the default border of linked image */
+            /*styling*/
+            cursor: pointer;
+        }
 
-            #left_scroll img {
-                width: 25px;
-                height: 25px;
-            }
+        #left_scroll img {
+            width: 25px;
+            height: 25px;
+        }
 
-            #right_scroll img {
-                width: 25px;
-                height: 25px;
-            }
+        #right_scroll img {
+            width: 25px;
+            height: 25px;
+        }
 
         .container > div:last-child {
             width: 100%;
@@ -268,20 +267,28 @@
         .navbar-nav {
             background: #fff
         }
+
         #sub-menu{background:#fff; list-style:none; position:absolute;top:50px; padding: 5px; width:100px; display: none}
         #hov-menu:hover #sub-menu{display:block}
      
         #sub-menu a {
-    padding: 5px !important; background: #fff !important
-}
+            padding: 5px !important; background: #fff !important
+        }
+
         #sub-menu .navbar-right{float:none !important}
         #sub-menu .nav.navbar-nav.navbar-right:before {
-    content: none !important;
-}
-        input[type="search"]{background: #21356a;
-    border-radius: 20px; color:#fff}
+            content: none !important;
+        }
 
-        ::placeholder{color:#fff !important}
+        input[type="search"]{
+            background: #21356a;
+            border-radius: 20px; color:#fff
+
+        }
+
+        .placeholder{color:#fff !important}
+
+        
     </style>
 
     <script>
@@ -327,6 +334,14 @@
                     </div>
                 </li>
                 <!--foreach-->
+                
+                
+            </ul>
+            <div style="border: 1px solid white;"></div>
+            <ul class=" nav flex-column" style="color: white; background-color: #122143;">
+                <li>@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
+                <li>@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
+                <li><a id="uploadFile" style="color:white">Subir Manual</a></li>
             </ul>
         </div>
         <div>
@@ -338,11 +353,9 @@
                                 <li>@Html.ActionLink("¿Quienes Somos?", "About", "Home")</li>
                                 <li>@Html.ActionLink("Very Talent", "Talend", "Home")</li>
                                 <li>@Html.ActionLink("Voluntariado", "Volunteer", "Home")</li>
-                                <li>@Html.ActionLink("Eventos", "Events", "Home")</li>
-                                
                                 <li>
                                     <form class="form-inline my-2 my-lg-0" style="padding-left:0">
-                                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
                                     </form>
                                 </li>
                                 <li id="hov-menu" style="display:flex; align-items:center">
@@ -351,12 +364,69 @@
                                     </i>
                                     <div id="sub-menu">
                                         @Html.ActionLink("Mi Perfil", "Profile", "Home")
+
                                         @Html.Partial("_LoginPartial")
                                     </div>
-                        </li>
-                        </ul>
-
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+                </div>
+                <!-- Modal new File -->
+                <div class="modal fade" id="uploadFileModal" role="dialog">
+                    <div class="modal-dialog" style="">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Agregar Nuevo manual</h4>
+                                <div id="validation"></div>
+                            </div>
+                            <!--form New Notice-->
+                            <form method="post" action="/Home/SaveNotice">
+                                <div class="modal-body">
+                                    <div id="validationEvent"></div>
+                                    <!--title-->
+                                    <input class="form-control" type="text" placeholder="Titulo" name="title" id="titleEvt">
+                                    <br />
+                                    <!--name tag-->
+                                    <div class="form-group">
+                                        <label for="FormControlTag">Empresa</label>
+                                        <select class="form-control" id="FormControlTag">
+                                            <option>Vacations Times</option>
+                                            <option>WORLDPASS</option>
+                                            <option>Inmense Hotels</option>
+                                            <option>Inmense Club</option>
+                                            <option>Axkan y Dunas</option>
+                                            <option>Grand Slam</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="FormControlDepto">Departamento</label>
+                                        <select class="form-control" id="FormControlDepto">
+                                            <option>Capacitación</option>
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class='col-sm-12'>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Archivo</label>
+                                                <input type="file" class="btn btn-default" value="" id="fileEvt" accept="image/*" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--save notice-->
+                                    <div style="text-align:right; padding:30px 5px">
+                                        <input type="submit" class="btn btn-default" value="Guardar" id="btnSaveEvt" />
+                                        <!--<button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Cerrar</button>-->
+                                    </div>
+
+                                </div>
+                            </form>
+                            <br />
+                        </div>
                     </div>
                 </div>
                 <div class=" ">
@@ -405,11 +475,122 @@
     <script src="~/Scripts/intranet/intranet.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script>
+
+        let array = "@ViewBag.Navbar";
+        let json = JSON.parse(array.replace(/&quot;/g, '"'));
+        let menuInfo = {};
+        let brands = [];
+
+        //console.log(json);
+        brands = getBrands(json);
+        //console.log(brands);
+        brands = findDuplicateValues(brands);
+        //console.log(brands);
+        menuInfo = getBrandDepto(json, brands);
+        createMenu(menuInfo);
+
         jQuery(document).ready(function ($) {
             var contenedor = $("#container-right").height();
             $("#container-left").css("height", contenedor);
 
+
+            $('#uploadFile').click(function () {
+                //alert('push');
+                $('#uploadFileModal').modal('show');
+            });
         });
+
+        function createMenu(menuInfo) {
+            //console.log(menuInfo);
+            let nav_home = document.querySelector('#nav_home');
+            let subMenu;
+
+            for (field in menuInfo) {
+                
+                let li = document.createElement('li');
+                let a = document.createElement('a');
+
+                a.style.color = 'white';
+                a.innerHTML = field;
+                a.setAttribute('id', field);
+                li.append(a);               
+                nav_home.append(li);
+
+                let item = menuInfo[field];
+                subMenu = createSubMenu(field, item);
+                //console.log(subMenu);
+                li.append(subMenu);
+               
+            }
+        }
+
+        function createSubMenu(field, item) {
+           
+            let submenu = document.createElement('div');
+            submenu.setAttribute('id', field);
+            let ul = document.createElement('ul');
+
+            for (let i = 0; i < item.length; i++) {
+                let li = document.createElement('li');
+                li.innerHTML = item[i].deptoName;
+                li.setAttribute('id', item[i].idDepto);
+                ul.appendChild(li);
+            }
+
+            submenu.appendChild(ul);
+            submenu.style.display = 'none';
+
+            return submenu;
+
+        }
+
+        function getBrands(array) {
+
+            let brands = [];
+            for (let i = 0; i < array.length; i++) {
+                brands.push(array[i].TagName);
+            }
+ 
+            return brands;
+        }
+
+        function findDuplicateValues(array) {
+            let object = {};
+            let result = [];
+
+            //found number coincidences
+            array.forEach(function (item) {
+                if (!object[item])
+                    object[item] = 0;
+                object[item] += 1;
+            });
+
+            //create array of results coincidences
+            for (let prop in object) {
+                if (object[prop] >= 1) {
+                    result.push(prop);
+                }
+            }
+            return result;
+        }
+
+        function getBrandDepto(brands_raw, brands) {
+            let object = {};
+            for (let i = 0; i < brands.length; i++) {
+                let deptos = [];
+                let ban = brands[i];
+                for (let j = 0; j < brands_raw.length; j++) {
+                    let brand = brands_raw[j].TagName;
+                    if (brand === ban) {
+                        let depto = { idTag: brands_raw[j].IdTag, idDepto: brands_raw[j].IdDepto, deptoName: brands_raw[j].DeptoName };
+                        deptos.push(depto);
+                    }
+                }
+                object[ban] = deptos;
+                deptos = [];
+            }
+            return object;
+        }
 
     </script>
 
@@ -814,113 +995,9 @@
         }
 
     </script>
+    <!--Menu dynamic-->
     <script>
-        let array = "@ViewBag.Navbar";
-        let json = JSON.parse(array.replace(/&quot;/g, '"'));
-        let menuInfo = {};
-        let brands = [];
-
-        //console.log(json);
-        brands = getBrands(json);
-        //console.log(brands);
-        brands = findDuplicateValues(brands);
-        //console.log(brands);
-        menuInfo = getBrandDepto(json, brands);
-        createMenu(menuInfo);
-
-        function createMenu(menuInfo) {
-            //console.log(menuInfo);
-            let nav_home = document.querySelector('#nav_home');
-            let subMenu;
-
-            for (field in menuInfo) {
-                
-                let li = document.createElement('li');
-                let a = document.createElement('a');
-
-                a.style.color = 'white';
-                a.innerHTML = field;
-                a.setAttribute('id', field);
-                li.append(a);               
-                nav_home.append(li);
-
-                let item = menuInfo[field];
-                subMenu = createSubMenu(field, item);
-                //console.log(subMenu);
-                li.append(subMenu);
-               
-            }
-        }
-
-        function createSubMenu(field, item) {
-            //console.log(item);
-
-            let submenu = document.createElement('div');
-            submenu.setAttribute('id', field);
-            let ul = document.createElement('ul');
-
-            for (let i = 0; i < item.length; i++) {
-                let li = document.createElement('li');
-                li.innerHTML = item[i].deptoName;
-                li.setAttribute('id', item[i].idDepto);
-                ul.appendChild(li);
-            }
-
-            submenu.appendChild(ul);
-            submenu.style.display = 'none';
-            //console.log(submenu);
-
-            return submenu;
-
-        }
-
-        function getBrands(array) {
-
-            let brands = [];
-            for (let i = 0; i < array.length; i++) {
-                brands.push(array[i].TagName);
-            }
- 
-            return brands;
-        }
-
-        function findDuplicateValues(array) {
-            let object = {};
-            let result = [];
-
-            //found number coincidences
-            array.forEach(function (item) {
-                if (!object[item])
-                    object[item] = 0;
-                object[item] += 1;
-            });
-
-            //create array of results coincidences
-            for (let prop in object) {
-                if (object[prop] >= 1) {
-                    result.push(prop);
-                }
-            }
-            return result;
-        }
-
-        function getBrandDepto(brands_raw, brands) {
-            let object = {};
-            for (let i = 0; i < brands.length; i++) {
-                let deptos = [];
-                let ban = brands[i];
-                for (let j = 0; j < brands_raw.length; j++) {
-                    let brand = brands_raw[j].TagName;
-                    if (brand === ban) {
-                        let depto = { idTag: brands_raw[j].IdTag, idDepto: brands_raw[j].IdDepto, deptoName: brands_raw[j].DeptoName };
-                        deptos.push(depto);
-                    }
-                }
-                object[ban] = deptos;
-                deptos = [];
-            }
-            return object;
-        }
+        
         
     </script>
 

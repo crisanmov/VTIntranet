@@ -200,18 +200,20 @@
 </head>
 <div>
     <div style="margin-left: 2%;">
-        <h4>
+        <h4 style="display:none">
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", new { idUser = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
         </h4>
     </div>
-    <div class="grid-container" id="grid-container" ;>
+    <br />
+    <div class="grid-container" id="grid-container">
         <div class="grid-item" id="row1" style="">
             <div id="news">
                 <div id="add-dates">
-                    <h4><b style="color: #7F7B7B">Noticias</b></h4><span style="font-size: 3em; color: #21356a; float: right;" data-toggle="modal" data-target="#myModal">
-                                                                       <i class="material-icons" style="font-size:40px">
-                                                                           control_point
-                                                                       </i>
+                    <h4><b style="color: #7F7B7B">Noticias</b></h4>
+                    <span style="font-size: 3em; color: #21356a; float: right;" data-toggle="modal" data-target="#myModal">
+                    <i class="material-icons" style="font-size:40px">
+                        control_point
+                    </i>
                     </span>
                 </div>
                 <table style="margin-left:5%; width: 90%">

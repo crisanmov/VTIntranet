@@ -13,9 +13,14 @@ namespace VTIntranet.Controllers
         // GET: Gallery
         public ActionResult Index()
         {
-            //get all tags
+            //serializer for brands
+            string id = this.Session["idUser"].ToString();
+            int idUser = int.Parse(id);
             TagHelper th = new TagHelper();
-            ViewBag.tags = th.getTagProfile(1);
+
+            var serializerBrand = new JavaScriptSerializer();
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            ViewBag.Navbar = serializedResultB;
 
             //get all events
             EventHelper eh = new EventHelper();
