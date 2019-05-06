@@ -77,7 +77,8 @@ namespace VTIntranet.Models
                              INNER JOIN tbltagdepto on tbltagdepto.idTag = tbltags.idTag
 	                         INNER JOIN tbldepto on tbldepto.idDepto = tbltagdepto.idDepto
 	                         INNER JOIN tblprofilestags on tblprofilestags.idTag = tbltags.idTag 
-                             WHERE tblprofilestags.idProfile = @idProfile";
+                             WHERE tblprofilestags.idProfile = @idProfile
+                             ORDER BY tagName";
 
             SqlCommand com = new SqlCommand(query, con);
             com.Parameters.Add("@idProfile", SqlDbType.Int);

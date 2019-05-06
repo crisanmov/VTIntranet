@@ -400,7 +400,7 @@
                                 <h4 class="modal-title">Agregar Nuevo manual</h4>
                                 <div id="validation"></div>
                             </div>
-                            <!--form New Notice-->
+                            <!--form New File-->
                             <form method="post" action="/Home/SaveNotice">
                                 <div class="modal-body">
                                     <div id="validationEvent"></div>
@@ -411,19 +411,15 @@
                                     <div class="form-group">
                                         <label for="FormControlTag">Empresa</label>
                                         <select class="form-control" id="FormControlTag">
-                                            <option>Vacations Times</option>
-                                            <option>WORLDPASS</option>
-                                            <option>Inmense Hotels</option>
-                                            <option>Inmense Club</option>
-                                            <option>Axkan y Dunas</option>
-                                            <option>Grand Slam</option>
+                                            <option>Selecciona una opción...</option>
+                                            
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="FormControlDepto">Departamento</label>
                                         <select class="form-control" id="FormControlDepto">
-                                            <option>Capacitación</option>
-                                            <option></option>
+                                            <option>Selecciona una opción...</option>
+                                            
                                         </select>
                                     </div>
                                     <div class="form-group row">
@@ -511,10 +507,12 @@
             var contenedor = $("#container-right").height();
             $("#container-left").css("height", contenedor);
 
-
             $('#uploadFile').click(function () {
                 //alert('push');
                 $('#uploadFileModal').modal('show');
+                console.log(brands);
+                populateListTag();
+                
             });
         });
 
@@ -563,16 +561,6 @@
 
         }
 
-        function getBrands(array) {
-
-            let brands = [];
-            for (let i = 0; i < array.length; i++) {
-                brands.push(array[i].TagName);
-            }
- 
-            return brands;
-        }
-
         function findDuplicateValues(array) {
             let object = {};
             let result = [];
@@ -593,6 +581,16 @@
             return result;
         }
 
+        function getBrands(array) {
+
+            let brands = [];
+            for (let i = 0; i < array.length; i++) {
+                brands.push(array[i].TagName);
+            }
+ 
+            return brands;
+        }
+
         function getBrandDepto(brands_raw, brands) {
             let object = {};
             for (let i = 0; i < brands.length; i++) {
@@ -609,6 +607,15 @@
                 deptos = [];
             }
             return object;
+        }
+
+        function getTags() {
+
+            
+        }
+
+        function populateListTag() {
+
         }
 
     </script>
