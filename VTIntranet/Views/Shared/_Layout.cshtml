@@ -24,10 +24,13 @@
             background-color: transparent !important;
 
         }
-         .nav.flex-column li:hover a {
+         #nav_home2 li:hover {
             border-left: 8px solid #ddd;
         }
-       #nav_home li:first-child a {
+         #nav_home li:hover a {
+    border-left: 8px solid #ddd;
+}
+       #nav_home li:first-child a{
     border: none !important;
 }
 
@@ -95,20 +98,17 @@
             color:#21356a
         }
         .fc-view-container{background:#fff}
-    #nav_home.nav > li > a, .nav.flex-column.nav > li > a {
-    padding: 20px 15px 20px 35px !important;
+
+    #nav_home.nav > li > a {
+    padding:15px 0px 15px 35px!important
 }
-    </style>
-
-    <!--CHAT-->
-    <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/style.css" rel="stylesheet" />
-    <!--<link href="~/Content/font-awesome.css" rel="stylesheet" />-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-    <style>
-        div#divusers * {
+    #nav_home2 > li > a {
+    padding: 15px 10px !important;
+}
+    .nav.flex-column>li img {
+    width: 30px;
+}
+      div#divusers * {
             color: #000 !important;
             padding: 0 5px
         }
@@ -168,18 +168,22 @@
             background: #21356a;
             align-items: center;
             height: 40px;
-            cursor: pointer
+            cursor: pointer;
+             font-size: 20px;
         }
 
         #chat-open {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            height: 100%;
-            background: #21356a;
-            cursor: pointer
+           display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    background: #21356a;
+    cursor: pointer;
+    font-size: 20px;
         }
-
+        #chat-open img,#chat-closed img {
+    margin-right: 15px;
+}
         .modal-footer {
             position: absolute;
             bottom: 0;
@@ -282,7 +286,7 @@
             background: #fff
         }
 
-        #sub-menu{background:#fff; list-style:none; position:absolute;top:50px; padding: 5px; width:100px; display: none}
+        #sub-menu{background:#fff; list-style:none; position:absolute;top:50px; padding: 5px; width:120px; display: none}
         #hov-menu:hover #sub-menu{display:block}
      
         #sub-menu a {
@@ -295,12 +299,14 @@
         }
 
         input[type="search"]{
-            background: #21356a;
-            border-radius: 20px; color:#fff
+            border-radius: 20px; color:#fff;
+                background: url(../../UploadedFiles/Intranet_Buscar.png) #21356a no-repeat 10px center;
+    background-size: 20px;
+    text-indent: 40px;
 
         }
 
-        .placeholder{color:#fff !important}
+        ::placeholder{color:#fff !important}
 
         #nav_home li:hover div, #nav_home li:active div {
             display: block !important;
@@ -316,11 +322,42 @@
         #nav_home>li {
     border-bottom: 1px solid #122143;
 }
-         .nav.flex-column>li
+         #nav_home2>li
          {
-    border-bottom: 1px solid #21356a;
+        display: flex;
+    align-items: center;
+    padding-left: 30px;
+    border-top: 1px solid #21356a;
 }
+         #UserCount{display:none}
+        
+         .fc-unthemed td.fc-today {
+    background: #737f8a;
+}
+       #row2 a {
+    color: #21356a;
+}
+       #row2 td.fc-day-top.fc-tue.fc-today a {
+    color: #fff;
+}
+       #add-dates img {
+    cursor: pointer;
+}
+       footer {
+    text-align: center;
+    font-size:20px;
+}
+       footer span{color:deeppink}
     </style>
+
+    <!--CHAT-->
+    <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <!--<link href="~/Content/font-awesome.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
 
     <script>
         function myFunction() {
@@ -368,10 +405,10 @@
 
             </ul>
            
-            <ul class=" nav flex-column" style="color: white; background-color: #122143;">
-                <li>@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
-                <li>@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
-                <li><a id="uploadFile" style="color:white">Subir Manual</a></li>
+            <ul class=" nav flex-column" id="nav_home2" style="color: white; background-color: #122143;">
+                <li><img src="~/UploadedFiles/Intranet_Eventos.png">@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
+                <li><img src="~/UploadedFiles/Intranet_Galeria.png">@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
+                <li><img src="~/UploadedFiles/Intranet_Subir-Manual.png"><a id="uploadFile" style="color:white">Subir Manual</a></li>
             </ul>
         </div>
         <div style="margin-left:200px">
@@ -385,11 +422,11 @@
                                 <li>@Html.ActionLink("Voluntariado", "Volunteer", "Home")</li>
                                 <li>
                                     <form class="form-inline my-2 my-lg-0" style="padding-left:0">
-                                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
+                                        <input id="buscar-menu" class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
                                     </form>
                                 </li>
                                 <li id="hov-menu" style="display:flex; align-items:center">
-                                    <i class="material-icons" style="font-size:40px">
+                                    <i class="material-icons" style="font-size:40px; color:#21356a">
                                         account_circle
                                     </i>
                                     <div id="sub-menu">
@@ -462,7 +499,7 @@
 
                     <hr />
                     <footer>
-                        <p>&copy; @DateTime.Now.Year - VT Intranet By Development Deparment.</p>
+                        <p>&copy; @DateTime.Now.Year - VT Intranet Made with ♥ By <span>Development Department. </span></p>
                     </footer>
                 </div>
             </div>
@@ -479,8 +516,8 @@
             </div>
         </div>
         <div id="chat" style="border: .5px solid #000">
-            <div id="chat-open" class="box-title" onclick="myFunction()"> Chat <span id='UserCount'></span><i id="open-chat" class="fas fa-chevron-up"></i></div>
-            <div id="chat-closed" class="box-title" onclick="myFunction1()">Minimizar chat<span id='UserCount'></span> <i id="close-chat" class="fas fa-times"></i></div>
+            <div id="chat-open" class="box-title" onclick="myFunction()"><div> <img src="~/UploadedFiles/Intranet_Chat.png" width="25" />Chat </div><span id='UserCount'></span><i id="open-chat" class="fas fa-chevron-up"></i></div>
+            <div id="chat-closed" class="box-title" onclick="myFunction1()"> <div><img src="~/UploadedFiles/Intranet_Chat.png" width="25" /> Chat</div><span id='UserCount'></span> <i id="close-chat" class="fas  fa-chevron-down"></i></div>
             <hr />
             <div class="" id="divusers"></div>
         </div>
