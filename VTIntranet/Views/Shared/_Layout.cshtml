@@ -24,9 +24,13 @@
             background-color: transparent !important;
 
         }
-        #nav_home li:hover a {
+         .nav.flex-column li:hover a {
             border-left: 8px solid #ddd;
         }
+       #nav_home li:first-child a {
+    border: none !important;
+}
+
         .nav > li > a{padding:15px !important}
         .container {
             width: 100% !important;
@@ -71,8 +75,8 @@
         }
 
         #container-left {
-            overflow-y: scroll;
-            min-width: 250px;
+          
+            min-width: 200px;
             background: #21356a;
         }
 
@@ -87,7 +91,9 @@
             color:#21356a
         }
         .fc-view-container{background:#fff}
-    
+    #nav_home.nav > li > a, .nav.flex-column.nav > li > a {
+    padding: 20px 15px 20px 35px !important;
+}
     </style>
 
     <!--CHAT-->
@@ -346,14 +352,13 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <div>
-                        </div>
-                        @Html.ActionLink("VT Intranet", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "background-color: #21356a; color: white;text-align: center" })
+
+                        @Html.ActionLink("VT INTRANET", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "background-color: #21356a; color: white;text-align: center" })
                     </div>
                 </li>
                 <!--foreach-->
                 
-                
+
             </ul>
             <div style="border: 1px solid white;"></div>
             <ul class=" nav flex-column" style="color: white; background-color: #21356a;">
