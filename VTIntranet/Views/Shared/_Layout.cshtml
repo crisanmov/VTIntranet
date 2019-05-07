@@ -75,9 +75,13 @@
         }
 
         #container-left {
-          
-            min-width: 200px;
-            background: #21356a;
+              min-width: 200px;
+    background: #21356a;
+    max-height: 100vh;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
         }
 
         #container-right {
@@ -242,7 +246,7 @@
 
         #row1 {
             max-height: 500px;
-            overflow: hidden;
+            overflow: auto;
         }
 
         #left_scroll, #right_scroll {
@@ -309,10 +313,13 @@
         .nav > li > div > ul {
             background: #122143;
         }
-        #nav_home>li, .nav.flex-column>li {
+        #nav_home>li {
     border-bottom: 1px solid #122143;
 }
-
+         .nav.flex-column>li
+         {
+    border-bottom: 1px solid #21356a;
+}
     </style>
 
     <script>
@@ -360,14 +367,14 @@
                 
 
             </ul>
-            <div style="border: 1px solid white;"></div>
-            <ul class=" nav flex-column" style="color: white; background-color: #21356a;">
+           
+            <ul class=" nav flex-column" style="color: white; background-color: #122143;">
                 <li>@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
                 <li>@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
                 <li><a id="uploadFile" style="color:white">Subir Manual</a></li>
             </ul>
         </div>
-        <div>
+        <div style="margin-left:200px">
             <div id="container-right">
                 <div class=" navbar-fixed-top">
                     <div class="container">
