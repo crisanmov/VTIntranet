@@ -15,9 +15,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <style>
         .grid-container {
-            display: grid;
-            grid-template-columns: auto auto;
-            padding: 10px;
+              display: flex;
+    justify-content: space-around;
+    padding: 10px;
         }
 
         #calendar {
@@ -197,6 +197,44 @@
             margin:0 auto
         }
         .index-form>div{padding:0}
+        .borrar {
+    font-size: 30px;
+}
+        #row1{box-shadow: 0 0 5px 1px #a59f9f; width:40%}
+      .novedades {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    width: 90%;
+    padding: 10px 0;
+    margin: 0 auto;
+    border-top: 1px solid #ddd;
+        align-items: center;
+}
+      .borrar {
+    font-size: 30px;
+    border-left: 5px solid #ddd;
+}
+      .borrar {
+    font-size: 30px;
+    border-left: 5px solid #ddd;
+    color: #848181;
+    padding-left:5px
+}
+      .anuncios a {
+    color: #000;
+}
+      .novedades:hover .anuncios a {
+    color: #3788d8;
+}
+
+.novedades:hover .borrar {
+    border-color: #3788d8;
+    color: #000;
+     }
+span.fc-title {
+    color: #fff;
+}
     </style>
 
 
@@ -217,19 +255,19 @@
                    <img src="~/UploadedFiles/Intranet_Noticias.png" width="50px"/>
                     </span>
                 </div>
-                <table style="margin-left:5%; width: 90%">
+               
+                    
                     @foreach (var field in ViewBag.news)
                     {
-                        <tr>
-                            <th style="font-size: medium; background: #CCC7C7; color: #122143">- @field.Title</th>
-                            <th style="font-size: medium; background: #CCC7C7; color: #122143"></th>
-                        </tr>
-                        <tr>
-                            <td style="font-size:small; color:#7F7B7B">@field.Description</td>
-                            <td style="font-size:small; color:#7F7B7B"><a href="@field.IdNotice" style="color: blue" class="newDetails">Ver Detalles</a></td>
-                        </tr>
+
+                        <div class="novedades">
+                            <div id="@field.IdNotice" class="borrar">@field.StartDateNotice</div>
+                            <div class="anuncios"><a href="@field.IdNotice" class="newDetails"> @field.Title</a></div>
+
+                        </div>
+
                     }
-                </table>
+               
             </div>
             <div class="container" id="">
                 <!-- Modal -->
@@ -409,6 +447,8 @@
             date = date[2] + "-" + date[1] + "-" + date[0];
             date2 = date2[2] + "-" + date2[1] + "-" + date2[0];
 
+
+
             //date2 = date2.substring(6, date2.length - 4);
             //let startDate = new Date(date).toISOString().slice(0, 10).replace('T', ' ');
             //console.log(date);
@@ -418,6 +458,10 @@
             json[key].EndDateNotice = date2;
 
         }
+             var prueba = $('.borrar').text().slice(0, 2);
+            $('.borrar').text(prueba);
+       
+        
 
         //console.log(json);
         let noticeObj = [];
@@ -729,7 +773,7 @@
                 $('#descriptionNotice').text(description);
                 $('#startNotice').text(date);
                 $('#endNotice').text(date2);
-
+              
 
 
             },
