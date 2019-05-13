@@ -26,7 +26,7 @@ namespace VTIntranet.Models
             Conectar();
             List<Tag> tags = new List<Tag>();
 
-            SqlCommand com = new SqlCommand("select * from tbltags", con);
+            SqlCommand com = new SqlCommand("select * from tbltags order by tagName", con);
             con.Open();
             SqlDataReader registros = com.ExecuteReader();
             while (registros.Read())
@@ -36,6 +36,7 @@ namespace VTIntranet.Models
                     idTag = int.Parse(registros["idTag"].ToString()),
                     tagName = registros["tagName"].ToString(),
                     tagDescription = registros["tagDescription"].ToString(),
+                    clabe = registros["clabe"].ToString()
                     //tagActive = int.Parse(registros["tagActive"].ToString())
                 };
                 tags.Add(tag);
@@ -68,11 +69,12 @@ namespace VTIntranet.Models
             return tags;
         }
 
+        //get brand for idProfile
         public List<Brand> GetBrand(int idProfile)
         {
             Conectar();
             List<Brand> brands = new List<Brand>();
-            string query = @"SELECT tbltags.idTag, tbltags.tagName, tbldepto.idDepto, tbldepto.name 
+            string query = @"SELECT tbltags.idTag, tbltags.tagName, tbltags.clabe, tbldepto.idDepto, tbldepto.name 
                              FROM tbltags
                              INNER JOIN tbltagdepto on tbltagdepto.idTag = tbltags.idTag
 	                         INNER JOIN tbldepto on tbldepto.idDepto = tbltagdepto.idDepto
@@ -94,6 +96,7 @@ namespace VTIntranet.Models
                     TagName = rows["tagName"].ToString(),
                     IdDepto = int.Parse(rows["idDepto"].ToString()),
                     DeptoName = rows["name"].ToString(),
+                    Clabe = rows["clabe"].ToString()
 
                 };
                 brands.Add(brand);
@@ -101,5 +104,41 @@ namespace VTIntranet.Models
             return brands;
 
         }
+
+        public List<Depto> GetDepto(string brand)
+        {
+            Conectar();
+            List<Depto> deptos = new List<Depto>();
+
+            string query = @"SELECT tbldepto.idDepto, tbldepto.name, tbldepto.clabe
+                            FROM tbldepto
+	                            INNER JOIN tbltagdepto ON tbltagdepto.idDepto = tbldepto.idDepto
+	                            INNER JOIN tbltags ON tbltags.idTag = tbltagdepto.idTag
+                            WHERE tbltags.clabe = @tagName
+                            ORDER BY tbldepto.name";
+
+            SqlCommand com = new SqlCommand(query, con);
+            com.Parameters.Add("@tagName", SqlDbType.VarChar);
+            com.Parameters["@tagName"].Value = brand;
+            con.Open();
+            SqlDataReader rows = com.ExecuteReader();
+
+            while (rows.Read())
+            {
+                Depto depto = new Depto()
+                {
+                    
+                    IdDepto = int.Parse(rows["idDepto"].ToString()),
+                    DeptoName = rows["name"].ToString(),
+                    Clabe = rows["clabe"].ToString(),
+
+                };
+                deptos.Add(depto);
+            }
+            return deptos;
+
+        }
+
+
     }
 }

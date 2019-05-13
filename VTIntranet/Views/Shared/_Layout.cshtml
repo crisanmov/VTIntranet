@@ -20,19 +20,25 @@
     <script src='~/Scripts/calendar/packages/daygrid/main.js'></script>
     
     <style>
+        .nav li div ul li:hover {
+            background: #ddd;
+        }
+        .nav li div ul li a:hover {
+            text-decoration: none;
+        }
         .nav > li > a:focus, .nav > li > a:hover {
             background-color: transparent !important;
 
         }
-         #nav_home2 li:hover {
+        #nav_home2 li:hover {
             border-left: 8px solid #ddd;
         }
-         #nav_home li:hover a {
-    border-left: 8px solid #ddd;
-}
-       #nav_home li:first-child a{
-    border: none !important;
-}
+        #nav_home li:hover >a {
+            border-left: 8px solid #ddd;
+        }
+        #nav_home li:first-child a{
+            border: none !important;
+        }
 
         .nav > li > a{padding:15px !important}
         .container {
@@ -78,13 +84,13 @@
         }
 
         #container-left {
-              min-width: 200px;
-    background: #21356a;
-    max-height: 100vh;
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+            min-width: 200px;
+            background: #21356a;
+            max-height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         #container-right {
@@ -109,9 +115,9 @@
     width: 30px;
 }
       div#divusers * {
-            color: #000 !important;
-            padding: 0 5px
-        }
+        color: #000 !important;
+        padding: 0 5px
+      }
 
         .box-comment {
             height: 45px;
@@ -306,7 +312,7 @@
 
         }
 
-        ::placeholder{color:#fff !important}
+        .placeholder{color:#fff !important}
 
         #nav_home li:hover div, #nav_home li:active div {
             display: block !important;
@@ -357,8 +363,6 @@
     <!--<link href="~/Content/font-awesome.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-  
-
     <script>
         function myFunction() {
             document.getElementById("chat-open").style.display = "none";
@@ -401,10 +405,7 @@
                     </div>
                 </li>
                 <!--foreach-->
-                
-
             </ul>
-           
             <ul class=" nav flex-column" id="nav_home2" style="color: white; background-color: #122143;">
                 <li><img src="~/UploadedFiles/Intranet_Eventos.png">@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Galeria.png">@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
@@ -450,39 +451,37 @@
                                 <div id="validation"></div>
                             </div>
                             <!--form New File-->
-                            <form method="post" action="/Home/SaveNotice">
+                            <form method="post" action="/Home/SavePdf">
                                 <div class="modal-body">
-                                    <div id="validationEvent"></div>
+                                    <div id="validationPdf"></div>
                                     <!--title-->
-                                    <input class="form-control" type="text" placeholder="Titulo" name="title" id="titleEvt">
+                                    <label for="FormControlPdf">Nombre del Manual</label>
+                                    <input class="form-control" type="text" placeholder="Titulo" name="title" id="titlePdf">
                                     <br />
                                     <!--name tag-->
                                     <div class="form-group">
                                         <label for="FormControlTag">Empresa</label>
                                         <select class="form-control" id="FormControlTag">
-                                            <option>Selecciona una opción...</option>
-                                            
+                                            <option value="seleccion">Selecciona una opción...</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="FormControlDepto">Departamento</label>
                                         <select class="form-control" id="FormControlDepto">
-                                            <option>Selecciona una opción...</option>
-                                            
+                                            <option value="seleccion">Selecciona una opción...</option>
                                         </select>
                                     </div>
                                     <div class="form-group row">
                                         <div class='col-sm-12'>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Archivo</label>
-                                                <input type="file" class="btn btn-default" value="" id="fileEvt" accept="image/*" />
+                                                <input type="file" class="btn btn-default" value="" id="filePdf" accept="application/pdf" />
                                             </div>
                                         </div>
-
                                     </div>
-                                    <!--save notice-->
+                                    <!--save PDF-->
                                     <div style="text-align:right; padding:30px 5px">
-                                        <input type="submit" class="btn btn-default" value="Guardar" id="btnSaveEvt" />
+                                        <input type="submit" class="btn btn-default" value="Guardar" id="btnSavePdf" />
                                         <!--<button type="button" class="btn btn-default" data-dismiss="modal" id="btnClose">Cerrar</button>-->
                                     </div>
 
@@ -496,7 +495,6 @@
                     @RenderBody()
                 </div>
                 <div class="">
-
                     <hr />
                     <footer>
                         <p>&copy; @DateTime.Now.Year - VT Intranet Made with ♥ By <span>Development Department. </span></p>
@@ -553,17 +551,74 @@
         createMenu(menuInfo);
 
         jQuery(document).ready(function ($) {
+
+            var tags = $('.tags');
             var contenedor = $("#container-right").height();
+
+            setEventClick(tags);
+
             $("#container-left").css("height", contenedor);
 
             $('#uploadFile').click(function () {
                 //alert('push');
                 $('#uploadFileModal').modal('show');
-                console.log(brands);
+                //console.log(brands);
                 populateListTag();
                 
             });
+
+            $('#FormControlTag').change(function (e) {
+                let brand = ($(this).val());
+                populateListDepto(brand);
+            });
+
+            $('#btnSavePdf').click(function (e) {
+                console.log('btnSavePdf');
+                e.preventDefault();
+                //validate form
+
+                let formData = new FormData();
+                let title = $('#titlePdf').val();
+                let brand_clabe = $('#FormControlTag').val();
+                let depto_clabe = $('#FormControlDepto').val();
+                let fileClabe = brand_clabe + '-' + depto_clabe;
+                let files = $('#filePdf').prop('files');
+
+                for (let i = 0; i < files.length; i++) {
+                    let file = files[i];
+                    //console.log("****FOR***");
+                    //console.log(file);
+                    formData.append('attachmentPost', file);
+                }
+
+                //console.log(formData.getAll('attachmentPost'));
+
+                formData.append('title', title)
+                formData.append('brandClabe', brand_clabe);
+                formData.append('deptoClabe', depto_clabe);
+                formData.append('fileClabe', fileClabe);
+                console.log(title);
+                console.log(fileClabe);
+                
+                
+                saveManual(formData);
+            });
+
+
         });
+
+        function clearSelect() {
+
+            let select_length = $('#FormControlDepto option').length;
+
+            if (select_length > 1) {
+                $('#FormControlDepto option').each(function () {
+                    if ($(this).val() != 'seleccion') {
+                        $(this).remove();
+                    }
+                });
+            }
+        }
 
         function createMenu(menuInfo) {
             //console.log(menuInfo);
@@ -574,10 +629,12 @@
                 
                 let li = document.createElement('li');
                 let a = document.createElement('a');
+                let clabe = menuInfo[field][0].tagClabe;
 
                 a.style.color = 'white';
                 a.innerHTML = field;
-                //a.setAttribute('id', field);
+                a.setAttribute('class', 'tags');
+                a.setAttribute('value', clabe);
                 li.append(a);               
                 nav_home.append(li);
 
@@ -597,7 +654,11 @@
 
             for (let i = 0; i < item.length; i++) {
                 let li = document.createElement('li');
-                li.innerHTML = item[i].deptoName;
+                let a = document.createElement('a');
+                a.setAttribute('href', 'example.com');
+                a.innerHTML = item[i].deptoName;
+                li.appendChild(a);
+                //li.innerHTML = item[i].deptoName;
                 //li.setAttribute('id', item[i].idDepto);
                 ul.appendChild(li);
             }
@@ -607,6 +668,27 @@
             
 
             return submenu;
+
+        }
+
+        function setEventClick(tags) {
+            //console.log("set listener click");
+            //sconsole.log(tags);
+            for (let i = 0; i < tags.length; i++) {
+                $(tags[i]).click(function (e) {
+                    console.log($(this));
+                    
+                    let clabe = $(this)[0].attributes[1].nodeValue;
+                    let tag = '/Home/Attachment/?tag=' + clabe;
+                    //tag = tag.replace(/ /g, '%20');
+                    $(tags[i]).attr('href', tag);
+
+                    /*let tag = '/Home/Attachment/?tag=' + $(this)[0].innerHTML;
+                    tag = tag.replace(/ /g, '%20');
+                    $(tags[i]).attr('href', tag);*/
+                                       
+                });
+            }
 
         }
 
@@ -631,7 +713,7 @@
         }
 
         function getBrands(array) {
-
+            //console.log(array);
             let brands = [];
             for (let i = 0; i < array.length; i++) {
                 brands.push(array[i].TagName);
@@ -648,25 +730,108 @@
                 for (let j = 0; j < brands_raw.length; j++) {
                     let brand = brands_raw[j].TagName;
                     if (brand === ban) {
-                        let depto = { idTag: brands_raw[j].IdTag, idDepto: brands_raw[j].IdDepto, deptoName: brands_raw[j].DeptoName };
+                        //build elements for json
+                        let depto = { idTag: brands_raw[j].IdTag, tagClabe: brands_raw[j].Clabe, idDepto: brands_raw[j].IdDepto, deptoName: brands_raw[j].DeptoName };
                         deptos.push(depto);
                     }
                 }
                 object[ban] = deptos;
                 deptos = [];
             }
+            //console.log(object);
             return object;
         }
 
-        function getTags() {
+        function populateListDepto(brand) {
 
-            
+            $.ajax({
+                url: 'GetDeptos/?brand=' + brand,
+                dataType: 'json',
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                asyn: 'true',
+                processData: 'false',
+                cache: 'false',
+                success: function (data) {
+
+                    clearSelect();
+
+                    let json = JSON.parse(data);
+                    //console.log(json);
+                    selectDepto = document.querySelector('#FormControlDepto');
+
+                    for (let i = 0; i < json.length; i++) {
+                        let option = document.createElement('option');
+                        option.innerHTML = json[i].DeptoName;
+                        option.setAttribute('value', json[i].Clabe);
+                        selectDepto.append(option);
+                    }
+
+
+
+                },
+                error: function (e) {
+
+                }
+            });
         }
 
         function populateListTag() {
 
+            $.ajax({
+                url: 'GetTags',
+                dataType: 'json',
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                asyn: 'true',
+                processData: 'false',
+                cache: 'false',
+                success: function (data) {
+
+                    let json = JSON.parse(data);
+                    console.log(json);
+                    //let options = [];
+                    selectTag = document.querySelector('#FormControlTag');
+                    
+                    for (let i = 0; i < json.length; i++) {
+                        let option = document.createElement('option');
+                        option.innerHTML = json[i].tagName;
+                        option.setAttribute('value', json[i].clabe);
+                        option.setAttribute('id', json[i].idTag);
+                        selectTag.append(option);
+                    }
+                },
+                error: function (e) {
+
+                }
+            });
+        
         }
 
+        function saveManual(fd) {
+
+            $.ajax({
+                url: "SaveFilePdf",
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (response) {
+                    console.log(response);
+                    /*if (response.success) {
+
+                        $('#myModal4').modal('hide');
+                        $modal = $('#myModal4');
+                        $modal.find('form')[0].reset();
+                        $('#files').val('');
+                        $('#list').empty();
+                    }*/
+                }
+            });
+        }
+
+     
     </script>
 
     <!--**************CHAT*************-->

@@ -11,6 +11,7 @@ namespace VTIntranet.Models
         public string TagName { get; set; }
         public int IdDepto { get; set; }
         public string DeptoName { get; set; }
+        public string Clabe { get; set; }
 
     }
 }

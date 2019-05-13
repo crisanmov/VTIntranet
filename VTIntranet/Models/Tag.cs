@@ -10,6 +10,7 @@ namespace VTIntranet.Models
         public int idTag { get; set; }
         public string tagName { get; set; }
         public string tagDescription { get; set; }
+        public string clabe { get; set; }
         //public int tagActive { get; set; }
     }
 }

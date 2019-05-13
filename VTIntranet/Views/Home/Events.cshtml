@@ -149,9 +149,6 @@
     <button type="button" class="btn btn-primary" style="margin-left: 1%" id="events">Nuevo Evento</button>
     <br />
     <hr />
-
-
-
     <div id="eventos-padre">
         @foreach (var field in ViewBag.events)
         {
@@ -163,9 +160,7 @@
                                 <div class="">
                                     <img class="img-responsive" src="~/UploadedFiles/@field.FileName" alt="">
                                     <div class="overlay">
-
                                         <p>
-
                                             <a href="@field.Url" style="color:#122143; font-size:large" target="_blank">CLICK</a>
                                         </p>
                                     </div>
@@ -177,7 +172,6 @@
                                 <h5 class="card-title">@field.Title</h5>
                                 <p class="card-text">@field.Description</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-
                             </div>
                         </div>
                         <div class="col-md-4" >
@@ -333,6 +327,7 @@
 
         let idAlbum = $('.addImage').attr("id");
         let fd = new FormData();
+        /*-------------------------------------------------------*/ 
         let files = $('#files').prop('files');
         console.log(files.length);
 

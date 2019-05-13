@@ -46,6 +46,79 @@ namespace VTIntranet.Controllers
             return View();
         }
 
+        //Attachments
+        [HttpGet]
+        public ActionResult Attachment()
+        {
+            //serializer for brands
+            string id = this.Session["idUser"].ToString();
+            int idUser = int.Parse(id);
+            TagHelper th = new TagHelper();
+
+            var tag = Request["tag"];
+            ViewBag.Tag = tag;
+            //get deptos
+            var serializerDepto = new JavaScriptSerializer();
+            var serializedResultD = serializerDepto.Serialize(th.GetDepto(tag));
+            ViewBag.D = serializedResultD;
+
+            var serializerBrand = new JavaScriptSerializer();
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            ViewBag.Navbar = serializedResultB;
+
+            return View();
+
+        }
+
+        [HttpGet]
+        public JsonResult GetFilesAttach(String tagClabe)
+        {
+
+            AttachmentHelper ah = new AttachmentHelper();
+            //get attachments
+            var serializerAttach = new JavaScriptSerializer();
+            var serializedResultA = serializerAttach.Serialize(ah.GetAttachments(tagClabe));
+            //ViewBag.Attachments = serializedResultA;
+
+            return Json(serializedResultA, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getNotice(String idNotice)
+        {
+            System.Diagnostics.Debug.WriteLine("###############################################################");
+            System.Diagnostics.Debug.WriteLine(idNotice);
+            int id = Int32.Parse(idNotice);
+
+            //ManageModelNew mn = new ManageModelNew();
+            //var Notice = mn.getNotice(id);
+            NoticeHelper nh = new NoticeHelper();
+            var Notice = nh.getNotice(id);
+
+            return Json(Notice, JsonRequestBehavior.AllowGet);
+            //return Json("");
+        }
+
+        [HttpGet]
+        public JsonResult GetDeptos(String brand)
+        {
+            TagHelper th = new TagHelper();
+            var serializer = new JavaScriptSerializer();
+            var serializedResult = serializer.Serialize(th.GetDepto(brand));
+
+            return Json(serializedResult, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetTags()
+        {
+            TagHelper th = new TagHelper();
+            var serializer = new JavaScriptSerializer();
+            var serializedResult = serializer.Serialize(th.gettAll());
+
+            return Json(serializedResult, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult SaveNotice(Notice notice)
         {
@@ -178,20 +251,65 @@ namespace VTIntranet.Controllers
 
         }
 
-        [HttpGet]
-        public JsonResult getNotice(String idNotice)
+        [HttpPost]
+        public ActionResult SaveFilePdf(IEnumerable<HttpPostedFileBase> attachmentPost)
         {
-            System.Diagnostics.Debug.WriteLine("###############################################################");
-            System.Diagnostics.Debug.WriteLine(idNotice);
-            int id = Int32.Parse(idNotice);
+            try
+            {
+                foreach(var file in attachmentPost)
+                {
+                    if (file.ContentLength > 0)
+                    {
+                        String FileExt = Path.GetExtension(file.FileName).ToUpper();
 
-            //ManageModelNew mn = new ManageModelNew();
-            //var Notice = mn.getNotice(id);
-            NoticeHelper nh = new NoticeHelper();
-            var Notice = nh.getNotice(id);
+                        if(FileExt == ".PDF")
+                        {
+                            string title_temp = Convert.ToString(Request["title"]);
+                            string fileClabe = Convert.ToString(Request["fileClabe"]);
+                            string title = title_temp + "-" + fileClabe + Path.GetExtension(file.FileName);
+                            int idAttachment = 0;
 
-            return Json(Notice, JsonRequestBehavior.AllowGet);
-            //return Json("");
+                            string _path = Path.Combine(Server.MapPath("~/UploadedFiles/attachments/"), title);
+                            file.SaveAs(_path);
+
+                            /*Stream str = file.InputStream;
+                            BinaryReader br = new BinaryReader(str);
+                            Byte[] FileDet = br.ReadBytes((Int32)str.Length);*/
+
+                            Attachment attachment = new Attachment()
+                            {
+                                AttachmentName = title,
+                                AttachmentDirectory = _path,
+                                
+                            };
+
+                            AttachmentHelper at = new AttachmentHelper();
+                            //save references attachment
+                            idAttachment = at.CreateAttachment(attachment);
+
+                            string tag = Convert.ToString(Request["brandClabe"]);
+                            string depto = Convert.ToString(Request["deptoClabe"]);
+
+                            int idTag = at.GetIdTag(tag);
+                            int idDepto = at.GetIdDepto(depto);
+
+
+                            //create relationship
+                            at.SaveAttachTagDepto(idAttachment, idTag, idDepto);
+
+
+                        }
+
+                    }
+                }
+
+                return Json("successfully");
+            }
+            catch
+            {
+                ViewBag.Message = "File upload failed!!";
+                return View();
+            }
         }
 
         [HttpPost]
@@ -256,37 +374,6 @@ namespace VTIntranet.Controllers
 
             return View();
         }
-
-        [ChildActionOnly]
-        public ActionResult Display(string name)
-        {
-            return Content("Child Action " + name);
-        }
-
-        /*
-        [ChildActionOnly]
-        public ActionResult Chat()
-        {
-            //tags
-            TagHelper mt = new TagHelper();
-            ViewBag.tags = mt.getTagProfile(1);
-
-            var userName = this.Session["userName"];
-            ViewBag.UserName = userName;
-
-            return View();        }
-
-        public ActionResult Chat()
-        {
-            //tags
-            TagHelper mt = new TagHelper();
-            ViewBag.tags = mt.getTagProfile(1);
-
-            var userName = this.Session["userName"];
-            ViewBag.UserName = userName;
-            
-            return View();
-        }*/
 
         public ActionResult Volunteer()
         {
