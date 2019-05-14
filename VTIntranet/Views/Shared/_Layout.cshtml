@@ -20,9 +20,10 @@
     <script src='~/Scripts/calendar/packages/daygrid/main.js'></script>
     
     <style>
-        .nav li div ul li:hover {
-            background: #ddd;
-        }
+        .nav li div ul li:hover, .nav li div ul li:hover a {
+    background: #ddd;
+    color: #122143 !important;
+}
         .nav li div ul li a:hover {
             text-decoration: none;
         }
@@ -320,10 +321,11 @@
         .nav > li > a, .nav > li > div > ul > li {
             position: relative;
             display: block;
-            padding: 10px 15px;
+            padding: 10px 15px 10px 60px;
         }
         .nav > li > div > ul {
             background: #122143;
+            padding:0
         }
         #nav_home>li {
     border-bottom: 1px solid #122143;
@@ -346,7 +348,7 @@
        #row2 td.fc-day-top.fc-tue.fc-today a {
     color: #fff;
 }
-       #add-dates img {
+       #add-dates img, .tags {
     cursor: pointer;
 }
        footer {
@@ -354,6 +356,10 @@
     font-size:20px;
 }
        footer span{color:deeppink}
+
+       #container-left a {
+    color: #fff;
+}
     </style>
 
     <!--CHAT-->
@@ -406,7 +412,7 @@
                 </li>
                 <!--foreach-->
             </ul>
-            <ul class=" nav flex-column" id="nav_home2" style="color: white; background-color: #122143;">
+            <ul class=" nav flex-column" id="nav_home2" style="color: white !important; background-color: #122143;">
                 <li><img src="~/UploadedFiles/Intranet_Eventos.png">@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Galeria.png">@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Subir-Manual.png"><a id="uploadFile" style="color:white">Subir Manual</a></li>

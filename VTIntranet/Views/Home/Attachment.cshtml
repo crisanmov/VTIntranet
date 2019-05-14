@@ -2,65 +2,115 @@
 
 <style>
 
-    #attachment {
+    .attachment {
         margin: 0px auto;
-        border: 1px solid green;
-        margin-top: 5%;
-        height: 300px;
-        width: 80%;
-        display: flex;
+    margin-top: 5%;
+    height: 300px;
+    width: 95%;
+    display: flex;
+    max-height: 300px;
+    overflow-y: scroll;
     }
 
-    #brand-logo,
-    #brand-text {
-        border: 1px solid green;
-    }
 
     #brand-logo {
-        width: 30%;
-        height: 300px;
-        margin: 0px;
-        padding: 0px;
+        min-width: 300px;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+    background:#ececec;
+     display:flex
     }
 
     #brand-text {
-        width: 70%;
-        height: 300px;
+       width: -webkit-fill-available;
+       background:#f0f0f0;
+       align-items:center;
+       flex-direction:column;
+       justify-content:center;
+       display:flex
+
     }
 
     #brand-deptos {
-        border: 1px solid orange;
-        height: 150px;
-        width: 80%;
+        width: 95%;
         margin: 0px auto;
         display: flex;
+        justify-content: space-between;
+       
     }
 
     .area {
-       
+          background: #122143;
+    padding: 15px 0;
+    margin: 30px auto;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+        width: 15%;
+        text-align:center
     }
 
     #contentFile {
         margin: 0px auto;
-        width: 80%;
-        border: 1px solid red;
+        width: 95%;
     }
+    table {
+    background-color: transparent;
+    table-layout: auto;
+    width: 100%;
+}
+    tbody {
+    background: #d7d7d7;
+}
+
+td, th {border: 5px solid #d7d7d7;padding: 5px;}
+
+th{color:#686868}
+
+td{font-weight:600}
+
+.inc, .ad, .gs, .inh, .vtech, .vt, .wp{display:none}
+
+#IN-C .inc, #AD .ad, #GS .gs, #IN-H .inh, #VTECH .vtech, #VT .vt, #WP .wp{display:block}
+
 </style>
 
 
-<div id="attachment">
+<div class="attachment">
+
     <div id="brand-logo">
-        LOGO
+
+        <img class="ad" src="~/UploadedFiles/Logos/Axkan.png" />
+        <img class="gs" src="~/UploadedFiles/Logos/Grand_Slam.png" />
+        <img class="inc" src="~/UploadedFiles/Logos/INMENSE_Club.png" />
+        <img class="inh" src="~/UploadedFiles/Logos/INMENSE_Hotels.png" />
+        <img class="vtech" src="~/UploadedFiles/Logos/INMENSE_Club.png" />
+        <img class="vt" src="~/UploadedFiles/Logos/VTime.png" />
+        <img class="wp" src="~/UploadedFiles/Logos/Worldpass.png" />
     </div>
     <div id="brand-text">
-        TEXT
+        <p  class="inc">
+            <b>Inmense hotels</b> es una cadena de hoteles. Nuestro objetivo es crear experi- <br />
+            encias memorables: Elegimos propiedades que sean únicas y mantenemos <br />
+            su originalidad complementada con una decoración exquisita. <br />
+            <br />
+            Más que una estancia hotelera buscamos crear una experiencia única, que <br />
+            involucre todos los sentidos de nuestros visitantes, desde el olor a madera o <br />
+            playa de nuestros hoteles, hasta los platillos preparados por nuestros chefs, <br />
+            pasando por un msaje ala luz de lasvelaso unacenaroánticaen medio <br />
+            de la neblina. <br />
+            <br />
+            Creemosen lo local y por eso nuestroshotelestienen elementos únicos. <br />
+            Nuestro manifiesto culinario usa los ingredientes locales y los mezcla de <br />
+        </p>
     </div>
 </div>
 <div id="brand-deptos"></div>
 <div id="contentFile">
     <table id="attachments">
         <tr>
-            <th>#</th>
+            <th>File ID</th>
             <th>Nombre</th>
             <th>Empresa</th>
             <th>Ver</th>
@@ -71,6 +121,7 @@
 </div>
 
 <script>
+   
 
     let tmp = "@ViewBag.D";
     let deptos = JSON.parse(tmp.replace(/&quot;/g, '"'));
@@ -78,6 +129,8 @@
     
     showArea(deptos);
     tagClabe = getUrlParam();
+
+    $('.attachment').attr('id', tagClabe);
 
     getFilesAttch(tagClabe);
 
