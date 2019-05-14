@@ -31,7 +31,7 @@
         }
 
         .fc-scroller.fc-day-grid-container {
-            height: auto !important;
+            height: 400px !important;
         }
 
         .navbar-fixed-top, .navbar-fixed-bottom {
@@ -59,7 +59,7 @@
         }
 
         .modal-content {
-            height: 580px !important; 
+            height: auto 
         }
 
         .modal-details {
@@ -200,7 +200,9 @@
         .borrar {
     font-size: 30px;
 }
-        #row1{box-shadow: 0 0 5px 1px #a59f9f; width:40%}
+        #row1, #row2{box-shadow: 0 0 5px 1px #a59f9f; background:#fff}
+        #row1{width:450px}
+        #row2{width:600px}
       .novedades {
     display: flex;
     text-align: center;
@@ -215,11 +217,21 @@
     font-size: 30px;
     border-left: 5px solid #ddd;
 }
-      .borrar {
+     .borrar {
     font-size: 30px;
     border-left: 5px solid #ddd;
     color: #848181;
-    padding-left:5px
+    padding-left: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+     .newDetails {
+    font-size: 20px;
+    text-decoration:none
+}
+     .newDetails:hover{text-decoration:none}
+     .borrar p:last-child {
+    font-size: 15px;
 }
       .anuncios a {
     color: #000;
@@ -235,11 +247,28 @@
 span.fc-title {
     color: #fff;
 }
+#slide-down i {
+    font-size: 70px;
+    position: relative;
+    top: -20px;
+}
+
+#slide-down {
+  
+    background: transparent;
+    border: none;
+    color: #001dff;
+}
+.fc-dayGrid-view .fc-body .fc-row {
+    max-height: 4.7em;
+}
     </style>
 
 
 </head>
-<div>
+
+
+<div style="text-align:center">
     <div style="margin-left: 2%;">
         <h4 style="display:none">
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", new { idUser = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
@@ -360,10 +389,14 @@ span.fc-title {
             <div id="events" style="height: 100%;">
                 <div class="" id="calendar" style=""></div>
             </div>
-            <br /><br />
         </div>
     </div>
-    <div>
+    <a id="slide-down" href="#slider-div">
+    <i class="material-icons">
+        arrow_drop_down
+    </i>
+</a>
+    <div id="slider-div">
         <div class="carrusel">
             <div class="carrusel-inner">
                 <input class="carrusel-open" type="radio" id="carrusel-1" name="carrusel" aria-hidden="true" hidden="" checked="checked">
@@ -535,7 +568,7 @@ span.fc-title {
                 //defaultDate: '2019-03-12',
                 navLinks: true, // can click day/week names to navigate views
                 editable: false,
-                eventLimit: false, // allow "more" link when too many events
+                eventLimit: true, // allow "more" link when too many events
                 events: events,
                 eventClick: function (event, jsEvent, view) {
                     //console.log(event.id);
@@ -584,7 +617,7 @@ span.fc-title {
                 div_date.setAttribute('id', json[i].IdNotice);
                 div_date.setAttribute('class', 'borrar');
                 div_date.innerHTML = tmp[2];
-                div_date.append();
+                div_date.append(p);
         
                 notice.setAttribute('class', 'newDetails');
                 notice.setAttribute('href', json[i].IdNotice);
