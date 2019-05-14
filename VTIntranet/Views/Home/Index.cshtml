@@ -252,22 +252,10 @@ span.fc-title {
                 <div id="add-dates">
                     <h4><b style="color: #21356a">Noticias</b></h4>
                     <span style="font-size: 3em; color: #21356a; float: right;" data-toggle="modal" data-target="#myModal">
-                   <img src="~/UploadedFiles/Intranet_Noticias.png" width="50px"/>
+                        <img src="~/UploadedFiles/Intranet_Noticias.png" width="50px" />
                     </span>
                 </div>
-               
-                    
-                    @foreach (var field in ViewBag.news)
-                    {
-
-                        <div class="novedades">
-                            <div id="@field.IdNotice" class="borrar">@field.StartDateNotice</div>
-                            <div class="anuncios"><a href="@field.IdNotice" class="newDetails"> @field.Title</a></div>
-
-                        </div>
-
-                    }
-               
+                <!--Div notices-->
             </div>
             <div class="container" id="">
                 <!-- Modal -->
@@ -375,14 +363,6 @@ span.fc-title {
             <br /><br />
         </div>
     </div>
-    <!--<div class="grid-item" id="row3">
-        <div class="container" id="gallery" style="border: 1.5px solid orange;">
-            @Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })<br />
-            @Html.ActionLink("Example", "Parent", "Home", null, new { style = "color: white" })<br />
-            @Html.ActionLink("Chat", "Chat", "Home", null, new { style = "color: white" })
-        </div>
-    </div>-->
-    <!--Carousel Images-->
     <div>
         <div class="carrusel">
             <div class="carrusel-inner">
@@ -426,117 +406,224 @@ span.fc-title {
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        var calendarEl = document.getElementById('calendar');
-        //console.log("Entra a Cargar Calendar");
-
         var notices = "@ViewBag.news2";
-        //console.log(notices);
         let json = JSON.parse(notices.replace(/&quot;/g, '"'));
-        //console.log(json);
-        //console.log(json[0]['startDateNotice']);
+        let events = setEventsCalendar(json);
+  
+        showCalendar(events);
+        setDialogNotice(json);
+        setNoticeClick();
 
-        //Parse Json Dates start and end notice
-        for (let key in json) {
+        function getNotice(idNotice) {
+            console.log('Entra a consultar noticia');
+            console.log(idNotice);
 
-            let date = json[key].StartDateNotice;
-            let date2 = json[key].EndDateNotice;
-            date = date.substring(0, date.length - 14);
-            date2 = date2.substring(0, date2.length - 14);
-            date = date.match(/\d+/g);
-            date2 = date2.match(/\d+/g);
-            date = date[2] + "-" + date[1] + "-" + date[0];
-            date2 = date2[2] + "-" + date2[1] + "-" + date2[0];
+            $.ajax({
+                url: 'getNotice/?idNotice=' + idNotice,
+                dataType: 'json',
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                processData: false,
+                cache: false,
+                success: function (data) {
+
+                    console.log(data);
+                    let title = data['Title'];
+                    let description = data['Description'];
+                    let date = data['StartDateNotice'];
+                    let date2 = data['EndDateNotice'];
+                    date = date.substring(0, date.length - 14);
+                    date2 = date2.substring(0, date2.length - 14);
+                    /*date = date.substring(6, date.length - 2);
+                    date2 = date2.substring(6, date2.length - 2);
+                    date = Number(date);
+                    date2 = Number(date2);*/
+
+                    //let startDate = new Date(date).toISOString().slice(0, 10).replace('T', ' ');
+                    //let endtDate = new Date(date2).toISOString().slice(0, 10).replace('T', ' ');
+
+                    $('#myModal2').modal('show');
+                    $('#titleNotice').text(title);
+                    $('#descriptionNotice').text(description);
+                    $('#startNotice').text(date);
+                    $('#endNotice').text(date2);
 
 
 
-            //date2 = date2.substring(6, date2.length - 4);
-            //let startDate = new Date(date).toISOString().slice(0, 10).replace('T', ' ');
-            //console.log(date);
-            //console.log(date2);
-
-            json[key].StartDateNotice = date;
-            json[key].EndDateNotice = date2;
-
+                },
+                error: function (e) {
+                    //console.log(e);
+                }
+            });
         }
-             var prueba = $('.borrar').text().slice(0, 2);
-            $('.borrar').text(prueba);
-       
+
+        function setEventsCalendar(json) {
+
+            let noticeObj = [];
+
+            //Parse Json Dates start and end notice
+            for (let key in json) {
+
+                let date = json[key].StartDateNotice;
+                let date2 = json[key].EndDateNotice;
+                date = date.substring(0, date.length - 14);
+                date2 = date2.substring(0, date2.length - 14);
+                date = date.match(/\d+/g);
+                date2 = date2.match(/\d+/g);
+                date = date[2] + "-" + date[1] + "-" + date[0];
+                date2 = date2[2] + "-" + date2[1] + "-" + date2[0];
+
+                //date2 = date2.substring(6, date2.length - 4);
+                //let startDate = new Date(date).toISOString().slice(0, 10).replace('T', ' ');
+                //console.log(date);
+                //console.log(date2);
+
+                json[key].StartDateNotice = date;
+                json[key].EndDateNotice = date2;
+
+            }
+
+            //create json events for set calendar
+            for (let key in json) {
+
+                let str = {};
+                let id;
+                let title;
+                let start;
+                let end;
+
+                id = json[key].IdNotice;
+                title = json[key].Title;
+                start = json[key].StartDateNotice;
+                end = json[key].EndDateNotice;
+
+                if (start == end) {
+                    //console.log(title);
+                    //console.log("fechas iguales");
+                    str.id = id.toString();
+                    //str.resourceId = 'a',
+                    str.title = title;
+                    str.start = start;
+                    //str.url = 'http://google.com/';
+                    noticeObj.push(str);
+
+                } else {
+                    str.id = id.toString();
+                    str.title = title;
+                    str.start = start;
+                    str.end = end;
+
+                    noticeObj.push(str);
+                }
+            }
+
+            return noticeObj;
+        }
         
+        function showCalendar(events) {
 
-        //console.log(json);
-        let noticeObj = [];
+            var calendarEl = document.getElementById('calendar');
 
-        for (let key in json) {
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['interaction', 'dayGrid'],
+                header: {
+                    left: 'prevYear,prev,next,nextYear today',
+                    center: 'title',
+                    right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                },
+                //defaultDate: '2019-03-12',
+                navLinks: true, // can click day/week names to navigate views
+                editable: false,
+                eventLimit: false, // allow "more" link when too many events
+                events: events,
+                eventClick: function (event, jsEvent, view) {
+                    //console.log(event.id);
+                    //console.log(event.title);
+                }
 
-            let str = {};
-            let id;
-            let title;
-            let start;
-            let end;
 
-            id = json[key].IdNotice;
-            title = json[key].Title;
-            start = json[key].StartDateNotice;
-            end = json[key].EndDateNotice;
 
-            if (start == end) {
-                //console.log(title);
-                //console.log("fechas iguales");
-                str.id = id.toString();
-                //str.resourceId = 'a',
-                str.title = title;
-                str.start = start;
-                //str.url = 'http://google.com/';
-                noticeObj.push(str);
 
-            } else {
-                str.id = id.toString();
-                str.title = title;
-                str.start = start;
-                str.end = end;
 
-                noticeObj.push(str);
-            }
+
+            });
+            calendar.render();
+            calendar.setOption('locale', 'es');
+            calendar.on('dateClick', function (info) {
+                console.log('clicked on ' + info.dateStr);
+
+            });
         }
 
-        //console.log(noticeObj);
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: ['interaction', 'dayGrid'],
-            header: {
-                left: 'prevYear,prev,next,nextYear today',
-                center: 'title',
-                right: 'dayGridMonth,dayGridWeek,dayGridDay'
-            },
-            //defaultDate: '2019-03-12',
-            navLinks: true, // can click day/week names to navigate views
-            editable: false,
-            eventLimit: false, // allow "more" link when too many events
+        function setDialogNotice(json){
+            //console.log('entra a setDialogNotice');
+            //console.log(json);
+            let div_notices = document.querySelector('#news');
 
-            events: noticeObj,
+            for (let i = 0; i < json.length; i++) {
 
+                let startDate = json[i].StartDateNotice;
+                //console.log(startDate);
+                let tmp = startDate.split("-");
+                
+                let date = new Date(tmp[2], tmp[1], tmp[0]);
+                let months = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DEC'];
+                let month = months[date.getMonth()];
+                console.log(month);
+                console.log(date);
 
-            eventClick: function (event, jsEvent, view) {
-                //console.log(event.id);
-                //console.log(event.title);
+                let div_notice = document.createElement('DIV');
+                let div_date = document.createElement('DIV');
+                let div_title = document.createElement('DIV');
+                let notice = document.createElement('a');
+                let p = document.createElement('p');
+
+                p.innerHTML = month;
+                div_notice.setAttribute('class', 'novedades');
+                div_date.setAttribute('id', json[i].IdNotice);
+                div_date.setAttribute('class', 'borrar');
+                div_date.innerHTML = tmp[2];
+                div_date.append();
+        
+                notice.setAttribute('class', 'newDetails');
+                notice.setAttribute('href', json[i].IdNotice);
+                notice.innerHTML = json[i].Title;
+
+                div_title.setAttribute('class', 'anuncios');
+
+                div_title.append(notice);
+                div_notice.append(div_date);
+                div_notice.append(div_title);
+
+                //console.log(div_notice);
+                div_notices.appendChild(div_notice);
+            
             }
 
+        }
 
+        function setNoticeClick() {
+            let notices = document.querySelectorAll('.newDetails');
+            //console.log(notices);
 
+            for (let i = 0; i < notices.length; i++) {
+                $(notices[i]).click(function (e) {
+                    e.preventDefault();
+                    
+                    let idNew = $(this).attr('href');
+                    getNotice(idNew);
+                });
+            }
 
-
-
-        });
-        calendar.render();
-        calendar.setOption('locale', 'es');
-        calendar.on('dateClick', function (info) {
-            console.log('clicked on ' + info.dateStr);
-
-        });
+        }
 
     });
 </script>
 <!--Functions and eventlisteners-->
 <script type="text/javascript">
+
+    
 
     $('#title').on('focus', function (e) {
         $(this).attr("autocomplete", "off");
@@ -669,16 +756,7 @@ span.fc-title {
 
     });
 
-    $('.newDetails').click(function (e) {
-        e.preventDefault();
-
-        let idNew = $(this).attr('href');
-        //console.log(idNew);
-        //alert(idNew);
-
-        getNotice(idNew);
-
-    });
+    
 
     function validateControl(...restArgs) {
         //console.log(restArgs.length);
@@ -739,49 +817,7 @@ span.fc-title {
 
     }
 
-    function getNotice(idNotice) {
-        console.log('Entra a consultar noticia');
-        console.log(idNotice);
-
-        $.ajax({
-            url: 'getNotice/?idNotice=' + idNotice,
-            dataType: 'json',
-            type: 'GET',
-            contentType: 'application/json; charset=utf-8',
-            async: true,
-            processData: false,
-            cache: false,
-            success: function (data) {
-
-                console.log(data);
-                let title = data['Title'];
-                let description = data['Description'];
-                let date = data['StartDateNotice'];
-                let date2 = data['EndDateNotice'];
-                date = date.substring(0, date.length - 14);
-                date2 = date2.substring(0, date2.length - 14);
-                /*date = date.substring(6, date.length - 2);
-                date2 = date2.substring(6, date2.length - 2);
-                date = Number(date);
-                date2 = Number(date2);*/
-
-                //let startDate = new Date(date).toISOString().slice(0, 10).replace('T', ' ');
-                //let endtDate = new Date(date2).toISOString().slice(0, 10).replace('T', ' ');
-
-                $('#myModal2').modal('show');
-                $('#titleNotice').text(title);
-                $('#descriptionNotice').text(description);
-                $('#startNotice').text(date);
-                $('#endNotice').text(date2);
-              
-
-
-            },
-            error: function (e) {
-                //console.log(e);
-            }
-        });
-    }
+    
 
     /*----------------------Change JQuery Version----------------------*/
     $j = jQuery.noConflict();
