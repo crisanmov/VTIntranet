@@ -751,9 +751,10 @@
         }
 
         function populateListDepto(brand) {
-
+            console.log("****");
+            console.log(brand);
             $.ajax({
-                url: 'GetDeptos/?brand=' + brand,
+                url: '/Home/GetDeptos/?brand=' + brand,
                 dataType: 'json',
                 type: 'GET',
                 contentType: 'application/json; charset=utf-8',
@@ -787,7 +788,7 @@
         function populateListTag() {
 
             $.ajax({
-                url: 'GetTags',
+                url: '/Home/GetTags/',
                 dataType: 'json',
                 type: 'GET',
                 contentType: 'application/json; charset=utf-8',
