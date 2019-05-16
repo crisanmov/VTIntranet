@@ -71,6 +71,14 @@ namespace VTIntranet.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetAttachment(String tagClabe, String idAttachment)
+        {
+
+            
+            return Json("successfully");
+        }
+
+        [HttpGet]
         public JsonResult GetFilesAttach(String tagClabe)
         {
 

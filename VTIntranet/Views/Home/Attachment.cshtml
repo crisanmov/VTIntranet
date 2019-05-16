@@ -122,17 +122,20 @@ td{font-weight:600}
 
 <script>
    
-
     let tmp = "@ViewBag.D";
     let deptos = JSON.parse(tmp.replace(/&quot;/g, '"'));
     let tagClabe = '';
-    
+
+    //show area or deptos in view
     showArea(deptos);
     tagClabe = getUrlParam();
 
     $('.attachment').attr('id', tagClabe);
 
+    //show files attachment of brand
     getFilesAttch(tagClabe);
+
+    
 
     function getFilesAttch(tagClabe) {
         //console.log('Entra a getFiles');
@@ -166,9 +169,15 @@ td{font-weight:600}
                     let a_edit = document.createElement('a');
 
                     a_show.innerHTML = 'Ver Documento';
-                    a_show.setAttribute('href', '/Home/AttachmentView/?idAttachment=' + json[i]['IdAttachment']);
+                    a_show.setAttribute('id', json[i]['IdAttachment']);
+                    a_show.setAttribute('href', '/UploadedFiles/attachments/' + json[i]['AttachmentName']);
+                    a_show.setAttribute('target', '_blank');
+                    a_show.setAttribute('class', 'fileShow');
                     a_edit.innerHTML = 'Editar Documento';
-                    a_edit.setAttribute('href', '/Home/AttachmentEdit/?idAttachment=' + json[i]['IdAttachment']);
+                    //a_edit.setAttribute('href', '/Home/AttachmentEdit/?idAttachment=' + json[i]['IdAttachment']);
+                    a_edit.setAttribute('href', json[i]['AttachmentName']);
+                    a_edit.setAttribute('id', json[i]['IdAttachment']);
+                    a_edit.setAttribute('class', 'fileEdit');
 
                     td_id.innerHTML = json[i]['IdAttachment'];
                     td_file.innerHTML = json[i]['AttachmentName'];
@@ -215,5 +224,52 @@ td{font-weight:600}
         }
     }
 
+    function setEventEditFile() {
+
+        let files = document.querySelectorAll('.fileEdit');
+        console.log(files);
+
+        for (let i = 0; i < files.length; i++) {
+            $(files[i]).click(function (e) {
+                e.preventDefault();
+
+                //alert('click');
+                let idAttachment = $(this).attr('id');
+                console.log('idFile: ' + idAttachment + ' tag: ' + tagClabe);
+
+                document.querySelector('#titleModalManual').innerHTML = 'Editar Manual';
+                $('#uploadFileModal').modal('show');
+                let fileName = $(files[i]).attr('href');
+                console.log(a);
+                document.querySelector('#titlePdf').innerHTML = fileName;
+                //alert("edit file");
+                /*$.ajax({
+                    url: '/Home/GetAttachment/',
+                    data: { tagClabe: tagClabe, idAttachment: idAttachment},
+                    dataType: 'json',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    asyn: 'true',
+                    processData: 'false',
+                    cache: 'false',
+                    success: function (data) {
+
+                    },
+                    error: function (e) {
+
+                    }
+                });*/
+            });
+        }
+    }
+
+    $(document).ready(function () {
+
+        //set event click show file
+        setEventEditFile();
+
+
+
+    });
     
 </script>

@@ -599,12 +599,15 @@ span.fc-title {
                 let startDate = json[i].StartDateNotice;
                 //console.log(startDate);
                 let tmp = startDate.split("-");
+                //console.log(tmp);
                 
-                let date = new Date(tmp[2], tmp[1], tmp[0]);
+                //let date = new Date(tmp[2], tmp[1], tmp[0]);
+                let date = new Date(json[i].StartDateNotice);
+                //console.log(date);
                 let months = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DEC'];
                 let month = months[date.getMonth()];
-                console.log(month);
-                console.log(date);
+                //console.log(month);
+                //console.log(date);
 
                 let div_notice = document.createElement('DIV');
                 let div_date = document.createElement('DIV');
