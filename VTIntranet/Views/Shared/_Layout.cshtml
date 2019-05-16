@@ -227,7 +227,7 @@
             position: fixed
         }
 
-        #divusers .fa-paw {
+        #divusers .fa-circle {
             color: #32c722 !important;
         }
 
@@ -426,7 +426,7 @@
                         <div class="navbar-collapse collapse" style=" width: 100%; position: relative; z-index:1; overflow:auto">
                             <ul class="nav navbar-nav">
                                 <li>@Html.ActionLink("¿Quienes Somos?", "About", "Home")</li>
-                                <li>@Html.ActionLink("Very Talent", "Talend", "Home")</li>
+                                <li>@Html.ActionLink("Very Talented", "Talend", "Home")</li>
                                 <li>@Html.ActionLink("Voluntariado", "Volunteer", "Home")</li>
                                 <li>
                                     <form class="form-inline my-2 my-lg-0" style="padding-left:0">
@@ -503,7 +503,7 @@
                 <div class="">
                     <hr />
                     <footer>
-                        <p>&copy; @DateTime.Now.Year - VT Intranet Made with ♥ By <span>Development Department. </span></p>
+                        <p>&copy; @DateTime.Now.Year - VT Intranet</p>
                     </footer>
                 </div>
             </div>
@@ -1072,7 +1072,7 @@
 
                 code = $('<div class="box-comment">' +
                     ' <div class="comment-text">' +
-                    '<span class="username"><i class="fas fa-paw"></i>' + name + '<span class="text-muted pull-right">' + date + '</span>  </span></div></div>');
+                    '<span class="username"><i class="fas fa-circle"></i>' + name + '<span class="text-muted pull-right">' + date + '</span>  </span></div></div>');
 
 
                 Clist = $(
@@ -1087,7 +1087,7 @@
 
                 code = $('<div class="box-comment" id="Div' + id + '">' +
                     ' <div class="comment-text">' +
-                    '<span class="username"><i class="fas fa-paw"></i>' + '<a id="' + id + '" class="user" >' + name + '<a>' + '<span class="text-muted pull-right">' + date + '</span>  </span></div></div>');
+                    '<span class="username"><i class="fas fa-circle"></i>' + '<a id="' + id + '" class="user" >' + name + '<a>' + '<span class="text-muted pull-right">' + date + '</span>  </span></div></div>');
 
                 Clist = $(
                     '<li>' +
