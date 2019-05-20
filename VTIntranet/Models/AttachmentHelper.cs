@@ -54,10 +54,48 @@ namespace VTIntranet.Models
 
         }
 
+        //delete attachment
+        public int DeleteAttach(int idAttachment)
+        {
+            Conectar();
+
+            string query = "DELETE FROM tblattachments WHERE idAttachment = @idAttachment";
+            SqlCommand deleteAttach = new SqlCommand(query, con);
+            deleteAttach.Parameters.Add("@idAttachment", SqlDbType.Int);
+            deleteAttach.Parameters["@idAttachment"].Value = idAttachment;
+
+            con.Open();
+            int r = deleteAttach.ExecuteNonQuery();
+            con.Close();
+
+            return r;
+        }
+
+        //delete attachment relationship
+        public int DeleteAttachRelation(int idAttachment, int idTag, int idDepto)
+        {
+            Conectar();
+
+            string query = "DELETE FROM tblattachmentstags WHERE idAttachment= @idAttachment AND idTag= @idTag And idDepto= @idDepto";
+            SqlCommand deleteAttach = new SqlCommand(query, con);
+            deleteAttach.Parameters.Add("@idAttachment", SqlDbType.Int);
+            deleteAttach.Parameters.Add("@idTag", SqlDbType.Int);
+            deleteAttach.Parameters.Add("@idDepto", SqlDbType.Int);
+            deleteAttach.Parameters["@idAttachment"].Value = idAttachment;
+            deleteAttach.Parameters["@idTag"].Value = idTag;
+            deleteAttach.Parameters["@idDepto"].Value = idDepto;
+
+            con.Open();
+            int r = deleteAttach.ExecuteNonQuery();
+            con.Close();
+
+            return r;
+
+        }
+
         //create relationship attachment, tag and department
         public int SaveAttachTagDepto(int attachment, int tag, int depto)
         {
-            string a = "node";
             Conectar();
 
             string query = "INSERT INTO tblattachmentstags(idAttachment, idTag, idDepto, attachmentTagsActive) values (@idAttachment, @idTag, @idDepto, @attachmentTagsActive)";
@@ -78,7 +116,7 @@ namespace VTIntranet.Models
             return r;
         }
 
-        //get idTag from tblrags
+        //get idTag from tbltags
         public int GetIdTag(string clabe)
         {
             Conectar();
@@ -118,7 +156,8 @@ namespace VTIntranet.Models
             Conectar();
             List<Attachment> attachments = new List<Attachment>();
 
-            string query = @"SELECT tblattachments.idAttachment, tblattachments.attachmentName, tbltags.tagName, tblattachments.attachmentDirectory
+            string query = @"SELECT tblattachments.idAttachment, tblattachments.attachmentName, tbltags.tagName,
+                            tblattachments.attachmentDirectory, tblattachmentstags.idDepto
                             FROM tblattachments
 	                            INNER JOIN tblattachmentstags ON tblattachmentstags.idAttachment = tblattachments.idAttachment
 	                            INNER JOIN tbltags ON tbltags.idTag = tblattachmentstags.idTag
@@ -138,6 +177,7 @@ namespace VTIntranet.Models
                     AttachmentName = registros["attachmentName"].ToString(),
                     AttachmentDirectory = registros["attachmentDirectory"].ToString(),
                     TagName = registros["tagName"].ToString(),
+                    IdDepto = int.Parse(registros["idDepto"].ToString()),
                     //AttachmentActive = registros["attachmentActive"].ToString()
                 };
 

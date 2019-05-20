@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using VTIntranet.intranetdb;
 
+
 using VTIntranet.Models;
 
 namespace VTIntranet.Controllers
@@ -71,9 +72,31 @@ namespace VTIntranet.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteAttach(String idAttach, String tagClabe)
+        public JsonResult DeleteAttach(String idAttach, String tagClabe, String idDepto, String fileName)
         {
-            return Json("successfully");
+            int idAttachment = int.Parse(idAttach);
+            int idDep = int.Parse(idDepto);
+
+            AttachmentHelper ah = new AttachmentHelper();
+            int idTag = ah.GetIdTag(tagClabe);
+
+            //delete references tblAttachmentstags
+            int delR = ah.DeleteAttachRelation(idAttachment, idTag, idDep);
+            //delete from tblAttachments
+            int delA = ah.DeleteAttach(idAttachment);
+            //delete file from Path
+            string _path = Path.Combine(Server.MapPath("~/UploadedFiles/attachments/"), fileName);
+            System.IO.File.Delete(_path);
+
+            if (delR == 1 && delA == 1)
+            {
+                return Json("successfully");
+            }
+            else
+            {
+                return Json("Error");
+            }
+            
         }
 
         [HttpGet]
@@ -326,31 +349,9 @@ namespace VTIntranet.Controllers
             }
         }
 
-        [HttpPost]
-        public JsonResult Create(User user)
-        {
-            return Json("Response from Create");
-        }
+        
 
-        public ActionResult Events()
-        {
-            //serializer for brands
-            string id = this.Session["idUser"].ToString();
-            int idUser = int.Parse(id);
-            TagHelper th = new TagHelper();
-
-            var serializerBrand = new JavaScriptSerializer();
-            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
-            ViewBag.Navbar = serializedResultB;
-
-            //events
-            EventHelper eh = new EventHelper();
-            ViewBag.events = eh.getAllEvent();
-            var userName = this.Session["userName"];
-            ViewBag.UserName = userName;
-
-            return View();
-        }
+        //********************** Order functions *****************
 
         public ActionResult About()
         {
@@ -378,6 +379,73 @@ namespace VTIntranet.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult Create(User user)
+        {
+            return Json("Response from Create");
+        }
+
+        public ActionResult Directory()
+        {
+            //serializer for brands
+            string id = this.Session["idUser"].ToString();
+            int idUser = int.Parse(id);
+            TagHelper th = new TagHelper();
+
+            var serializerBrand = new JavaScriptSerializer();
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            ViewBag.Navbar = serializedResultB;
+
+            return View();
+        }
+
+        public ActionResult Events()
+        {
+            //serializer for brands
+            string id = this.Session["idUser"].ToString();
+            int idUser = int.Parse(id);
+            TagHelper th = new TagHelper();
+
+            var serializerBrand = new JavaScriptSerializer();
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            ViewBag.Navbar = serializedResultB;
+
+            //events
+            EventHelper eh = new EventHelper();
+            ViewBag.events = eh.getAllEvent();
+            var userName = this.Session["userName"];
+            ViewBag.UserName = userName;
+
+            return View();
+        }
+
+        public ActionResult Post()
+        {
+            //serializer for brands
+            string id = this.Session["idUser"].ToString();
+            int idUser = int.Parse(id);
+            TagHelper th = new TagHelper();
+
+            var serializerBrand = new JavaScriptSerializer();
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            ViewBag.Navbar = serializedResultB;
+
+            return View();
+        }
+
+        public ActionResult Talend()
+        {
+            //serializer for brands
+            string id = this.Session["idUser"].ToString();
+            int idUser = int.Parse(id);
+            TagHelper th = new TagHelper();
+
+            var serializerBrand = new JavaScriptSerializer();
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            ViewBag.Navbar = serializedResultB;
+            return View();
+        }
+
         public ActionResult Volunteer()
         {
             //serializer for brands
@@ -391,17 +459,6 @@ namespace VTIntranet.Controllers
             return View();
         }
 
-        public ActionResult Talend ()
-        {
-            //serializer for brands
-            string id = this.Session["idUser"].ToString();
-            int idUser = int.Parse(id);
-            TagHelper th = new TagHelper();
-
-            var serializerBrand = new JavaScriptSerializer();
-            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
-            ViewBag.Navbar = serializedResultB;
-            return View();
-        }
+        
     }
 }

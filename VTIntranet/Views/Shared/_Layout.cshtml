@@ -414,12 +414,15 @@
                             <span class="icon-bar"></span>
                         </button>
 
-                        @Html.ActionLink("VT INTRANET", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "background-color: #21356a; color: white;text-align: center" })
+                        <a href="@Url.Action("Index", "Home", new { area = "" })">
+                            <img src="~/UploadedFiles/vtimes_logo.png" class="" style=""/>
+                        </a>
                     </div>
                 </li>
                 <!--foreach-->
             </ul>
             <ul class=" nav flex-column" id="nav_home2" style="color: white !important; background-color: #122143;">
+                <li><img src="~/UploadedFiles/Intranet_Eventos.png">@Html.ActionLink("Directorio", "Directory", "Home", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Eventos.png">@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Galeria.png">@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Subir-Manual.png"><a id="uploadFile" style="color:white">Subir Manual</a></li>
@@ -433,6 +436,7 @@
                             <ul class="nav navbar-nav">
                                 <li>@Html.ActionLink("¿Quienes Somos?", "About", "Home")</li>
                                 <li>@Html.ActionLink("Very Talented", "Talend", "Home")</li>
+                                <li>@Html.ActionLink("Ocio", "Post", "Home")</li>
                                 <li>@Html.ActionLink("Voluntariado", "Volunteer", "Home")</li>
                                 <li>
                                     <form class="form-inline my-2 my-lg-0" style="padding-left:0">
@@ -825,7 +829,7 @@
 
         function saveManual(fd) {
 
-            if (document.querySelector('#titleModalManual').textContent) {
+            if (document.querySelector('#titleModalManual').textContent === 'Editar Manual') {
                 alert('Vamos a Editar');
 
             } else {

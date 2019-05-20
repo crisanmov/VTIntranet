@@ -231,18 +231,21 @@
         console.log(tagClabe, idAttachment);
     }
 
-    function deleteAttachment(idAttach, tagCable) {
+    function deleteAttachment(idAttach, tagClabe, idDepto, fileName) {
         console.log('entra a eliminar');
 
         $.ajax({
             url: '/Home/DeleteAttach/',
-            data: JSON.stringify({ "idAttach": idAttach, "tagClabe": tagClabe }),
+            data: JSON.stringify({ "idAttach": idAttach, "tagClabe": tagClabe, "idDepto": idDepto, "fileName": fileName }),
             dataType: 'json',
             type: 'POST',
             contentType: 'application/json; charset=utf-8'
         })
         .done(function (value) {
-            alert(value);
+            if (value === 'successfully') {
+                alert("El Archivo se Borro Exitosamente.");
+                location.reload();
+            }
         });
     }
 
@@ -261,7 +264,7 @@
             success: function (data) {
 
                 let json = JSON.parse(data);
-                //console.log(json);
+                console.log(json);
                 let table = document.querySelector('#attachments');
 
                 for (let i = 0; i < json.length; i++) {
@@ -277,6 +280,7 @@
                     let a_edit = document.createElement('a');
                     let a_del = document.createElement('a');
                     let span_edit = document.createElement('span');
+                    let span_del = document.createElement('span');
 
                     //show file
                     a_show.innerHTML = 'Ver Documento';
@@ -289,14 +293,18 @@
                     span_edit.textContent = json[i]['AttachmentName'];
                     span_edit.setAttribute('class', 'span_title');
                     span_edit.style.display = 'none';
-                    
+
                     a_edit.setAttribute('href', '');
                     a_edit.setAttribute('id', json[i]['IdAttachment']);
                     a_edit.setAttribute('class', 'fileEdit');
                     //delete file
                     a_del.innerHTML = 'Eliminar Documento';
                     a_del.setAttribute('href', json[i]['IdAttachment']);
+                    a_del.setAttribute('name', json[i]['AttachmentName']);
                     a_del.setAttribute('id', 'deleteFile');
+                    a_del.setAttribute('class', json[i]['IdDepto']);
+                    span_del.style.display = 'none';
+                    span_del.textContent = json[i]['IdDepto'];
                     
                     td_id.innerHTML = json[i]['IdAttachment'];
                     td_file.innerHTML = json[i]['AttachmentName'];
@@ -305,6 +313,7 @@
                     td_edit.appendChild(a_edit);
                     td_edit.append(span_edit);
                     td_del.appendChild(a_del);
+                    td_del.append(span_del);
                     
                     tr.append(td_id);
                     tr.append(td_file);
@@ -383,6 +392,8 @@
             e.preventDefault();
 
             let idAttach = $(this).attr('href');
+            let idDepto = $(this).attr('class');
+            let fileName = $(this).attr('name');
             $('.cd-popup').addClass('is-visible');
 
             //close popup
@@ -406,7 +417,8 @@
                 let res = $(this)[0].textContent;
                 if (res === "Si") {
                     //alert(idAttach + " " + tagClabe);
-                    deleteAttachment(idAttach, tagClabe);
+                    $('.cd-popup').removeClass('is-visible');
+                    deleteAttachment(idAttach, tagClabe, idDepto, fileName);
                 }
             });
         });

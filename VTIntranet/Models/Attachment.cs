@@ -12,5 +12,7 @@ namespace VTIntranet.Models
         public string AttachmentDirectory { get; set; }
         public string TagName { get; set; }
         public string AttachmentActive { get; set; }
+
+        public int IdDepto { get; set; }
     }
 }
