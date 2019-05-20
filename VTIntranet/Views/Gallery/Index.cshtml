@@ -8,9 +8,10 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 </head>
 <style type="text/css">
-  .cont-img img {
-    width: 100%;
-}
+    .cont-img img {
+        width: 100%;
+    }
+
     .cont-img {
         padding: 0;
     }
@@ -23,91 +24,110 @@
     }
 
     .cont-img:hover {
-    box-shadow: 0 0 20px 4px #000;
-}
-
+        box-shadow: 0 0 20px 4px #000;
+    }
 </style>
 
-<div class="">
     <h2>@ViewBag.Title</h2>
     <hr />
-
-    <div style="display: grid;grid-template-columns: 1fr 1fr 1fr 1fr">
-
-        @foreach (var evt in ViewBag.events)
-        {
-            <div style="max-width: 95%; margin-bottom:15px; margin:0 auto">
-                <div class="cont-img" style="display:grid; width: 100%; grid-template-columns: auto auto;">
-                    <span class="album" style="display:none;">@evt.IdEvent</span>
-                </div>
-                <div class="card-body" style="width:100%; margin-left:2%">
-                    <h5 class="card-title"><strong>@evt.Title</strong></h5>
-                    <p class="card-text">@evt.Description</p>
-                    <a href="#" class="btn btn-primary">Ver galeria</a>
-                </div>
-            </div>
-        }
-    </div>
-
-    
-
-    <script>
-
-        $(document).ready(function () {
-
-            let albums = $(".album");
-            //console.log(albums.length);
-
-            for (var i = 0; i < albums.length; i++) {
-                //console.log($(albums[i]).text());
-                let idAlbum = $(albums[i]).text();
-                getPortrait(idAlbum);
-            }
-
-        });
+    <div id="gallery_container" style="display: flex;justify-content: space-between;"></div>
 
 
+<script>
 
-        function getPortrait(idAlbum) {
-            console.log("entra a generar portrait de album: " + idAlbum);
+    $(document).ready(function () {
 
-            $.ajax({
-                url: 'getPortrait/?idAlbum=' + idAlbum,
-                dataType: 'json',
-                type: 'GET',
-                contentType: 'application/json; charset=utf-8',
-                async: true,
-                processData: false,
-                cache: false,
-                success: function (data) {
-
-                    let portrait = document.querySelector('.cont-img');
-                    console.log(data);
-                    for (let i = 0; i < data.length; i++) {
-                        let src = "/UploadedFiles/";
-                        src += data[i].FileName;
-                        console.log(data[i].FileName);
-                        let img = document.createElement('img');
-                        img.setAttribute("class", "img-album");
-                        img.src = src;
-                        portrait.append(img);
-                    }
+        let events = "@ViewBag.events";
+        let json = JSON.parse(events.replace(/&quot;/g, '"'));
 
 
+        createCardEvent(json);
 
-                },
-                error: function (e) {
-                    //console.log(e);
+    });
+
+    function createCardEvent(json) {
+
+        console.log(json);
+        let gallery = document.querySelector('#gallery_container');
+
+        for (let i = 0; i < json.length; i++) {
+            let idAlbum = json[i].IdEvent;
+
+            let divContainer = document.createElement('DIV');
+            divContainer.style.maxWidth = '95%';
+            divContainer.style.marginBottom = '15px';
+            divContainer.style.margin = '0 auto';
+
+            let divImg = document.createElement('DIV');
+            divImg.setAttribute('class', 'cont-img');
+            divImg.style.display = 'grid';
+            divImg.style.width = '100%';
+            divImg.style.gridTemplateColumns = 'auto auto';
+
+            let span = document.createElement('span');
+            span.setAttribute('class', 'album');
+            span.style.display = 'none';
+            span.textContent = idAlbum;
+            divImg.append(span);
+
+            let promise = getPortrait(idAlbum);
+            promise.then(function (value) {
+                //console.log(value);
+
+                for (let i = 0; i < value.length; i++) {
+                    let src = "/UploadedFiles/";
+                    src += value[i].FileName;
+                    //console.log(data[i].FileName);
+                    let img = document.createElement('img');
+                    img.setAttribute("class", "img-album");
+                    img.src = src;
+                    divImg.append(img);
                 }
             });
+
+            divContainer.append(divImg);
+
+            let divCard = document.createElement('DIV');
+            divCard.setAttribute('class', 'card-body');
+            divCard.style.width = '100%';
+            divCard.style.marginLeft = '2%';
+
+            let h5 = document.createElement('h5');
+            h5.setAttribute('class', 'card-title');
+            h5.innerHTML = json[i].Title;
+
+            let p = document.createElement('p');
+            p.setAttribute('class', 'card-text');
+            p.innerHTML = json[i].Description;
+
+            let a = document.createElement('a');
+            a.setAttribute('class', 'btn btn-primary');
+            a.setAttribute('href', '/Gallery/Album?idEvent=' + json[i].IdEvent);
+            a.innerHTML = 'Ver Album';
+
+
+            divCard.append(h5);
+            divCard.append(p);
+            divCard.append(a);
+            divContainer.append(divCard);
+            gallery.append(divContainer);
+
         }
-    </script>
 
+    }
 
+    async function getPortrait(idAlbum) {
+        //console.log("entra a generar portrait de album: " + idAlbum);
 
+        const result = $.ajax({
+            url: 'getPortrait/?idAlbum=' + idAlbum,
+            dataType: 'json',
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+        });
 
+        return result;
 
+    }
 
-</div>
-
-
+</script>

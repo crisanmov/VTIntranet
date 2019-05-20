@@ -31,7 +31,7 @@ namespace VTIntranet.Models
                         INNER JOIN tblactivity ON tblactivity.idActivity = tblevent.idEvent 
                         INNER JOIN tblmultimedia ON tblmultimedia.idMultimedia = tbleventmultimedia.idMultimedia 
                         WHERE tblevent.idEvent = @idAlbum 
-                        ORDER BY tblmultimedia.fileName 
+                        ORDER BY tblmultimedia.idMultimedia
                         OFFSET 0 ROWS FETCH FIRST 4 ROWS ONLY";
 
             SqlCommand com = new SqlCommand(q, con);

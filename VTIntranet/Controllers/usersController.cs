@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using VTIntranet.intranetdb;
 using VTIntranet.Models;
 using VTIntranet.Models.Identity;
@@ -26,6 +27,16 @@ namespace VTIntranet.Controllers
         // GET: users
         public ActionResult Index(int? page, int? pageSize)
         {
+            //serializer for brands
+            string id = this.Session["idUser"].ToString();
+            int idUser = int.Parse(id);
+            TagHelper th = new TagHelper();
+
+            var serializerBrand = new JavaScriptSerializer();
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            ViewBag.Navbar = serializedResultB;
+
+
             List<usersModelHelper> lst = accountServices.getAllUser();
             IQueryable<usersModelHelper> query = lst.AsQueryable();
 

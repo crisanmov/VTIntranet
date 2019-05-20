@@ -70,6 +70,12 @@ namespace VTIntranet.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult DeleteAttach(String idAttach, String tagClabe)
+        {
+            return Json("successfully");
+        }
+
         [HttpGet]
         public JsonResult GetAttachment(String tagClabe, String idAttachment)
         {
@@ -369,17 +375,6 @@ namespace VTIntranet.Controllers
             var serializerBrand = new JavaScriptSerializer();
             var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
             ViewBag.Navbar = serializedResultB;
-            return View();
-        }
-
-        public ActionResult Parent()
-        {
-            ViewBag.Message = "Parent Partial View";
-
-            //tags
-            TagHelper mt = new TagHelper();
-            ViewBag.tags = mt.getTagProfile(1);
-
             return View();
         }
 

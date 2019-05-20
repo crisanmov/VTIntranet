@@ -24,7 +24,10 @@ namespace VTIntranet.Controllers
 
             //get all events
             EventHelper eh = new EventHelper();
-            ViewBag.events = eh.getAllEvent();
+            var serializerEvent = new JavaScriptSerializer();
+            var serializedResultE = serializerEvent.Serialize(eh.getAllEvent());
+            
+            ViewBag.events = serializedResultE;
 
             return View();
         }
@@ -33,6 +36,10 @@ namespace VTIntranet.Controllers
         [HttpGet]
         public ActionResult Album(int idEvent)
         {
+            //serializer for brands
+            string id = this.Session["idUser"].ToString();
+            int idUser = int.Parse(id);
+
             //get all tags
             TagHelper th = new TagHelper();
             ViewBag.tags = th.getTagProfile(1);
@@ -44,6 +51,13 @@ namespace VTIntranet.Controllers
             //get images for idEvent
             MultimediaHelper mh = new MultimediaHelper();
             //ViewBag.images = mh.getImages(idEvent);
+
+
+            //serializer for brands
+            //ViewBag.tags = th.getTagProfile(1);
+            var serializerBrand = new JavaScriptSerializer();
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            ViewBag.Navbar = serializedResultB;
 
             var serializer = new JavaScriptSerializer();
             var serializedResult = serializer.Serialize(mh.getImages(idEvent));

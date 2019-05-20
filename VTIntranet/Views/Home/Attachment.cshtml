@@ -1,17 +1,17 @@
 ﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 
+
 <style>
 
     .attachment {
         margin: 0px auto;
-    margin-top: 5%;
-    height: 300px;
-    width: 95%;
-    display: flex;
-    max-height: 300px;
-    overflow-y: scroll;
+        margin-top: 5%;
+        height: 300px;
+        width: 95%;
+        display: flex;
+        max-height: 300px;
+        overflow-y: scroll;
     }
-
 
     #brand-logo {
         min-width: 300px;
@@ -56,12 +56,12 @@
         width: 95%;
     }
     table {
-    background-color: transparent;
-    table-layout: auto;
-    width: 100%;
+        background-color: transparent;
+        table-layout: auto;
+        width: 100%;
     }
     tbody {
-    background: #d7d7d7;
+        background: #d7d7d7;
     }
 
     td, th {border: 5px solid #d7d7d7;padding: 5px;}
@@ -82,23 +82,40 @@
     .cd-popup {
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.3s 0s, visibility 0s 0.3s;
     }
 
-    .cd-popup.is-visible {
-        opacity: 1;
-        visibility: visible;
-        transition: opacity 0.3s 0s, visibility 0s 0s;
-    }
+        .cd-popup.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s 0s, visibility 0s 0s;
+            position: absolute;
+            background: #77777785;
+            width: 100%;
+            left: 0;
+            height: 100%;
+            top: 0;
+        }
 
     .cd-popup-container {
         transform: translateY(-40px);
         transition-property: transform;
         transition-duration: 0.3s;
     }
-
+        .cd-popup-container li {
+            list-style: none;
+        }
+    .cd-buttons {
+        padding: 0;
+    }
     .is-visible .cd-popup-container {
+        width: 50%;
         transform: translateY(0);
+        margin: 0 auto;
+        position: relative;
+        top: 25%;
+        background: #f8f7f9;
+        text-align: center;
+        padding: 70px;
     }
 
 </style>
@@ -169,17 +186,19 @@
         </p>
 
     </div>
-    <div class="cd-popup" role="alert">
-        <div class="cd-popup-container">
-            <p>¿Deseas borrar el siguiente Archivo?</p>
-            <ul class="cd-buttons">
-                <li><a href="#0">Si</a></li>
-                <li><a href="#0">No</a></li>
-            </ul>
-            <a href="#0" class="cd-popup-close img-replace">Close</a>
-        </div> 
+    
+</div>
+<div class="cd-popup" role="alert">
+    <div class="cd-popup-container">
+        <p>¿Deseas borrar el siguiente Archivo?</p>
+        <ul class="cd-buttons">
+            <li><a class="del" href="#0">Si</a></li>
+            <li><a class="del" href="#0">No</a></li>
+        </ul>
+        <a href="#0" class="cd-popup-close img-replace">Close</a>
     </div>
 </div>
+
 <div id="brand-deptos"></div>
 <div id="contentFile">
     <table id="attachments">
@@ -208,12 +227,28 @@
     //show files attachment of brand
     getFilesAttch(tagClabe);
 
-    
+    function editAttachment(tagClabe, idAttachment) {
+        console.log(tagClabe, idAttachment);
+    }
+
+    function deleteAttachment(idAttach, tagCable) {
+        console.log('entra a eliminar');
+
+        $.ajax({
+            url: '/Home/DeleteAttach/',
+            data: JSON.stringify({ "idAttach": idAttach, "tagClabe": tagClabe }),
+            dataType: 'json',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8'
+        })
+        .done(function (value) {
+            alert(value);
+        });
+    }
 
     function getFilesAttch(tagClabe) {
-        //console.log('Entra a getFiles');
+        
         //console.log(tagClabe);
-
         $.ajax({
             url: '/Home/GetFilesAttach/',
             data: { tagClabe: tagClabe },
@@ -226,13 +261,12 @@
             success: function (data) {
 
                 let json = JSON.parse(data);
-                console.log(json);
+                //console.log(json);
                 let table = document.querySelector('#attachments');
 
                 for (let i = 0; i < json.length; i++) {
 
                     let tr = document.createElement('TR');
-
                     let td_id = document.createElement('TD');
                     let td_file = document.createElement('TD');
                     let td_tag = document.createElement('TD');
@@ -242,6 +276,7 @@
                     let a_show = document.createElement('a');
                     let a_edit = document.createElement('a');
                     let a_del = document.createElement('a');
+                    let span_edit = document.createElement('span');
 
                     //show file
                     a_show.innerHTML = 'Ver Documento';
@@ -251,7 +286,11 @@
                     a_show.setAttribute('class', 'fileShow');
                     //edit file
                     a_edit.innerHTML = 'Editar Documento';
-                    a_edit.setAttribute('href', json[i]['AttachmentName']);
+                    span_edit.textContent = json[i]['AttachmentName'];
+                    span_edit.setAttribute('class', 'span_title');
+                    span_edit.style.display = 'none';
+                    
+                    a_edit.setAttribute('href', '');
                     a_edit.setAttribute('id', json[i]['IdAttachment']);
                     a_edit.setAttribute('class', 'fileEdit');
                     //delete file
@@ -264,6 +303,7 @@
                     td_tag.innerHTML = json[i]['TagName'];
                     td_show.appendChild(a_show);
                     td_edit.appendChild(a_edit);
+                    td_edit.append(span_edit);
                     td_del.appendChild(a_del);
                     
                     tr.append(td_id);
@@ -309,38 +349,27 @@
     function setEventEditFile() {
 
         let files = document.querySelectorAll('.fileEdit');
-        console.log(files);
+        let span_title = document.querySelectorAll('.span_title');
+        //console.log(files);
 
         for (let i = 0; i < files.length; i++) {
             $(files[i]).click(function (e) {
                 e.preventDefault();
-
+                
                 //alert('click');
                 let idAttachment = $(this).attr('id');
-                console.log('idFile: ' + idAttachment + ' tag: ' + tagClabe);
+                //console.log('idFile: ' + idAttachment + ' tag: ' + tagClabe);
 
                 document.querySelector('#titleModalManual').innerHTML = 'Editar Manual';
                 $('#uploadFileModal').modal('show');
-                let fileName = $(files[i]).attr('href');
-                console.log(fileName);
-                document.querySelector('#titlePdf').innerHTML = fileName;
-                //alert("edit file");
-                /*$.ajax({
-                    url: '/Home/GetAttachment/',
-                    data: { tagClabe: tagClabe, idAttachment: idAttachment},
-                    dataType: 'json',
-                    type: 'GET',
-                    contentType: 'application/json; charset=utf-8',
-                    asyn: 'true',
-                    processData: 'false',
-                    cache: 'false',
-                    success: function (data) {
+                let fileName = $(span_title[i]).html();
+                
+                //$('#FormControlTag option[value=' + tagClabe + ']').attr('selected', 'selected');
+                
+                document.querySelector('#titlePdf').setAttribute('value', fileName);
+                document.querySelector('#FormControlTag').setAttribute('value', span_title[i]);
+                populateListTag();
 
-                    },
-                    error: function (e) {
-
-                    }
-                });*/
             });
         }
     }
@@ -353,6 +382,7 @@
         $('#deleteFile').click(function (e) {
             e.preventDefault();
 
+            let idAttach = $(this).attr('href');
             $('.cd-popup').addClass('is-visible');
 
             //close popup
@@ -362,13 +392,26 @@
                     $(this).removeClass('is-visible');
                 }
             });
+
             //close popup when clicking the esc keyboard button
             $(document).keyup(function (event) {
                 if (event.which == '27') {
                     $('.cd-popup').removeClass('is-visible');
                 }
             });
+
+            //
+            $('.del').click(function (e) {
+                e.preventDefault();
+                let res = $(this)[0].textContent;
+                if (res === "Si") {
+                    //alert(idAttach + " " + tagClabe);
+                    deleteAttachment(idAttach, tagClabe);
+                }
+            });
         });
+
+        
 
 
 

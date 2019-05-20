@@ -37,7 +37,7 @@ namespace VTIntranet.Models
                     Title = registros["title"].ToString(),
                     Description = registros["description"].ToString(),
                     FileName = registros["fileName"].ToString(),
-                    Path = registros["path"].ToString(),
+                    //Path = registros["path"].ToString(),
                     Url = registros["url"].ToString(),
 
                 };

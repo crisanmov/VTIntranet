@@ -278,6 +278,9 @@
 
 </div>
 <script>
+
+    var idAlb = 0;
+
     $('#events').click(function (e) {
         e.preventDefault();
         $('#myModal3').modal('show');
@@ -326,8 +329,9 @@
     $('.addImage').click(function (e) {
         e.preventDefault();
 
-        //alert($(this).attr('id'));
+        //alert();
         $('#myModal4').modal('show');
+        idAlb = $(this).attr('id');
 
     });
 
@@ -335,7 +339,13 @@
 
         e.preventDefault();
 
-        let idAlbum = $('.addImage').attr("id");
+        //let idAlbum = $('.addImage').attr("id");
+        //let idAlbum = $(this).attr('id');
+        console.log(idAlb);
+
+        //return;
+
+
         let fd = new FormData();
         /*-------------------------------------------------------*/ 
         let files = $('#files').prop('files');
@@ -346,7 +356,7 @@
             fd.append('filesPost', file);
         }
 
-        fd.append('idAlbum', idAlbum);
+        fd.append('idAlbum', idAlb);
 
         saveAlbum(fd);
 

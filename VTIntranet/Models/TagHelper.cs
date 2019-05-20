@@ -69,7 +69,7 @@ namespace VTIntranet.Models
             return tags;
         }
 
-        //get brand for idProfile
+        //get tags for idProfile
         public List<Brand> GetBrand(int idProfile)
         {
             Conectar();

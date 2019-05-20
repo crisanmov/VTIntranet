@@ -16,8 +16,8 @@
     <style>
         .grid-container {
               display: flex;
-    justify-content: space-around;
-    padding: 10px;
+            justify-content: space-around;
+            padding: 10px;
         }
 
         #calendar {
@@ -79,8 +79,8 @@
         #add-dates h4 b{font-size:30px; text-transform:uppercase;color:#21356a}
         .carrusel {
             position: relative;
-            box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.64);
-            margin-top: 26px;
+            box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.64);
+            //margin-top: 26px;
         }
 
         .carrusel-inner {
@@ -92,6 +92,7 @@
         .carrusel-open:checked + .carrusel-item {
             position: static;
             opacity: 100;
+            height: 415px
         }
 
         .carrusel-item {
@@ -262,6 +263,15 @@ span.fc-title {
 .fc-dayGrid-view .fc-body .fc-row {
     max-height: 4.7em;
 }
+
+        .agenda {
+            font-size: 31px;
+            font-family: Helvetica, Arial;
+            //color: #21356a;
+            color: blue;
+            margin-top: -2%;
+            margin-bottom: 2%;
+        }
     </style>
 
 
@@ -274,7 +284,55 @@ span.fc-title {
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", new { idUser = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
         </h4>
     </div>
-    <br />
+    
+    <!--Slider-->
+    <div id="slider-div">
+        <div class="carrusel">
+            <div class="carrusel-inner">
+                <input class="carrusel-open" type="radio" id="carrusel-1" name="carrusel" aria-hidden="true" hidden="" checked="checked">
+                <div class="carrusel-item">
+                    <img src="~/UploadedFiles/Slider_Intranet.jpg">
+
+
+                </div>
+                <input class="carrusel-open" type="radio" id="carrusel-2" name="carrusel" aria-hidden="true" hidden="">
+                <div class="carrusel-item">
+
+                    <img src="~/UploadedFiles/Slider_2_Intranet.jpg">
+                </div>
+                <input class="carrusel-open" type="radio" id="carrusel-3" name="carrusel" aria-hidden="true" hidden="">
+                <div class="carrusel-item">
+                    <img src="~/UploadedFiles/Slider_3_Intranet.jpg">
+                </div>
+                <label for="carrusel-3" class="carrusel-control prev control-1">‹</label>
+                <label for="carrusel-2" class="carrusel-control next control-1">›</label>
+                <label for="carrusel-1" class="carrusel-control prev control-2">‹</label>
+                <label for="carrusel-3" class="carrusel-control next control-2">›</label>
+                <label for="carrusel-2" class="carrusel-control prev control-3">‹</label>
+                <label for="carrusel-1" class="carrusel-control next control-3">›</label>
+                <ol class="carrusel-indicators">
+                    <li>
+                        <label for="carrusel-1" class="carrusel-bullet">•</label>
+                    </li>
+                    <li>
+                        <label for="carrusel-2" class="carrusel-bullet">•</label>
+                    </li>
+                    <li>
+                        <label for="carrusel-3" class="carrusel-bullet">•</label>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!--icon down-->
+    <a id="slide-down" href="#slider-div">
+        <i class="material-icons">
+            arrow_drop_down
+        </i>
+    </a>
+    <h4 class="agenda">Agenda</h4>
+    
+    <!--calendar and news-->
     <div class="grid-container" id="grid-container">
         <div class="grid-item" id="row1" style="">
             <div id="news">
@@ -317,7 +375,7 @@ span.fc-title {
                                                 </label>
                                             </div>
                                         </div>
-                                        </div>
+                                    </div>
                                     <div class="index-form">
                                         <!--calendar startDate-->
                                         <div class='col-sm-12'>
@@ -391,49 +449,8 @@ span.fc-title {
             </div>
         </div>
     </div>
-    <a id="slide-down" href="#slider-div">
-    <i class="material-icons">
-        arrow_drop_down
-    </i>
-</a>
-    <div id="slider-div">
-        <div class="carrusel">
-            <div class="carrusel-inner">
-                <input class="carrusel-open" type="radio" id="carrusel-1" name="carrusel" aria-hidden="true" hidden="" checked="checked">
-                <div class="carrusel-item">
-                    <img src="~/UploadedFiles/Slider_Intranet.jpg">
-                    
-                
-                </div>
-                <input class="carrusel-open" type="radio" id="carrusel-2" name="carrusel" aria-hidden="true" hidden="">
-                <div class="carrusel-item">
 
-                    <img src="~/UploadedFiles/Slider_2_Intranet.jpg">
-                </div>
-                <input class="carrusel-open" type="radio" id="carrusel-3" name="carrusel" aria-hidden="true" hidden="">
-                <div class="carrusel-item">
-                    <img src="~/UploadedFiles/Slider_3_Intranet.jpg">
-                </div>
-                <label for="carrusel-3" class="carrusel-control prev control-1">‹</label>
-                <label for="carrusel-2" class="carrusel-control next control-1">›</label>
-                <label for="carrusel-1" class="carrusel-control prev control-2">‹</label>
-                <label for="carrusel-3" class="carrusel-control next control-2">›</label>
-                <label for="carrusel-2" class="carrusel-control prev control-3">‹</label>
-                <label for="carrusel-1" class="carrusel-control next control-3">›</label>
-                <ol class="carrusel-indicators">
-                    <li>
-                        <label for="carrusel-1" class="carrusel-bullet">•</label>
-                    </li>
-                    <li>
-                        <label for="carrusel-2" class="carrusel-bullet">•</label>
-                    </li>
-                    <li>
-                        <label for="carrusel-3" class="carrusel-bullet">•</label>
-                    </li>
-                </ol>
-            </div>
-        </div>
-    </div>
+
 </div>
 <!--JS Calendar-->
 <script>
