@@ -146,7 +146,7 @@
 
         .hover-shadow:hover {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            transform: scale(1.1);
+          
         }
 
         #myGallery img {
@@ -159,10 +159,22 @@
 
         #myGallery {
             display: grid;
-            grid-template-columns: auto auto auto;
+            grid-template-columns: auto auto auto auto;
             text-align: center;
         }
+        .cajasin label>img {
+    width: auto !important;
+}
 
+        .cajasin>input {
+    position: absolute;
+    margin: 30px;
+    display:none
+}
+        .visible .cajasin>input
+        {
+            display:inline-block
+        }
         .modal {
             background-color: #23222291;
       
@@ -192,7 +204,8 @@
     <h2>@ViewBag.Title</h2>
     <hr />
     <!--Images gallery-->
-    <div id="myGallery"></div>
+    <div><button id="del-img">Eliminar Imagenes</button></div>
+    <div id="myGallery" class="prueba"></div>
 
     <div id="myModal" class="modal">
         <span class="close cursor" onclick="closeModal()">&times;</span>
@@ -259,15 +272,23 @@
                     //console.log(json[i].IdMultimedia);
 
                     //div´s
-                    let column = document.createElement("div");
+                   
+                    let column = document.createElement("label");
                     let mySlides = document.createElement("div");
                     let numberText = document.createElement("div");
                     let footer = document.createElement("div");
+                    let inputs = document.createElement("input");
+                    let cajainput = document.createElement("div");
 
                     //column.setAttribute("class", "column");
-                    column.setAttribute("id", id);
+
+                    cajainput.setAttribute("class", "cajasin");
+                    column.setAttribute("for", id);
                     mySlides.setAttribute("id", id);
                     mySlides.setAttribute("class", "mySlides");
+                    inputs.setAttribute("id", id);
+                    inputs.setAttribute("type", "checkbox");
+                    inputs.setAttribute("class", "showinput");
 
                     numberText.setAttribute("class", "numbertext");
                     numberText.innerHTML = id + '/' + imgMax;
@@ -289,7 +310,6 @@
                     imgFoo.src = path;
                     imgFoo.setAttribute("onclick", "currentSlide(" + id + ")");
 
-                    img.setAttribute("id", id);
                     img.setAttribute("class", "hover-shadow cursor funct");
                     img.style.width = "100%";
                     imgSlide.style.width = "100%";
@@ -302,7 +322,9 @@
                     mySlides.append(numberText);
                     mySlides.append(imgSlide);
                     modalContent.append(mySlides);
-                    myGallery.appendChild(column);
+                    myGallery.appendChild(cajainput);                
+                    cajainput.appendChild(inputs);
+                    cajainput.appendChild(column);
                     //footer images modal
                     footer.append(imgFoo);
                     //footerM.append(footer);
@@ -324,6 +346,16 @@
                 }
 
             }
+
+            $('#del-img').click(function () {
+                var x = document.getElementById("myGallery");
+  if (x.className === "prueba") {
+    x.className += " visible";
+  } else {
+    x.className = "prueba";
+  }
+                
+            });
         });
 
         function openModal() {
@@ -409,6 +441,7 @@
         }
 
 
+        
 
     </script>
 </div>
