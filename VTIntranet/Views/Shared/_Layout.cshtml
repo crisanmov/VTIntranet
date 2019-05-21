@@ -436,7 +436,7 @@
                 <!--foreach-->
             </ul>
             <ul class=" nav flex-column" id="nav_home2" style="color: white !important; background-color: #122143;">
-                <li><img src="~/UploadedFiles/Intranet_Eventos.png">@Html.ActionLink("Directorio", "Directory", "Home", null, new { style = "color: white" })</li>
+                <li><img src="~/UploadedFiles/Intranet_Directorio.png">@Html.ActionLink("Directorio", "Directory", "Home", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Eventos.png">@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Galeria.png">@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Subir-Manual.png"><a id="uploadFile" style="color:white">Subir Manual</a></li>
@@ -463,7 +463,7 @@
                                     </i>
                                     <div id="sub-menu">
                                         @Html.ActionLink("Mi Perfil", "Profile", "Home")
-
+                                        @Html.ActionLink("Usuarios", "Index", "users")
                                         @Html.Partial("_LoginPartial")
                                     </div>
                                 </li>

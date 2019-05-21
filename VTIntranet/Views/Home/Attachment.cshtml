@@ -380,6 +380,12 @@ sino un servicio completo de Asesoría de Experiencia de Viajes.<br />
         }
     }
 
+    function setEventClickDeptos() {
+
+        let deptos = document.querySelectorAll('.area');
+        console.log(deptos);
+    }
+
     function setEventEditFile() {
 
         let files = document.querySelectorAll('.fileEdit');
@@ -412,6 +418,8 @@ sino un servicio completo de Asesoría de Experiencia de Viajes.<br />
 
         //set event click show file
         setEventEditFile();
+        //set event click for deptos
+        setEventClickDeptos();
 
         $('#deleteFile').click(function (e) {
             e.preventDefault();
