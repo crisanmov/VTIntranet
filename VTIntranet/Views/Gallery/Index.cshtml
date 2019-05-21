@@ -9,13 +9,17 @@
 </head>
 <style type="text/css">
     .cont-img img {
-        width: 100%;
-    }
+    width: 115%;
+}
 
     .cont-img {
         padding: 0;
     }
-
+    .cont-img>div {
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+}
     .content-album {
         border: 1.5px solid blue;
         width: 80%;
@@ -30,7 +34,7 @@
 
     <h2>@ViewBag.Title</h2>
     <hr />
-    <div id="gallery_container" style="display: flex;justify-content: space-between;"></div>
+    <div id="gallery_container" style="display: flex;justify-content: space-between;flex-wrap:wrap"></div>
 
 
 <script>
@@ -55,8 +59,7 @@
 
             let divContainer = document.createElement('DIV');
             divContainer.style.maxWidth = '95%';
-            divContainer.style.marginBottom = '15px';
-            divContainer.style.margin = '0 auto';
+            divContainer.style.margin = '0 auto 30px';
 
             let divImg = document.createElement('DIV');
             divImg.setAttribute('class', 'cont-img');
@@ -79,9 +82,11 @@
                     src += value[i].FileName;
                     //console.log(data[i].FileName);
                     let img = document.createElement('img');
+                    let asd = document.createElement('div');
                     img.setAttribute("class", "img-album");
                     img.src = src;
-                    divImg.append(img);
+                    divImg.append(asd);
+                    asd.append(img);
                 }
             });
 

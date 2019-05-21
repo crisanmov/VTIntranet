@@ -161,6 +161,8 @@
             display: grid;
             grid-template-columns: auto auto auto auto;
             text-align: center;
+            margin:20px;
+            width:95%;
         }
         .cajasin label>img {
     width: auto !important;
@@ -171,10 +173,19 @@
     margin: 30px;
     display:none
 }
-        .visible .cajasin>input
+         #deletear
         {
-            display:inline-block
+            display:none
         }
+        .visible input[type="checkbox"] + label:before
+        {
+            visibility:visible;
+            display:block
+        }
+         .visible #deletear
+         {
+             display:inline-block
+         }
         .modal {
             background-color: #23222291;
       
@@ -182,12 +193,16 @@
 
         .modal-content {
             background-color: #fefefe;
-            width: 60%;
+            width: auto;
+    min-width: auto;
+    max-width: fit-content;
         }
 
         #myModal img {
-            max-width: 100%;
-        }
+    max-width: 100%;
+    width: auto !important;
+    height: 75vh;
+}
 
         .caption-container {
             background: none;
@@ -196,15 +211,63 @@
         span.close.cursor {
             z-index: 1998;
             top: 50px;
+                opacity: 1;
         }
 
+
+
+
+
+        input[type="checkbox"] { display: none; }
+
+input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 0;
+  margin-bottom: 20px;
+  font: 14px/20px 'Open Sans', Arial, sans-serif;
+  color: #ddd;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+input[type="checkbox"] + label:last-child { margin-bottom: 0; }
+
+input[type="checkbox"] + label:before {
+  content: '';
+  visibility:hidden;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #122143;
+  position: relative;
+  left: 0;
+  top: 0;
+  opacity: .6;
+  -webkit-transition: all .12s, border-color .08s;
+  transition: all .12s, border-color .08s;
+  cursor:none
+}
+
+input[type="checkbox"]:checked + label:before {
+  width: 10px;
+  top: -5px;
+  left: 5px;
+  border-radius: 0;
+  opacity: 1;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
     </style>
 </head>
-<div>
+<div id="todo-album" class="prueba">
     <h2>@ViewBag.Title</h2>
     <hr />
     <!--Images gallery-->
-    <div><button id="del-img">Eliminar Imagenes</button></div>
+    <div style="width:95%; margin:0 auto"><button id="del-img">Seleccionar imagenes</button><button id="deletear">Eliminar imagenes</button></div>
     <div id="myGallery" class="prueba"></div>
 
     <div id="myModal" class="modal">
@@ -292,7 +355,7 @@
 
                     numberText.setAttribute("class", "numbertext");
                     numberText.innerHTML = id + '/' + imgMax;
-                    numberText.style.color = "blue";
+                    numberText.style.color = "#fff";
                     footer.setAttribute("class", "column");
 
                     //image
@@ -348,7 +411,7 @@
             }
 
             $('#del-img').click(function () {
-                var x = document.getElementById("myGallery");
+                var x = document.getElementById("todo-album");
   if (x.className === "prueba") {
     x.className += " visible";
   } else {
