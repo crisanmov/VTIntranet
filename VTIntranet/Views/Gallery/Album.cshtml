@@ -180,12 +180,17 @@
         .visible input[type="checkbox"] + label:before
         {
             visibility:visible;
-            display:block
+            display:block;
+            content:"";
+            left:0
         }
          .visible #deletear
          {
              display:inline-block
          }
+         .visible #myModal {
+    display: none !important;
+}
         .modal {
             background-color: #23222291;
       
@@ -236,7 +241,6 @@ input[type="checkbox"] + label {
 input[type="checkbox"] + label:last-child { margin-bottom: 0; }
 
 input[type="checkbox"] + label:before {
-  content: '';
   visibility:hidden;
   width: 20px;
   height: 20px;
@@ -413,7 +417,7 @@ input[type="checkbox"]:checked + label:before {
             $('#del-img').click(function () {
                 var x = document.getElementById("todo-album");
   if (x.className === "prueba") {
-    x.className += " visible";
+      x.className += " visible";
   } else {
     x.className = "prueba";
   }
