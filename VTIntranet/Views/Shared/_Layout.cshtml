@@ -26,9 +26,9 @@
 }
        
         #nav_home li:first-child img {
-    max-width: 100%;
-    width: 200px;
-    padding: 20px;
+        max-width: 100%;
+    width: 150px;
+    padding: 15px;
 }
         .nav li div ul li:hover, .nav li div ul li:hover a {
             background: #ddd;
@@ -78,7 +78,8 @@
         }
 
         .navbar-header {
-            float: none !important
+            float: none !important;
+            text-align:center
         }
 
         body {
@@ -384,6 +385,9 @@
      .fc-today a {
     color: #fff !important;
 }
+   #container-main {
+    min-height: 85vh;
+}
     </style>
 
     <!--CHAT-->
@@ -432,7 +436,7 @@
                         </button>
 
                         <a href="@Url.Action("Index", "Home", new { area = "" })">
-                            <img src="~/UploadedFiles/vtimes_logo.png" class="" style=""/>
+                            <img src="~/UploadedFiles/vtimes_logo.png" class="" style="" />
                         </a>
                     </div>
                 </li>
@@ -524,10 +528,10 @@
                         </div>
                     </div>
                 </div>
-                <div class=" ">
+                <div id="container-main">
                     @RenderBody()
                 </div>
-                <div class="">
+                <div class="footer-padre">
                     <hr />
                     <footer>
                         <p>&copy; @DateTime.Now.Year - VT Intranet</p>
@@ -597,7 +601,7 @@
                 $('#uploadFileModal').modal('show');
                 //console.log(brands);
                 populateListTag();
-                
+
             });
 
             $('#FormControlTag').change(function (e) {
@@ -632,8 +636,8 @@
                 formData.append('fileClabe', fileClabe);
                 console.log(title);
                 console.log(fileClabe);
-                
-                
+
+
                 saveManual(formData);
             });
 
@@ -659,7 +663,7 @@
             let subMenu;
 
             for (field in menuInfo) {
-                
+
                 let li = document.createElement('li');
                 let a = document.createElement('a');
                 let clabe = menuInfo[field][0].tagClabe;
@@ -668,19 +672,19 @@
                 a.innerHTML = field;
                 a.setAttribute('class', 'tags');
                 a.setAttribute('value', clabe);
-                li.append(a);               
+                li.append(a);
                 nav_home.append(li);
 
                 let item = menuInfo[field];
                 subMenu = createSubMenu(field, item);
                 //console.log(subMenu);
                 li.append(subMenu);
-               
+
             }
         }
 
         function createSubMenu(field, item) {
-           
+
             let submenu = document.createElement('div');
             submenu.setAttribute('id', field);
             let ul = document.createElement('ul');
@@ -698,7 +702,7 @@
 
             submenu.appendChild(ul);
             submenu.style.display = 'none';
-            
+
 
             return submenu;
 
@@ -706,12 +710,12 @@
 
         function setEventClick(tags) {
             //console.log("set listener click");
-            
+
             for (let i = 0; i < tags.length; i++) {
-                
+
                 $(tags[i]).click(function (e) {
                     console.log($(this));
-                    
+
                     let clabe = $(this)[0].attributes[1].nodeValue;
                     let tag = '/Home/Attachment/?tag=' + clabe;
                     //tag = tag.replace(/ /g, '%20');
@@ -721,7 +725,7 @@
                     /*let tag = '/Home/Attachment/?tag=' + $(this)[0].innerHTML;
                      * tag = tag.replace(/ /g, '%20');
                      $(tags[i]).attr('href', tag);*/
-                    
+
                 });
             }
 
@@ -753,7 +757,7 @@
             for (let i = 0; i < array.length; i++) {
                 brands.push(array[i].TagName);
             }
- 
+
             return brands;
         }
 
@@ -828,7 +832,7 @@
                     console.log(json);
                     //let options = [];
                     selectTag = document.querySelector('#FormControlTag');
-                    
+
                     for (let i = 0; i < json.length; i++) {
                         let option = document.createElement('option');
                         option.innerHTML = json[i].tagName;
@@ -841,7 +845,7 @@
 
                 }
             });
-        
+
         }
 
         function saveManual(fd) {
@@ -860,7 +864,7 @@
                     success: function (response) {
                         console.log(response);
                         /*if (response.success) {
-    
+
                             $('#myModal4').modal('hide');
                             $modal = $('#myModal4');
                             $modal.find('form')[0].reset();
@@ -871,10 +875,10 @@
                 });
             }
 
-            
+
         }
 
-     
+
     </script>
 
     <!--**************CHAT*************-->
@@ -1279,9 +1283,14 @@
 
     </script>
     <!--Menu dynamic-->
-    <script>
-        
-        
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#padre-img').children("div").click(function () {
+                $(this).children("div").removeClass("hidden");
+                $('div.logoschidos').removeClass("visible");
+                $(this).children("div").addClass("visible");
+            });
+        });
     </script>
 
     @*@Scripts.Render("~/bundles/jquery")
