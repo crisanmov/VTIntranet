@@ -27,14 +27,7 @@ namespace VTIntranet.Controllers
         // GET: users
         public ActionResult Index(int? page, int? pageSize)
         {
-            //serializer for brands
-            string id = this.Session["idUser"].ToString();
-            int idUser = int.Parse(id);
-            TagHelper th = new TagHelper();
-
-            var serializerBrand = new JavaScriptSerializer();
-            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
-            ViewBag.Navbar = serializedResultB;
+            
 
 
             List<usersModelHelper> lst = accountServices.getAllUser();

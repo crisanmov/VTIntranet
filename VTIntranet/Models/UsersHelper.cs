@@ -39,5 +39,27 @@ namespace VTIntranet.Models
             con.Close();
             return data;
         }
+
+        public int GetProfile(String UserName)
+        {
+            Conectar();
+            string query = @"SELECT tblprofiles.idProfile
+                            FROM tblprofiles
+                            INNER JOIN tblusersprofiles on tblusersprofiles.idProfile = tblprofiles.idProfile
+                            INNER JOIN tblusers on tblusers.idUser = tblusersprofiles.idUser
+                            WHERE tblusers.userName = @UserName";
+
+            SqlCommand com = new SqlCommand(query, con);
+            com.Parameters.Add("@UserName", SqlDbType.VarChar);
+            com.Parameters["@UserName"].Value = UserName;
+
+            con.Open();
+            int r = Convert.ToInt32(com.ExecuteScalar());
+
+            con.Close();
+
+            return r;
+            
+        }
     }
 }

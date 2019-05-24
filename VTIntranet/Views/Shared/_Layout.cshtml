@@ -446,7 +446,9 @@
                 <li><img src="~/UploadedFiles/Intranet_Directorio.png">@Html.ActionLink("Directorio", "Directory", "Home", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Eventos.png">@Html.ActionLink("Eventos", "Events", "Home", null, new { style = "color: white" })</li>
                 <li><img src="~/UploadedFiles/Intranet_Galeria.png">@Html.ActionLink("Galeria", "Index", "Gallery", null, new { style = "color: white" })</li>
+               
                 <li><img src="~/UploadedFiles/Intranet_Subir-Manual.png"><a id="uploadFile" style="color:white">Subir Manual</a></li>
+                
             </ul>
         </div>
         <div style="margin-left:200px">
@@ -455,22 +457,24 @@
                     <div class="container">
                         <div class="navbar-collapse collapse" style=" width: 100%; position: relative; z-index:1; overflow:auto">
                             <ul class="nav navbar-nav">
-                                <li>@Html.ActionLink("¿Quienes Somos?", "About", "Home")</li>
+                                <li>@Html.ActionLink("¿Quiénes Somos?", "About", "Home")</li>
                                 <li>@Html.ActionLink("Very Talented", "Talend", "Home")</li>
-                                <li>@Html.ActionLink("Ocio", "Post", "Home")</li>
                                 <li>@Html.ActionLink("Voluntariado", "Volunteer", "Home")</li>
                                 <li>
                                     <form class="form-inline my-2 my-lg-0" style="padding-left:0">
                                         <input id="buscar-menu" class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
                                     </form>
                                 </li>
+                                <li>@Html.ActionLink("Ocio", "Post", "Home")</li>
                                 <li id="hov-menu" style="display:flex; align-items:center">
                                     <i class="material-icons" style="font-size:40px; color:#21356a">
                                         account_circle
                                     </i>
                                     <div id="sub-menu">
                                         @Html.ActionLink("Mi Perfil", "Profile", "Home")
+
                                         @Html.ActionLink("Usuarios", "Index", "users")
+                                       
                                         @Html.Partial("_LoginPartial")
                                     </div>
                                 </li>
@@ -662,25 +666,80 @@
             let nav_home = document.querySelector('#nav_home');
             let subMenu;
 
+            let tags_default = ['AD', 'GS', 'IN-C', 'IN-H', 'VTECH', 'VT', 'WP'];
+            let tags = [];
+
             for (field in menuInfo) {
-
-                let li = document.createElement('li');
-                let a = document.createElement('a');
                 let clabe = menuInfo[field][0].tagClabe;
-
-                a.style.color = 'white';
-                a.innerHTML = field;
-                a.setAttribute('class', 'tags');
-                a.setAttribute('value', clabe);
-                li.append(a);
-                nav_home.append(li);
-
-                let item = menuInfo[field];
-                subMenu = createSubMenu(field, item);
-                //console.log(subMenu);
-                li.append(subMenu);
-
+                tags.push(clabe);
             }
+
+            //console.log(tags);
+
+            if (tags_default.length != tags.length) {
+
+                for (let i = 0; i < tags.length; i++) {
+                    let t = tags[i];
+                    for (let j = 0; j < tags_default.length; j++) {
+                        
+                        if (tags_default[j] === t) {
+                            tags_default.splice(j, 1);
+                        }
+                    }
+                }
+
+                //console.log(tags_default);
+                //console.log(menuInfo);
+
+                let result = getTagname(tags_default);
+                //console.log(result);
+
+
+                for (field in menuInfo) {
+
+                    let li = document.createElement('li');
+                    let a = document.createElement('a');
+                    let clabe = menuInfo[field][0].tagClabe;
+
+                    a.style.color = 'white';
+                    a.innerHTML = field;
+                    a.setAttribute('class', 'tags');
+                    a.setAttribute('value', clabe);
+                    li.append(a);
+                    nav_home.append(li);
+
+                    let item = menuInfo[field];
+                    subMenu = createSubMenu(field, item);
+                    //console.log(subMenu);
+                    li.append(subMenu);
+
+                }
+
+            } else {
+
+                for (field in menuInfo) {
+
+                    let li = document.createElement('li');
+                    let a = document.createElement('a');
+                    let clabe = menuInfo[field][0].tagClabe;
+
+                    a.style.color = 'white';
+                    a.innerHTML = field;
+                    a.setAttribute('class', 'tags');
+                    a.setAttribute('value', clabe);
+                    li.append(a);
+                    nav_home.append(li);
+
+                    let item = menuInfo[field];
+                    subMenu = createSubMenu(field, item);
+                    //console.log(subMenu);
+                    li.append(subMenu);
+
+                }
+            }
+            
+
+            
         }
 
         function createSubMenu(field, item) {
@@ -705,29 +764,6 @@
 
 
             return submenu;
-
-        }
-
-        function setEventClick(tags) {
-            //console.log("set listener click");
-
-            for (let i = 0; i < tags.length; i++) {
-
-                $(tags[i]).click(function (e) {
-                    console.log($(this));
-
-                    let clabe = $(this)[0].attributes[1].nodeValue;
-                    let tag = '/Home/Attachment/?tag=' + clabe;
-                    //tag = tag.replace(/ /g, '%20');
-                    console.log("");
-                    $(tags[i]).attr('href', tag);
-
-                    /*let tag = '/Home/Attachment/?tag=' + $(this)[0].innerHTML;
-                     * tag = tag.replace(/ /g, '%20');
-                     $(tags[i]).attr('href', tag);*/
-
-                });
-            }
 
         }
 
@@ -779,6 +815,18 @@
             }
             //console.log(object);
             return object;
+        }
+
+        function getTagname(tags_default) {
+            console.log(tags_default);
+            console.log({ Tags: tags_default });
+            
+            $.ajax({
+                url: '/Home/GetTagName/',
+                type: 'GET',
+                dataType: 'json',
+                data: { Tags: JSON.stringify(tags_default)}
+            })
         }
 
         function populateListDepto(brand) {
@@ -878,7 +926,30 @@
 
         }
 
+        function setEventClick(tags) {
+            //console.log("set listener click");
 
+            for (let i = 0; i < tags.length; i++) {
+
+                $(tags[i]).click(function (e) {
+                    console.log($(this));
+
+                    let clabe = $(this)[0].attributes[1].nodeValue;
+                    let tag = '/Home/Attachment/?tag=' + clabe;
+                    //tag = tag.replace(/ /g, '%20');
+                    console.log("");
+                    $(tags[i]).attr('href', tag);
+
+                    /*let tag = '/Home/Attachment/?tag=' + $(this)[0].innerHTML;
+                     * tag = tag.replace(/ /g, '%20');
+                     $(tags[i]).attr('href', tag);*/
+
+                });
+            }
+
+        }
+
+     
     </script>
 
     <!--**************CHAT*************-->

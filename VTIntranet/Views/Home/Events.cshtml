@@ -155,8 +155,13 @@
     </style>
 </head>
 <div>
+    
     <h3>@ViewBag.Message</h3>
-    <button type="button" class="btn btn-primary" style="margin-left: 1%" id="events">Nuevo Evento</button>
+    @if (ViewBag.Username == "administrator")
+    {
+        <button type="button" class="btn btn-primary" style="margin-left: 1%" id="events">Nuevo Evento</button>
+    }
+
     <br />
     <hr />
     <div id="eventos-padre">
@@ -184,7 +189,7 @@
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                         </div>
-                        <div class="col-md-4" >
+                        <div class="col-md-4">
                             <button class="btn btn-primary addImage" id="@field.IdEvent">Añadir Imagenes</button><br /><br />
                             @Html.ActionLink("Ir al Album", "Album", "Gallery", new { idEvent = @field.IdEvent }, new { @class = "btn btn-primary", @style = "color: white" })
                         </div>
@@ -271,7 +276,7 @@
                     </form>
 
                 </div>
-            
+
             </div>
         </div>
     </div>

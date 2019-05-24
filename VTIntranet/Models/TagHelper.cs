@@ -139,6 +139,17 @@ namespace VTIntranet.Models
 
         }
 
+        public String GetBrand(String brand)
+        {
+            Conectar();
+            string[] result = { };
+
+
+
+            return "a";
+
+        }
+
 
     }
 }

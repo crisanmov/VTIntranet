@@ -58,9 +58,12 @@ namespace VTIntranet.Controllers
                     string userName = model.UserName.ToString();
 
                     usersModelHelper data = uh.GetUser(userName);
+                    int idProfile = uh.GetProfile(userName);
+
                     var idUser = data.idUser;
                     this.Session["idUser"] = idUser;
                     this.Session["userName"] = userName;
+                    this.Session["idProfile"] = idProfile;
 
                     var identityClaims = accountServices.AddIdentityBasic(model);
 

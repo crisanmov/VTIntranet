@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,10 +23,11 @@ namespace VTIntranet.Controllers
         public ActionResult Index()
         {
             var userName = this.Session["userName"];
-            ViewBag.UserName = userName;
+            string id = this.Session["idProfile"].ToString();
+            int idProfile = int.Parse(id);
 
-            string id = this.Session["idUser"].ToString();
-            int idUser = int.Parse(id);
+            ViewBag.UserName = userName;
+            ViewBag.IdProfile = idProfile;
 
             TagHelper th = new TagHelper();
             NoticeHelper nh = new NoticeHelper();
@@ -41,7 +43,7 @@ namespace VTIntranet.Controllers
             //serializer for brands
             //ViewBag.tags = th.getTagProfile(1);
             var serializerBrand = new JavaScriptSerializer();
-            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idUser));
+            var serializedResultB = serializerBrand.Serialize(th.GetBrand(idProfile));
             ViewBag.Navbar = serializedResultB;
             
             return View();
@@ -154,6 +156,26 @@ namespace VTIntranet.Controllers
             var serializedResult = serializer.Serialize(th.gettAll());
 
             return Json(serializedResult, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetTagName(String[] Tags)
+        {
+
+            var objects = JsonConvert.DeserializeObject<List<object>>(Tags[0]);
+            //var result = objects.Select(obj => JsonConvert.SerializeObject(obj)).ToArray();
+
+            TagHelper th = new TagHelper();
+            var myList = new List<string>();
+
+            foreach(string field in objects)
+            {
+                myList.Add(th.GetBrand(field));
+            }
+           
+
+            
+            return Json("successfully");
         }
 
         [HttpPost]
