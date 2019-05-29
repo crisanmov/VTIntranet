@@ -266,9 +266,12 @@ sino un servicio completo de Asesoría de Experiencia de Viajes.<br />
 </div>
 
 <script>
-   
+
+
     let tmp = "@ViewBag.D";
+    console.log(tmp);
     let deptos = JSON.parse(tmp.replace(/&quot;/g, '"'));
+     console.log(tmp);
     let tagClabe = '';
 
     //show area or deptos in view
@@ -310,7 +313,7 @@ sino un servicio completo de Asesoría de Experiencia de Viajes.<br />
             data: { tagClabe: tagClabe },
             dataType: 'json',
             type: 'GET',
-            contentType: 'application/json; charset=utf-8',
+            contentType: 'application/json;',
             asyn: 'true',
             processData: 'false',
             cache: 'false',
@@ -403,7 +406,7 @@ sino un servicio completo de Asesoría de Experiencia de Viajes.<br />
             let div = document.createElement('DIV');
             div.setAttribute('class', 'area');
             div.append(deptoName);
-            //console.log(div.innerHTML);
+            console.log(div.innerHTML);
             brandDeptos.appendChild(div);
         }
     }
@@ -441,9 +444,12 @@ sino un servicio completo de Asesoría de Experiencia de Viajes.<br />
             });
         }
     }
-
+   
     $(document).ready(function () {
-
+        $('body').find('*').each(function() {             
+       var html= $(this).html().replace(/&amp;/g, "&");
+        $(this).html(html);
+    });
         //set event click show file
         setEventEditFile();
         //set event click for deptos
