@@ -850,7 +850,7 @@
 
                     for (let i = 0; i < json.length; i++) {
                         let option = document.createElement('option');
-                        option.innerHTML = json[i].DeptoName;
+                        option.innerHTML = utf8_encode(json[i].DeptoName);
                         option.setAttribute('value', json[i].Clabe);
                         selectDepto.append(option);
                     }
@@ -1354,15 +1354,20 @@
 
     </script>
     <!--Menu dynamic-->
+
     <script type="text/javascript">
-    $(document).ready(function () {
-        $('#padre-img').children("div").click(function () {
+        $(document).ready(function () {
+            $('#padre-img').children("div").click(function () {
                 $(this).children("div").removeClass("hidden");
                 $('div.logoschidos').removeClass("visible");
+                $('div.logoschidos').removeClass("principal");
                 $(this).children("div").addClass("visible");
             });
+         
         });
     </script>
+ 
+
 
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")*@
