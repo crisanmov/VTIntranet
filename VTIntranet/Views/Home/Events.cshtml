@@ -29,10 +29,7 @@
     width: 30%;
 }
 
-        .buttonlink:hover {
-            color: darkgray;
-        }
-
+        
         .buttonlink img {
             height: 80%;
             width: 100%;
@@ -152,23 +149,84 @@
         }
 
         
+
+
+
+           input[type="checkbox"] { display: none; }
+
+input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding:10px 0 0 20px;
+  margin-bottom: 20px;
+  font: 14px/20px 'Open Sans', Arial, sans-serif;
+  color: #ddd;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+input[type="checkbox"] + label:last-child { margin-bottom: 0; }
+
+input[type="checkbox"] + label:before {
+  visibility:hidden;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #122143;
+  position: relative;
+  left: 0;
+  top: 0;
+  opacity: .6;
+  -webkit-transition: all .12s, border-color .08s;
+  transition: all .12s, border-color .08s;
+}
+
+input[type="checkbox"]:checked + label:before {
+  width: 10px;
+  top: -5px;
+  left: 5px;
+  border-radius: 0;
+  opacity: 1;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+ .visible input[type="checkbox"] + label:before
+        {
+            visibility:visible;
+            display:block;
+            content:"";
+            left:0
+        }
+
+ #deletear{
+     display:none
+ }
+ #padredetodo.visible #deletear{display:inline-block}
+
     </style>
 </head>
-<div>
+<div id="padredetodo" class="prueba">
 
     <h3>@ViewBag.Message</h3>
 
     <button type="button" class="btn btn-primary" style="margin-left: 1%" id="events">Nuevo Evento</button>
-    <button type="button" class="btn btn-primary" style="margin-left: 1%" id="events">Seleccionar</button>
+    <button type="button" class="btn btn-primary" style="margin-left: 1%" id="del-img">Seleccionar</button>
+    <button id="deletear" class="btn btn-primary" style="margin-left:1%">Eliminar imagenes</button>
 
 
     <br />
     <hr />
-    <div id="eventos-padre">
+    <div id="eventos-padre" class="prueba">
         @foreach (var field in ViewBag.events)
         {
             <div class="buttonlink">
                 <div class="card mb-3 ">
+                    <input type="checkbox" id="/@field.FileName">
+                    <label for="/@field.FileName"></label>
                     <div class="row no-gutters" style="display: flex; align-items: center;">
                         <div class="col-xs-12  col-sm-6 col-md-4">
                             <div class="hovereffect">
@@ -476,7 +534,16 @@
 
     document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
+     $('#del-img').click(function () {
 
+                var x = document.getElementById("padredetodo");
+                if (x.className === "prueba") {
+                    x.className += " visible";
+                } else {
+                    x.className = "prueba";
+                }
+                
+            });
 
 
 </script>
